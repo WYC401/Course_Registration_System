@@ -19,7 +19,7 @@ public class CourseManagement {
     private Graph<Course,DefaultEdge> courseGraph;
 
     public CourseManagement() {
-        courseGraph = new DefaultDirectedGraph<Course, DefaultEdge>();
+        courseGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
     }
 
     // REQUIRES: two List-like object to indicate those courses being of its prerequisites and taking courses
