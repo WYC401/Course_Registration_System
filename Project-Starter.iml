@@ -29,5 +29,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="jgrapht.core" level="project" />
+    <orderEntry type="library" name="jgrapht.opt" level="project" />
+    <orderEntry type="library" name="jgrapht.io" level="project" />
   </component>
 </module>
