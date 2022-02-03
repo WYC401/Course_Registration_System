@@ -13,7 +13,9 @@ it should have the following functionalities:
  */
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CourseManagement {
     private Graph<Course,DefaultEdge> courseGraph;
@@ -22,15 +24,26 @@ public class CourseManagement {
         courseGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
     }
 
+    // MODiFIES: this
+    // EFFECT: add a course into courseManagement system.
+    public void addCourses(Course course) {
+        courseGraph.addVertex(course);
+    }
+
     // REQUIRES: two List-like object to indicate those courses being of its prerequisites and taking courses
     //           as prerequisites
     // MODIFIES: this
     // EFFECT: add a course together with its prerequisites and the courses taking it as prerequisites.
     //          success in added will return ture
-    public boolean addCourse(Course course, List<Course> prerequisitesList, List<Course> toBePrerequisiteList) {
-        
+
+    public boolean setPrerequisites(Course course, Course prerequisite) {
+        if(getAllCourses().contains(prerequisite)) {
+            courseGraph.addEdge(course, prerequisite);
+            return true;
+        }
         return false;
     }
+
 
     // REQUIRES: the course name(id) is valid and its prerequisites list is also valid
     // MODIFIES: this
@@ -43,19 +56,36 @@ public class CourseManagement {
     // MODIFIES: this
     // EFFECT: delete input course and its relationship, return true
     //         failure in deletion will return false
-    public boolean deleteCourse() {
+    public boolean deleteCourse(Course course) {
+        if(containCourse(course)) {
+            courseGraph.removeVertex(course);
+            return true;
+        }
         return false;
     }
 
     // REQUIRES: the course name (id) is valid
     // EFFECT: return a list of prerequisites for input course
-    public ArrayList<Course> returnPrerequisites() {
-        return null;
+    public Set<Course> returnPrerequisites(Course course) {
+        Set<DefaultEdge> outgoingEdges = courseGraph.outgoingEdgesOf(course);
+        Set<Course> prerequisitesSet = new HashSet<Course>();
+        for(DefaultEdge e: outgoingEdges) {
+            prerequisitesSet.add(courseGraph.getEdgeTarget(e));
+        }
+        return prerequisitesSet;
     }
 
     // REQUIRES: the course name is valid
     // EFFECT: return a list of all the courses that must be taken before registration of input course
     public ArrayList<Course> returnAllNeededCourses() {
         return null;
+    }
+
+    public Set<Course> getAllCourses() {
+        return courseGraph.vertexSet();
+    }
+
+    private boolean containCourse(Course course) {
+        return getAllCourses().contains(course);
     }
 }
