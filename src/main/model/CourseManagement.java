@@ -1,6 +1,8 @@
 package model;
 import org.jgrapht.*;
+import org.jgrapht.alg.shortestpath.AllDirectedPaths;
 import org.jgrapht.graph.*;
+import org.jgrapht.nio.*;
 /*
 This is CourseManagement System that store all the courses and their relationships across all the faculties.
 it should have the following functionalities:
@@ -77,8 +79,19 @@ public class CourseManagement {
 
     // REQUIRES: the course name is valid
     // EFFECT: return a list of all the courses that must be taken before registration of input course
-    public ArrayList<Course> returnAllNeededCourses() {
-        return null;
+    public Graph<Course,DefaultEdge> returnAllNeededCourses(Set<Course> courseAlreadyTaken, Course course) {
+        AllDirectedPaths<Course,DefaultEdge> allPathToCourse = new AllDirectedPaths<>(courseGraph);
+        Set<Course> singleCourseSet = new HashSet<Course>();
+        singleCourseSet.add(course);
+        List<GraphPath<Course,DefaultEdge>> pathList = allPathToCourse.getAllPaths(courseAlreadyTaken, singleCourseSet,
+                true,null);
+        GraphPath<Course, DefaultEdge> tempMinLength = pathList.get(0);
+        for(GraphPath<Course,DefaultEdge> gp: pathList) {
+            if(gp.getLength() < tempMinLength.getLength()) {
+                tempMinLength = gp;
+            }
+        }
+        return tempMinLength.getGraph();
     }
 
     public Set<Course> getAllCourses() {
