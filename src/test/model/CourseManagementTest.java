@@ -28,6 +28,7 @@ public class CourseManagementTest {
         CM.setPrerequisites(cpsc213, cpsc210);
         CM.setPrerequisites(cpsc313, cpsc213);
         CM.setPrerequisites(cpsc313, cpsc221);
+        CM.displayCurrentCourseGraph();
     }
 
     @Test

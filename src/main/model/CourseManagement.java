@@ -3,6 +3,7 @@ import org.jgrapht.*;
 import org.jgrapht.alg.shortestpath.AllDirectedPaths;
 import org.jgrapht.graph.*;
 import org.jgrapht.nio.*;
+import org.jgrapht.nio.dot.DOTExporter;
 /*
 This is CourseManagement System that store all the courses and their relationships across all the faculties.
 it should have the following functionalities:
@@ -14,10 +15,10 @@ it should have the following functionalities:
 (6) find all the courses needed to be taken for specific course
  */
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.net.URI;
+import java.util.*;
 
 public class CourseManagement {
     private Graph<Course,DefaultEdge> courseGraph;
@@ -100,5 +101,21 @@ public class CourseManagement {
 
     private boolean containCourse(Course course) {
         return getAllCourses().contains(course);
+    }
+
+    public String displayCourseGraph(Graph<Course,DefaultEdge> courseGraph) {
+        DOTExporter<Course, DefaultEdge> exporter =
+                new DOTExporter<>(v -> String.valueOf(v.getCourseID()));
+        exporter.setVertexAttributeProvider((v) -> {
+            Map<String, Attribute> map = new LinkedHashMap<>();
+            map.put("label", DefaultAttribute.createAttribute(v.toString()));
+            return map;
+        });
+        Writer writer = new StringWriter();
+        exporter.exportGraph(courseGraph, writer);
+        return writer.toString();
+    }
+    public void displayCurrentCourseGraph() {
+        System.out.println(displayCourseGraph(this.courseGraph));
     }
 }

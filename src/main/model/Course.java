@@ -5,7 +5,7 @@ This is representation of a course, including name of course, courseID, syllabus
 public class Course {
     // EFFECT: create a new course object
     private String courseName;
-    private int courseID;
+    private Integer courseID;
     private String syllabus;
     private String instructor;
 
