@@ -34,7 +34,6 @@ public class CourseManagementTest {
     @Test
     public void TestAddCourse() {
         Set<Course> tempCourseSet = new HashSet<Course>();
-
         tempCourseSet.add(cpsc213);
         tempCourseSet.add(cpsc210);
         tempCourseSet.add(cpsc313);

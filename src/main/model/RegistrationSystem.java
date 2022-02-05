@@ -9,7 +9,7 @@ public class RegistrationSystem {
 
     // MODIFIERS : this
     // EFFECT: initialize course management system under the hood
-    private void loadCourseManagement() {
+    public void loadCourseManagement(CourseManagement CM) {
 
     }
 
@@ -29,7 +29,7 @@ public class RegistrationSystem {
     //          (2)the number of course vacancy is increased by 1
     //          (3)the courses will be removed into student's registered list
     public boolean drop(CourseOfferedBySemester course, Student student) {
-
+        return false;
     }
 
     // EFFECT: return/display the information of the course
@@ -45,7 +45,7 @@ public class RegistrationSystem {
 
     // MODIFIERS: this
     // EFFECT: add one Student into this system
-    public void addCourseAvailable(Student student) {
+    public void addStudent(Student student) {
 
     }
 
