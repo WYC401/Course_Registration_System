@@ -7,6 +7,7 @@ courses she/he have already taken and the corresponding grades
 import com.sun.xml.internal.bind.v2.model.core.ID;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,15 +15,15 @@ public class Student {
     private String name;
     private Integer id;
     private String major;
-    private Set<CourseOfferedBySemester> courseSetAlreadyTaken;
-    private Set<CourseOfferedBySemester> courseSetToTake;
+    private HashMap<Integer, CourseOfferedBySemester> courseSetAlreadyTaken;
+    private HashMap<Integer, CourseOfferedBySemester> courseSetToTake;
     // EFFECT: Create a student object with student id, name, major and gradeList
     public Student(String name, Integer id, String major) {
         this.id = id;
         this.name = name;
         this.major = major;
-        courseSetAlreadyTaken = new HashSet<CourseOfferedBySemester>();
-        courseSetToTake = new HashSet<CourseOfferedBySemester>();
+        courseSetAlreadyTaken = new HashMap<>();
+        courseSetToTake = new HashMap<>();
     }
 
     // EFFECT: return the ID of a student
@@ -47,33 +48,37 @@ public class Student {
     // EFFECT: add a course into the gradeList
     public boolean addTakenCourse(CourseOfferedBySemester course) {
         if(!isAlreadyTaken(course)) {
-            courseSetAlreadyTaken.add(course);
+            courseSetAlreadyTaken.put(course.getCourseID(),course);
             return true;
         }
         return false;
     }
 
+    public boolean canBeRegistered(CourseOfferedBySemester course) {
+        if((!isAlreadyRegistered(course))&&(!isAlreadyTaken(course))) {
+            return true;
+        }
+        return false;
+    }
     // MODIFIES: this
     // EFFECT: register one course
-    public boolean registerCourse(CourseOfferedBySemester course) {
+    public void registerCourse(CourseOfferedBySemester course) {
         if((!isAlreadyRegistered(course))&&(!isAlreadyTaken(course))) {
-            courseSetToTake.add(course);
-            return true;
+            courseSetToTake.put(course.getCourseID(), course);
         }
-        return false;
 
     }
 
-    public boolean isAlreadyTaken(CourseOfferedBySemester course) {
-        if(courseSetAlreadyTaken.contains(course)) {
+    public boolean isAlreadyTaken(Course course) {
+        if(courseSetAlreadyTaken.containsKey(course.getCourseID())) {
             return true;
         } else {
             return false;
         }
     }
 
-    public boolean isAlreadyRegistered(CourseOfferedBySemester course) {
-        if(courseSetToTake.contains(course)) {
+    public boolean isAlreadyRegistered(Course course) {
+        if(courseSetToTake.containsKey(course.getCourseID())) {
             return true;
         } else {
             return false;

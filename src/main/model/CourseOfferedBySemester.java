@@ -40,12 +40,22 @@ public class CourseOfferedBySemester extends Course{
         return true;
     }
 
-    public boolean addOneStudent() {
+    public void addOneStudent(Student student) {
         if(!isFull()) {
-            seatsRemaining ++;
+            seatsRemaining --;
+            studentsRegistered.add(student);
+        }
+    }
+    public boolean containsStudent(Student student) {
+        if(studentsRegistered.contains(student)) {
             return true;
         }
         return false;
+    }
+    public void removeStudent(Student student) {
+        if(containsStudent(student)) {
+            studentsRegistered.remove(student);
+        }
     }
 
 
