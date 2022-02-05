@@ -108,7 +108,7 @@ public class CourseManagement {
                 new DOTExporter<>(v -> String.valueOf(v.getCourseID()));
         exporter.setVertexAttributeProvider((v) -> {
             Map<String, Attribute> map = new LinkedHashMap<>();
-            map.put("label", DefaultAttribute.createAttribute(v.toString()));
+            map.put("label", DefaultAttribute.createAttribute(String.valueOf(v.getCourseID())));
             return map;
         });
         Writer writer = new StringWriter();
