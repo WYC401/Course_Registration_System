@@ -17,20 +17,21 @@ it should have the following functionalities:
 
 import java.io.StringWriter;
 import java.io.Writer;
-import java.net.URI;
 import java.util.*;
 
 public class CourseManagement {
-    private Graph<Course,DefaultEdge> courseGraph;
-
+    private Graph<Integer,DefaultEdge> courseGraph;
+    private HashMap<Integer, Course> courseMap;
     public CourseManagement() {
         courseGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
+        courseMap = new HashMap<>();
     }
 
     // MODiFIES: this
     // EFFECT: add a course into courseManagement system.
     public void addCourses(Course course) {
-        courseGraph.addVertex(course);
+        courseGraph.addVertex(course.getCourseID());
+        courseMap.put(course.getCourseID(),course);
     }
 
     // REQUIRES: two List-like object to indicate those courses being of its prerequisites and taking courses
@@ -40,8 +41,8 @@ public class CourseManagement {
     //          success in added will return ture
 
     public boolean setPrerequisites(Course course, Course prerequisite) {
-        if(getAllCourses().contains(prerequisite)) {
-            courseGraph.addEdge(course, prerequisite);
+        if(getAllCoursesID().contains(prerequisite.getCourseID()) && getAllCoursesID().contains(course.getCourseID())) {
+            courseGraph.addEdge(course.getCourseID(), prerequisite.getCourseID());
             return true;
         }
         return false;
@@ -60,8 +61,9 @@ public class CourseManagement {
     // EFFECT: delete input course and its relationship, return true
     //         failure in deletion will return false
     public boolean deleteCourse(Course course) {
-        if(containCourse(course)) {
-            courseGraph.removeVertex(course);
+        if(containCourse(course.getCourseID())) {
+            courseGraph.removeVertex(course.getCourseID());
+            courseMap.remove(course.getCourseID(),course);
             return true;
         }
         return false;
@@ -69,9 +71,12 @@ public class CourseManagement {
 
     // REQUIRES: the course name (id) is valid
     // EFFECT: return a list of prerequisites for input course
-    public Set<Course> returnPrerequisites(Course course) {
-        Set<DefaultEdge> outgoingEdges = courseGraph.outgoingEdgesOf(course);
-        Set<Course> prerequisitesSet = new HashSet<Course>();
+    public Set<Integer> returnPrerequisitesID(Integer courseID) {
+        if(!containCourse(courseID)) {
+            return null;
+        }
+        Set<DefaultEdge> outgoingEdges = courseGraph.outgoingEdgesOf(courseID);
+        Set<Integer> prerequisitesSet = new HashSet<>();
         for(DefaultEdge e: outgoingEdges) {
             prerequisitesSet.add(courseGraph.getEdgeTarget(e));
         }
@@ -80,14 +85,14 @@ public class CourseManagement {
 
     // REQUIRES: the course name is valid
     // EFFECT: return a list of all the courses that must be taken before registration of input course
-    public Graph<Course,DefaultEdge> returnAllNeededCourses(Set<Course> courseAlreadyTaken, Course course) {
-        AllDirectedPaths<Course,DefaultEdge> allPathToCourse = new AllDirectedPaths<>(courseGraph);
-        Set<Course> singleCourseSet = new HashSet<Course>();
-        singleCourseSet.add(course);
-        List<GraphPath<Course,DefaultEdge>> pathList = allPathToCourse.getAllPaths(courseAlreadyTaken, singleCourseSet,
+    public Graph<Integer,DefaultEdge> returnAllNeededCoursesID(Set<Integer> courseAlreadyTaken, Integer courseID) {
+        AllDirectedPaths<Integer,DefaultEdge> allPathToCourse = new AllDirectedPaths<>(courseGraph);
+        Set<Integer> singleCourseSet = new HashSet<Integer>();
+        singleCourseSet.add(courseID);
+        List<GraphPath<Integer,DefaultEdge>> pathList = allPathToCourse.getAllPaths(courseAlreadyTaken, singleCourseSet,
                 true,null);
-        GraphPath<Course, DefaultEdge> tempMinLength = pathList.get(0);
-        for(GraphPath<Course,DefaultEdge> gp: pathList) {
+        GraphPath<Integer, DefaultEdge> tempMinLength = pathList.get(0);
+        for(GraphPath<Integer,DefaultEdge> gp: pathList) {
             if(gp.getLength() < tempMinLength.getLength()) {
                 tempMinLength = gp;
             }
@@ -95,20 +100,20 @@ public class CourseManagement {
         return tempMinLength.getGraph();
     }
 
-    public Set<Course> getAllCourses() {
+    public Set<Integer> getAllCoursesID() {
         return courseGraph.vertexSet();
     }
 
-    private boolean containCourse(Course course) {
-        return getAllCourses().contains(course);
+    private boolean containCourse(Integer courseID) {
+        return getAllCoursesID().contains(courseID);
     }
 
-    public String displayCourseGraph(Graph<Course,DefaultEdge> courseGraph) {
-        DOTExporter<Course, DefaultEdge> exporter =
-                new DOTExporter<>(v -> String.valueOf(v.getCourseID()));
+    public String displayCourseGraph(Graph<Integer,DefaultEdge> courseGraph) {
+        DOTExporter<Integer, DefaultEdge> exporter =
+                new DOTExporter<>(v -> String.valueOf(v));
         exporter.setVertexAttributeProvider((v) -> {
             Map<String, Attribute> map = new LinkedHashMap<>();
-            map.put("label", DefaultAttribute.createAttribute(String.valueOf(v.getCourseID())));
+            map.put("label", DefaultAttribute.createAttribute(String.valueOf(v)));
             return map;
         });
         Writer writer = new StringWriter();
@@ -118,4 +123,19 @@ public class CourseManagement {
     public void displayCurrentCourseGraph() {
         System.out.println(displayCourseGraph(this.courseGraph));
     }
+
+    public Course getCourse(Integer courseID) {
+        return courseMap.get(courseID);
+    }
+
+    public Integer getCourseID(Course course) {
+        Set<Integer> idSet = courseMap.keySet();
+        for(Integer i : idSet) {
+            if(courseMap.get(i) == course) {
+                return i;
+            }
+        }
+        return null;
+    }
+
 }

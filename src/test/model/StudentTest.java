@@ -30,8 +30,10 @@ class StudentTest {
     @Test
     public void addTakenCourseTest () {
         assertFalse(studentTest.isAlreadyTaken(cpsc110ThisSemester));
+        assertTrue(studentTest.getTakenCourses().isEmpty());
         assertFalse(studentTest.isAlreadyRegistered(cpsc110ThisSemester));
         assertTrue(studentTest.addTakenCourse(cpsc110ThisSemester));
+        assertTrue(studentTest.getTakenCourses().contains(cpsc110ThisSemester));
         assertTrue(studentTest.isAlreadyTaken(cpsc110ThisSemester));
         assertFalse(studentTest.addTakenCourse(cpsc110ThisSemester));
     }
@@ -54,4 +56,5 @@ class StudentTest {
         assertTrue(studentTest.dropCourse(cpsc213ThisSemester));
         assertFalse(studentTest.isAlreadyRegistered(cpsc313ThisSemester));
     }
+
 }

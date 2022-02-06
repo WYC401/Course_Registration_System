@@ -33,20 +33,20 @@ public class CourseManagementTest {
 
     @Test
     public void TestAddCourse() {
-        Set<Course> tempCourseSet = new HashSet<Course>();
-        tempCourseSet.add(cpsc213);
-        tempCourseSet.add(cpsc210);
-        tempCourseSet.add(cpsc313);
-        tempCourseSet.add(cpsc110);
-        tempCourseSet.add(cpsc221);
-        assertEquals(tempCourseSet, CM.getAllCourses());
+        Set<Integer> tempCourseSet = new HashSet<Integer>();
+        tempCourseSet.add(213);
+        tempCourseSet.add(210);
+        tempCourseSet.add(110);
+        tempCourseSet.add(313);
+        tempCourseSet.add(221);
+        assertEquals(tempCourseSet, CM.getAllCoursesID());
     }
 
     @Test
     public void TestSetPrerequisites() {
-        Set<Course> tempCourseSet = new HashSet<Course>();
-        tempCourseSet.add(cpsc221);
-        tempCourseSet.add(cpsc213);
-        assertEquals(tempCourseSet,CM.returnPrerequisites(cpsc313));
+        Set<Integer> tempIDset = new HashSet<>();
+        tempIDset.add(213);
+        tempIDset.add(221);
+        assertEquals(tempIDset,CM.returnPrerequisitesID(cpsc313.getCourseID()));
     }
 }

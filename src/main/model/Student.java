@@ -6,10 +6,7 @@ courses she/he have already taken and the corresponding grades
 
 import com.sun.xml.internal.bind.v2.model.core.ID;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Student {
     private String name;
@@ -99,8 +96,13 @@ public class Student {
 
 
     //EFFECT: return all the courses which were taken in previous semester
-    private ArrayList<Integer> getTakenCourses() {
-        return null;
+    public Set<CourseOfferedBySemester> getTakenCourses() {
+        Collection<CourseOfferedBySemester> tempCollection = courseSetAlreadyTaken.values();
+        HashSet<CourseOfferedBySemester> tempSet = new HashSet<>();
+        for(CourseOfferedBySemester C : tempCollection) {
+            tempSet.add(C);
+        }
+        return tempSet;
     }
 
     //EFFECT: return all the courses registered in this semester

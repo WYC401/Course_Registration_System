@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CourseOfferedBySemester extends Course{
     private String semester;
@@ -24,21 +25,22 @@ public class CourseOfferedBySemester extends Course{
     // EFFECT: If the input number is greater than people already enrolled, the input is set to be total seats and seats
     // remaining change accordingly. If not, return false.
     public boolean setSeatsTotal(int numSeats){
-        int temp = this.seatsRemaining;
-        if((numSeats>this.seatsTotal-this.seatsRemaining)||(numSeats==this.seatsTotal-this.seatsRemaining)) {
+        int numRegistered = getSeatsTotal() - getSeatsRemaining();
+        if((numSeats>getSeatsTotal() - getSeatsRemaining()) || (numSeats==getSeatsTotal() - getSeatsRemaining())) {
             this.seatsTotal = numSeats;
-            this.seatsRemaining = this.seatsTotal-(temp - this.seatsRemaining);
+            this.seatsRemaining = this.seatsTotal - numRegistered;
             return true;
         }
         return false;
     }
 
     public boolean isFull() {
-        if(seatsRemaining<seatsTotal) {
-            return false;
+        if(seatsRemaining == 0) {
+            return true;
         }
-        return true;
+        return false;
     }
+
 
     public void addOneStudent(Student student) {
         if(!isFull()) {
@@ -58,7 +60,31 @@ public class CourseOfferedBySemester extends Course{
         }
     }
 
+    public int getGrade() {
+        return grade;
+    }
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
 
+    public String getSemester() {
+        return semester;
+    }
 
+    public int getSeatsTotal() {
+        return seatsTotal;
+    }
+
+    public int getSeatsRemaining() {
+        return seatsRemaining;
+    }
+
+    public void setSeatsRemaining(int num) {
+        this.seatsRemaining = num;
+    }
+
+    public List<Student> getStudentRegistered() {
+        return studentsRegistered;
+    }
 
 }
