@@ -72,7 +72,11 @@ public class RegistrationSystem {
 
 
     private boolean hasPrerequisites(Course course, Student student) {
-        if(courseManagementSystem.returnPrerequisitesID(course.getCourseID()).contains()) {
+        Set<Integer> temp1 = student.getAlreadyTakenCourseID();
+        Set<Integer> temp2 = courseManagementSystem.returnPrerequisitesID(course.getCourseID());
+
+        if(student.getAlreadyTakenCourseID().containsAll(courseManagementSystem.returnPrerequisitesID(course.getCourseID()))) {
+
             return true;
         }
         return false;

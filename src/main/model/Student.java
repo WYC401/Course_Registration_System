@@ -110,6 +110,12 @@ public class Student {
         return null;
     }
 
+    public Set<Integer> getRegisteredCourseID() {
+        return courseSetToTake.keySet();
+    }
 
+    public Set<Integer> getAlreadyTakenCourseID() {
+        return courseSetAlreadyTaken.keySet();
+    }
 
 }

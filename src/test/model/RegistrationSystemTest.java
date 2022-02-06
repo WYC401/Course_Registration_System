@@ -12,9 +12,9 @@ public class RegistrationSystemTest {
     private static CourseOfferedBySemester cpsc213ThisSemester = new CourseOfferedBySemester("ComputerSystem",213,
             "This is a syllabus","Meghan","2021W1",2,-1);
     private static CourseOfferedBySemester cpsc313ThisSemester = new CourseOfferedBySemester("ComputerSystem",313,
-            "This is a syllabus","Meghan","2021W1",1,-1);
+            "This is a syllabus","Meghan","2021W1",2,-1);
     private static CourseOfferedBySemester cpsc110ThisSemester = new CourseOfferedBySemester("ComputerSystem",110,
-            "This is a syllabus","Meghan","2021W1",1,-1);
+            "This is a syllabus","Meghan","2021W1",2,-1);
     private Student yicheng = new Student("Yicheng Wang",1,"Statistics");
     private Student chenyang = new Student("Chenyang Li", 2, "History");
     private Student richard = new Student("Richard Yang", 3, "Computer Science");
@@ -78,6 +78,7 @@ public class RegistrationSystemTest {
     }
     @Test
     public void dropTest() {
+        assertTrue(registrationSystem.register(cpsc313ThisSemester,richard));
         assertTrue(registrationSystem.drop(cpsc313ThisSemester,richard));
         assertFalse(registrationSystem.drop(cpsc313ThisSemester,richard));
         assertFalse(registrationSystem.drop(cpsc213ThisSemester,chenyang));
