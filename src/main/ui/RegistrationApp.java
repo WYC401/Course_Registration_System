@@ -1,8 +1,11 @@
 package ui;
 
 import model.*;
-
+import javax.swing.JPasswordField;
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.Scanner;
+import java.io.Console;
 
 public class RegistrationApp {
     private final RegistrationSystem registrationSystemCore;
@@ -14,9 +17,32 @@ public class RegistrationApp {
 
     }
 
-    private void displayMenu() {
+    private Student displayMenu() {
         System.out.println("Welcome to course registration system");
-        System.out.println("Please enter your username:");
+        String usernameGot = "";
+        String passwordGot = "";
+        Student student;
+
+        while(true) {
+            System.out.println("Please enter your username:");
+            Scanner sc = new Scanner(System.in);
+            usernameGot = sc.nextLine();
+            System.out.println("Please enter your password:");
+            //sc.nextLine();
+            passwordGot= sc.nextLine();
+            student = registrationSystemCore.searchStudent(Arrays.asList(usernameGot,passwordGot));
+            if(Objects.isNull(student)) {
+                System.out.print("Press q to go back to main menu, otherwise try again");
+                String choice = sc.next();
+                if(choice.equals("q")) {
+                    return null;
+                }
+            } else {
+                return student;
+            }
+
+        }
+
 
     }
 

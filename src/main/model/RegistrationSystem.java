@@ -19,6 +19,7 @@ public class RegistrationSystem {
     public RegistrationSystem() {
         courseSetThisSemester = new HashSet<CourseOfferedBySemester>();
         courseManagementSystem = new CourseManagement();
+        studentMapByUsername = new HashMap<>();
     }
     // MODIFIERS : this
     // EFFECT: initialize course management system under the hood
