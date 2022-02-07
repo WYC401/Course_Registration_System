@@ -1,6 +1,8 @@
 package model;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /*
@@ -12,6 +14,7 @@ This is a class for course registration system. It should have such functionalit
 public class RegistrationSystem {
     private Set<CourseOfferedBySemester> courseSetThisSemester;
     private CourseManagement courseManagementSystem;
+    private HashMap<List<String>,Student> studentMapByUsername;
 
     public RegistrationSystem() {
         courseSetThisSemester = new HashSet<CourseOfferedBySemester>();
@@ -65,18 +68,21 @@ public class RegistrationSystem {
 
     // MODIFIERS: this
     // EFFECT: add one Student into this system
-    public void addStudent(Student student) {
+    public void addStudent(List<String> usernameAndPassword,Student student) {
+        studentMapByUsername.put(usernameAndPassword, student);
+    }
 
+    public Student searchStudent(List<String> usernameAndPassword) {
+        if(studentMapByUsername.containsKey(usernameAndPassword)) {
+            return studentMapByUsername.get(usernameAndPassword);
+        }
+        return null;
     }
 
 
 
     private boolean hasPrerequisites(Course course, Student student) {
-        Set<Integer> temp1 = student.getAlreadyTakenCourseID();
-        Set<Integer> temp2 = courseManagementSystem.returnPrerequisitesID(course.getCourseID());
-
         if(student.getAlreadyTakenCourseID().containsAll(courseManagementSystem.returnPrerequisitesID(course.getCourseID()))) {
-
             return true;
         }
         return false;

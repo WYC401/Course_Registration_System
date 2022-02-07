@@ -9,8 +9,8 @@ public class CourseOfferedBySemester extends Course{
     private int seatsTotal;
     private int grade;
     private ArrayList<Student> studentsRegistered;
-    CourseOfferedBySemester(String courseName, int courseID, String syllabus, String instructor,
-                            String semester, int seatsTotal, int grade) {
+    public CourseOfferedBySemester(String courseName, int courseID, String syllabus, String instructor,
+                                   String semester, int seatsTotal, int grade) {
 
         super(courseName, courseID, syllabus, instructor);
         this.seatsRemaining = seatsTotal;

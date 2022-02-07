@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,9 +31,10 @@ public class RegistrationSystemTest {
         registrationSystem.addCourseAvailable(cpsc213ThisSemester);
         registrationSystem.addCourseAvailable(cpsc313ThisSemester);
 
-        registrationSystem.addStudent(yicheng);
-        registrationSystem.addStudent(chenyang);
-        registrationSystem.addStudent(richard);
+        registrationSystem.addStudent(Arrays.asList("yicheng2021","wycwyc"),yicheng);
+        registrationSystem.addStudent(Arrays.asList("chenyang2018","lcylcy"),chenyang);
+        registrationSystem.addStudent(Arrays.asList("richard2019","yzhyzh"),richard);
+        registrationSystem.addStudent(Arrays.asList("jintong2021","yjtyjt"),jintong);
         CourseOfferedBySemester cpsc213PreviousSemester = new CourseOfferedBySemester("ComputerSystem",213,
                 "This is a syllabus","Meghan","2021W1",2,60);
         CourseOfferedBySemester cpsc210PreviousSemester = new CourseOfferedBySemester("ComputerSystem",210,
