@@ -17,37 +17,50 @@ public class RegistrationApp {
         if(Objects.isNull(studentUsingSystem)) {
             System. exit(0);
         }
-        displayMenu();
-        scanner = new Scanner(System.in);
-        String choice = dealWithChoice();
-        if(choice.equals("q")) {
-            System. exit(0);
-        } else if(choice.equals("r")) {
-            goToRegisterPage();
-        } else if(choice.equals("d")) {
-            goToDropPage();
-        } else {
-            goToSearchPage();
+        while (true) {
+            displayMenu();
+            scanner = new Scanner(System.in);
+            String choice = dealWithChoice();
+            if(choice.equals("q")) {
+                System. exit(0);
+            } else if(choice.equals("r")) {
+                goToRegisterPage(studentUsingSystem);
+            } else if(choice.equals("d")) {
+                goToDropPage(studentUsingSystem);
+            } else {
+                goToSearchPage(studentUsingSystem);
+            }
         }
+
     }
 
     private void goToRegisterPage(Student student) {
-        String s = "";
-        System.out.println("Enter the course you want register: ");
+        String temp = "";
         do {
-            String temp = scanner.next();
+            System.out.println("Enter the course you want register: ");
+            temp = scanner.next();
             int courseID = Integer.parseInt(temp);//it may not be a parsable integer
             if (registrationSystemCore.containCourses(courseID)) {
-                registrationSystemCore.register(registrationSystemCore.getCourseFromID(courseID), student);
-                System.out.println(" Successfully Registered! ");
-            } else if () {
-
+                CourseOfferedBySemester courseIntendedTaken = registrationSystemCore.getCourseFromID(courseID);
+                if(registrationSystemCore.register(courseIntendedTaken, student)) {
+                    System.out.println(" Successfully Registered!\n");
+                } else if (registrationSystemCore.isCourseFull(courseIntendedTaken, student)) {
+                    System.out.println(" The course is full!\n");
+                } else if (!registrationSystemCore.canRegisterThisCourse(courseIntendedTaken, student)) {
+                    System.out.println(" You have registered or taken this course!\n");
+                } else {
+                    System.out.println(" You do not satisfy prerequisites of the course!\n");
+                }
+            } else {
+                System.out.println("The course does not exist!\n");
             }
-            System.out.println("Continue to register or Back to Main Menu");
-            System.out.println("\tc-->register");
-            System.out.println("\tb-->back to menu");
-
-        } while (!scanner.next().equals("b"));
+            do{
+                System.out.println("Continue to register or Back to Main Menu");
+                System.out.println("\tc-->continue to register");
+                System.out.println("\tb-->back to menu");
+                temp = scanner.next().toLowerCase();
+            } while((!temp.equals("c")) && (!temp.equals("b")));
+        } while(temp.equals("c"));
     }
 
     private void goToSearchPage(Student student) {
@@ -55,11 +68,32 @@ public class RegistrationApp {
     }
 
     private void goToDropPage(Student student) {
-
+        String temp;
+        do {
+            System.out.println("Type in courseID you want to drop: ");
+            temp = scanner.next();//TODO:why .nextline() does not work
+            Integer courseID = Integer.parseInt(temp);
+            if(!registrationSystemCore.containCourses(courseID)) {
+                System.out.println("This course does not exist!\n");
+            } else {
+                CourseOfferedBySemester tempCourse = registrationSystemCore.getCourseFromID(courseID);
+                if(registrationSystemCore.drop(tempCourse, student)) {
+                    System.out.println("Successfully drop this course!\n");
+                } else {
+                    System.out.println("You have not registered this course!\n");
+                }
+            }
+            do{
+                System.out.println("Continue to drop or Back to Main Menu");
+                System.out.println("\tc-->continue to drop");
+                System.out.println("\tb-->back to menu");
+                temp = scanner.next().toLowerCase();
+            } while((!temp.equals("c")) && (!temp.equals("b")));
+        } while(temp.equals("c"));
     }
     private String dealWithChoice() {
         String choice = "";
-        while((!choice.equals("q")) || (!choice.equals("d")) || (!choice.equals("r")) || (!choice.equals("s")))  {
+        while((!choice.equals("q")) && (!choice.equals("d")) && (!choice.equals("r")) && (!choice.equals("s")))  {
             choice = scanner.next();
             choice = choice.toLowerCase();
         }
@@ -154,6 +188,11 @@ public class RegistrationApp {
                 "This is a syllabus","Meghan","2021W1",2,-1);
         CourseOfferedBySemester cpsc210ThisSemester = new CourseOfferedBySemester("ComputerSystem",210,
                 "This is a syllabus","Meghan","2021W1",2,-1);
+        registrationSystemCore.addCourseAvailable(cpsc213ThisSemester);
+        registrationSystemCore.addCourseAvailable(cpsc313ThisSemester);
+        registrationSystemCore.addCourseAvailable(cpsc110ThisSemester);
+        registrationSystemCore.addCourseAvailable(cpsc210ThisSemester);
+
     }
 }
 

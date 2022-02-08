@@ -32,7 +32,7 @@ public class RegistrationSystem {
     //          then return true
     //          else, false;
     public boolean register(CourseOfferedBySemester course, Student student) {
-        if(hasPrerequisites(course,student) && (student.canBeRegistered(course)) && (!course.isFull())) {
+        if(hasPrerequisites(course,student) && (canRegisterThisCourse(course, student)) && (!isCourseFull(course, student))) {
             student.registerCourse(course);
             course.addOneStudent(student);
             return true;
@@ -98,6 +98,10 @@ public class RegistrationSystem {
     }
     public boolean isCourseFull(CourseOfferedBySemester course, Student student) {
         return course.isFull();
+    }
+
+    public boolean canRegisterThisCourse(CourseOfferedBySemester course, Student student) {
+        return student.canBeRegistered(course);
     }
 
 }
