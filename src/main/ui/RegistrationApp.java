@@ -1,23 +1,71 @@
 package ui;
 
 import model.*;
-import javax.swing.JPasswordField;
+
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
-import java.io.Console;
 
 public class RegistrationApp {
     private final RegistrationSystem registrationSystemCore;
-
+    private Scanner scanner;
     public RegistrationApp() {
         registrationSystemCore = new RegistrationSystem();
         initi();
+        Student studentUsingSystem = login();
+        if(Objects.isNull(studentUsingSystem)) {
+            System. exit(0);
+        }
         displayMenu();
+        scanner = new Scanner(System.in);
+        String choice = dealWithChoice();
+        if(choice.equals("q")) {
+            System. exit(0);
+        } else if(choice.equals("r")) {
+            goToRegisterPage();
+        } else if(choice.equals("d")) {
+            goToDropPage();
+        } else {
+            goToSearchPage();
+        }
+    }
+
+    private void goToRegisterPage(Student student) {
+        String s = "";
+        System.out.println("Enter the course you want register: ");
+        do {
+            String temp = scanner.next();
+            int courseID = Integer.parseInt(temp);//it may not be a parsable integer
+            if (registrationSystemCore.containCourses(courseID)) {
+                registrationSystemCore.register(registrationSystemCore.getCourseFromID(courseID), student);
+                System.out.println(" Successfully Registered! ");
+            } else if () {
+
+            }
+            System.out.println("Continue to register or Back to Main Menu");
+            System.out.println("\tc-->register");
+            System.out.println("\tb-->back to menu");
+
+        } while (!scanner.next().equals("b"));
+    }
+
+    private void goToSearchPage(Student student) {
 
     }
 
-    private Student displayMenu() {
+    private void goToDropPage(Student student) {
+
+    }
+    private String dealWithChoice() {
+        String choice = "";
+        while((!choice.equals("q")) || (!choice.equals("d")) || (!choice.equals("r")) || (!choice.equals("s")))  {
+            choice = scanner.next();
+            choice = choice.toLowerCase();
+        }
+        return choice;
+    }
+    private Student login() {
         System.out.println("Welcome to course registration system");
         String usernameGot = "";
         String passwordGot = "";
@@ -32,7 +80,7 @@ public class RegistrationApp {
             passwordGot= sc.nextLine();
             student = registrationSystemCore.searchStudent(Arrays.asList(usernameGot,passwordGot));
             if(Objects.isNull(student)) {
-                System.out.print("Press q to go back to main menu, otherwise try again");
+                System.out.print("Press q to quit, otherwise try again");
                 String choice = sc.next();
                 if(choice.equals("q")) {
                     return null;
@@ -40,10 +88,16 @@ public class RegistrationApp {
             } else {
                 return student;
             }
-
         }
+    }
 
-
+    private void displayMenu() {
+        System.out.println("Welcome back!");
+        System.out.println("Select From: ");
+        System.out.println("\td-->drop registered courses");
+        System.out.println("\ts-->search for certain course");
+        System.out.println("\tr-->register courses");
+        System.out.println("\tq-->quit the system");
     }
 
     private void initi() {

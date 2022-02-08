@@ -1,9 +1,6 @@
 package model;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /*
 This is a class for course registration system. It should have such functionalities:
@@ -12,12 +9,12 @@ This is a class for course registration system. It should have such functionalit
 (3) all the information of a course can be searched and displayed
  */
 public class RegistrationSystem {
-    private Set<CourseOfferedBySemester> courseSetThisSemester;
+    private HashMap<Integer, CourseOfferedBySemester> courseSetThisSemester;
     private CourseManagement courseManagementSystem;
     private HashMap<List<String>,Student> studentMapByUsername;
 
     public RegistrationSystem() {
-        courseSetThisSemester = new HashSet<CourseOfferedBySemester>();
+        courseSetThisSemester = new HashMap<Integer, CourseOfferedBySemester>();
         courseManagementSystem = new CourseManagement();
         studentMapByUsername = new HashMap<>();
     }
@@ -64,7 +61,7 @@ public class RegistrationSystem {
     // MODIFIERS: this
     // EFFECT: add one course available for this semester into the system
     public boolean addCourseAvailable(CourseOfferedBySemester course) {
-        return courseSetThisSemester.add(course);
+        return Objects.isNull(courseSetThisSemester.put(course.getCourseID(), course));
     }
 
     // MODIFIERS: this
@@ -80,6 +77,17 @@ public class RegistrationSystem {
         return null;
     }
 
+    public boolean containCourses(Integer courseID) {
+        return courseSetThisSemester.keySet().contains(courseID);
+    }
+    public CourseOfferedBySemester getCourseFromID(Integer courseID) {
+        if(containCourses(courseID)) {
+            return courseSetThisSemester.get(courseID);
+        }
+        return null;
+
+    }
+
 
 
     private boolean hasPrerequisites(Course course, Student student) {
@@ -88,6 +96,8 @@ public class RegistrationSystem {
         }
         return false;
     }
-
+    public boolean isCourseFull(CourseOfferedBySemester course, Student student) {
+        return course.isFull();
+    }
 
 }

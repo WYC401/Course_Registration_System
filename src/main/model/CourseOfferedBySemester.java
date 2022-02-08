@@ -26,7 +26,7 @@ public class CourseOfferedBySemester extends Course{
     // remaining change accordingly. If not, return false.
     public boolean setSeatsTotal(int numSeats){
         int numRegistered = getSeatsTotal() - getSeatsRemaining();
-        if((numSeats>getSeatsTotal() - getSeatsRemaining()) || (numSeats==getSeatsTotal() - getSeatsRemaining())) {
+        if((numSeats > getSeatsTotal() - getSeatsRemaining()) || (numSeats == getSeatsTotal() - getSeatsRemaining())) {
             this.seatsTotal = numSeats;
             this.seatsRemaining = this.seatsTotal - numRegistered;
             return true;
