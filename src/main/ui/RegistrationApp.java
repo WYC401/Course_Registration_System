@@ -64,7 +64,30 @@ public class RegistrationApp {
     }
 
     private void goToSearchPage(Student student) {
-
+        String temp = "";
+        do {
+            System.out.println("Type the courseID you want to search: ");
+            temp = scanner.next();
+            Integer courseID = Integer.parseInt(temp);
+            if(!registrationSystemCore.containCourses(courseID)) {
+                System.out.println("This course does not exist!\n");
+            } else {
+                CourseOfferedBySemester tempCourse = registrationSystemCore.getCourseFromID(courseID);
+                System.out.println(String.format("%-30s %s", "Course Name", tempCourse.getCourseName()));
+                System.out.println(String.format("%-30s %s", "CourseID", tempCourse.getCourseID()));
+                System.out.println(String.format("%-30s %s", "Instructor", tempCourse.getInstructor()));
+                System.out.println(String.format("%-30s %s", "Seats Total", tempCourse.getSeatsTotal()));
+                System.out.println(String.format("%-30s %s", "Seats Remaining", tempCourse.getSeatsRemaining()));
+                System.out.println("Syllabus:");
+                System.out.println(tempCourse.getSyllabus()+"\n");
+            }
+            do{
+                System.out.println("Continue to register or Back to Main Menu");
+                System.out.println("\tc-->continue to register");
+                System.out.println("\tb-->back to menu");
+                temp = scanner.next().toLowerCase();
+            } while((!temp.equals("c")) && (!temp.equals("b")));
+        } while(temp.equals("c"));
     }
 
     private void goToDropPage(Student student) {
