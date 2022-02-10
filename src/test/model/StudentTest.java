@@ -3,6 +3,9 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentTest {
@@ -36,6 +39,11 @@ class StudentTest {
         assertTrue(studentTest.getTakenCourses().contains(cpsc110ThisSemester));
         assertTrue(studentTest.isAlreadyTaken(cpsc110ThisSemester));
         assertFalse(studentTest.addTakenCourse(cpsc110ThisSemester));
+        Set<Integer> temp = new HashSet<>();
+        temp.add(110);
+        assertEquals(temp, studentTest.getAlreadyTakenCourseID());
+
+
     }
 
     @Test
@@ -47,6 +55,9 @@ class StudentTest {
         studentTest.registerCourse(cpsc213ThisSemester);
         assertTrue(studentTest.isAlreadyRegistered(cpsc213ThisSemester));
         assertFalse(studentTest.canBeRegistered(cpsc213ThisSemester));
+        Set<Integer> temp = new HashSet<>();
+        temp.add(213);
+        assertEquals(temp, studentTest.getAlreadyRegisteredID());
     }
 
     @Test

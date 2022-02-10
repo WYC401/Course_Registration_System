@@ -27,8 +27,10 @@ public class RegistrationApp {
                 goToRegisterPage(studentUsingSystem);
             } else if (choice.equals("d")) {
                 goToDropPage(studentUsingSystem);
-            } else {
+            } else if (choice.equals("s")) {
                 goToSearchPage(studentUsingSystem);
+            } else {
+                goToViewPage(studentUsingSystem);
             }
         }
 
@@ -55,14 +57,14 @@ public class RegistrationApp {
                 System.out.println("The course does not exist!\n");
             }
             do {
-                temp = displaySubPageInformation();
+                temp = displaySubPageInformation("register");
             } while ((!temp.equals("c")) && (!temp.equals("b")));
         } while (temp.equals("c"));
     }
 
-    private String displaySubPageInformation() {
+    private String displaySubPageInformation(String mode) {
         System.out.println("Continue to register or Back to Main Menu");
-        System.out.println("\tc-->continue to register");
+        System.out.println("\tc-->continue to " + mode);
         System.out.println("\tb-->back to menu");
         return scanner.next().toLowerCase();
     }
@@ -86,7 +88,7 @@ public class RegistrationApp {
                 System.out.println(tempCourse.getSyllabus() + "\n");
             }
             do {
-                temp = displaySubPageInformation();
+                temp = displaySubPageInformation("search");
             } while ((!temp.equals("c")) && (!temp.equals("b")));
         } while (temp.equals("c"));
     }
@@ -108,17 +110,25 @@ public class RegistrationApp {
                 }
             }
             do {
-                System.out.println("Continue to drop or Back to Main Menu");
-                System.out.println("\tc-->continue to drop");
-                System.out.println("\tb-->back to menu");
-                temp = scanner.next().toLowerCase();
+                temp = displaySubPageInformation("drop");
             } while ((!temp.equals("c")) && (!temp.equals("b")));
+        } while (temp.equals("c"));
+    }
+
+    private void goToViewPage(Student student) {
+        String temp;
+        do {
+            System.out.println("Here are all the courses you already registered:");
+            System.out.println(student.getAlreadyRegisteredID());
+            temp = displaySubPageInformation("view");
+
         } while (temp.equals("c"));
     }
 
     private String dealWithChoice() {
         String choice = "";
-        while ((!choice.equals("q")) && (!choice.equals("d")) && (!choice.equals("r")) && (!choice.equals("s"))) {
+        while ((!choice.equals("q")) && (!choice.equals("d")) && (!choice.equals("r")) && (!choice.equals("s"))
+                && (!choice.equals("v"))) {
             choice = scanner.next();
             choice = choice.toLowerCase();
         }
@@ -158,6 +168,7 @@ public class RegistrationApp {
         System.out.println("\ts-->search for certain course");
         System.out.println("\tr-->register courses");
         System.out.println("\tq-->quit the system");
+        System.out.println("\tv-->view all registered courses");
     }
 
     private void initi() {

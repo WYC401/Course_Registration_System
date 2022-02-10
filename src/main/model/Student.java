@@ -103,6 +103,10 @@ public class Student {
         return tempSet;
     }
 
+    public Set<Integer> getAlreadyRegisteredID() {
+        return courseSetToTake.keySet();
+    }
+
     public Set<Integer> getAlreadyTakenCourseID() {
         return courseSetAlreadyTaken.keySet();
     }
