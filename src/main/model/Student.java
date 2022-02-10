@@ -5,7 +5,6 @@ courses she/he have already taken and the corresponding grades
  */
 
 
-
 import java.util.*;
 
 public class Student {
@@ -14,6 +13,7 @@ public class Student {
     private String major;
     private HashMap<Integer, CourseOfferedBySemester> courseSetAlreadyTaken;
     private HashMap<Integer, CourseOfferedBySemester> courseSetToTake;
+
     // EFFECT: Create a student object with student id, name, major and gradeList
     public Student(String name, Integer id, String major) {
         this.id = id;
@@ -39,35 +39,35 @@ public class Student {
     }
 
 
-
     // REQUIRE: the grade input should be an integer from 0 to 100.
     // MODIFIES: this
     // EFFECT: add a course into the gradeList
     public boolean addTakenCourse(CourseOfferedBySemester course) {
-        if(!isAlreadyTaken(course)) {
-            courseSetAlreadyTaken.put(course.getCourseID(),course);
+        if (!isAlreadyTaken(course)) {
+            courseSetAlreadyTaken.put(course.getCourseID(), course);
             return true;
         }
         return false;
     }
 
     public boolean canBeRegistered(CourseOfferedBySemester course) {
-        if((!isAlreadyRegistered(course))&&(!isAlreadyTaken(course))) {
+        if ((!isAlreadyRegistered(course)) && (!isAlreadyTaken(course))) {
             return true;
         }
         return false;
     }
+
     // MODIFIES: this
     // EFFECT: register one course
     public void registerCourse(CourseOfferedBySemester course) {
-        if((!isAlreadyRegistered(course))&&(!isAlreadyTaken(course))) {
+        if ((!isAlreadyRegistered(course)) && (!isAlreadyTaken(course))) {
             courseSetToTake.put(course.getCourseID(), course);
         }
 
     }
 
     public boolean isAlreadyTaken(Course course) {
-        if(courseSetAlreadyTaken.containsKey(course.getCourseID())) {
+        if (courseSetAlreadyTaken.containsKey(course.getCourseID())) {
             return true;
         } else {
             return false;
@@ -75,7 +75,7 @@ public class Student {
     }
 
     public boolean isAlreadyRegistered(Course course) {
-        if(courseSetToTake.containsKey(course.getCourseID())) {
+        if (courseSetToTake.containsKey(course.getCourseID())) {
             return true;
         } else {
             return false;
@@ -85,7 +85,7 @@ public class Student {
     // MODIFIES: this
     // EFFECT: drop the course registered
     public boolean dropCourse(CourseOfferedBySemester course) {
-        if(isAlreadyRegistered(course)) {
+        if (isAlreadyRegistered(course)) {
             courseSetToTake.remove(course);
             return true;
         }
@@ -93,14 +93,12 @@ public class Student {
     }
 
 
-
-
     //EFFECT: return all the courses which were taken in previous semester
     public Set<CourseOfferedBySemester> getTakenCourses() {
         Collection<CourseOfferedBySemester> tempCollection = courseSetAlreadyTaken.values();
         HashSet<CourseOfferedBySemester> tempSet = new HashSet<>();
-        for(CourseOfferedBySemester C : tempCollection) {
-            tempSet.add(C);
+        for (CourseOfferedBySemester coursethissemester : tempCollection) {
+            tempSet.add(coursethissemester);
         }
         return tempSet;
     }

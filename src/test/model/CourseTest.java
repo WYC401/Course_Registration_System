@@ -1,4 +1,5 @@
 package model;
+
 import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,9 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CourseTest {
     private Course course;
+
     @BeforeEach
     public void setup() {
-        course = new Course("ddd",0,"",
+        course = new Course("ddd", 0, "",
                 "");
     }
 
@@ -20,7 +22,7 @@ public class CourseTest {
         course.setInstructor("Meghan");
         course.setSyllabus("Here is a syllabus");
         assertEquals("Software Construction", course.getCourseName());
-        assertEquals(210,course.getCourseID());
+        assertEquals(210, course.getCourseID());
         assertEquals("Here is a syllabus", course.getSyllabus());
         assertEquals("Meghan", course.getInstructor());
     }

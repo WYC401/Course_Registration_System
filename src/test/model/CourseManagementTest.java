@@ -10,12 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CourseManagementTest {
     private CourseManagement CM;
-    static Course cpsc213 = new Course("ComputerSystem",213,"This is a syllabus","Meghan");
-    static Course cpsc210 = new Course("ComputerSystem",210,"This is a syllabus","Meghan");
-    static Course cpsc313 = new Course("ComputerSystem",313,"This is a syllabus","Meghan");
-    static Course cpsc110 = new Course("ComputerSystem",110,"This is a syllabus","Meghan");
-    static Course cpsc221 = new Course("ComputerSystem",221,"This is a syllabus","Meghan");
-    static Course cpsc406 = new Course("ComputerSystem",406,"This is a syllabus","Meghan");
+    static Course cpsc213 = new Course("ComputerSystem", 213, "This is a syllabus", "Meghan");
+    static Course cpsc210 = new Course("ComputerSystem", 210, "This is a syllabus", "Meghan");
+    static Course cpsc313 = new Course("ComputerSystem", 313, "This is a syllabus", "Meghan");
+    static Course cpsc110 = new Course("ComputerSystem", 110, "This is a syllabus", "Meghan");
+    static Course cpsc221 = new Course("ComputerSystem", 221, "This is a syllabus", "Meghan");
+    static Course cpsc406 = new Course("ComputerSystem", 406, "This is a syllabus", "Meghan");
+
     @BeforeEach
     public void setup() {
         CM = new CourseManagement();
@@ -28,8 +29,7 @@ public class CourseManagementTest {
         assertTrue(CM.setPrerequisites(cpsc213, cpsc210));
         assertTrue(CM.setPrerequisites(cpsc313, cpsc213));
         assertTrue(CM.setPrerequisites(cpsc313, cpsc221));
-        assertFalse(CM.setPrerequisites(cpsc406,cpsc313));
-
+        assertFalse(CM.setPrerequisites(cpsc406, cpsc313));
 
 
     }
@@ -54,7 +54,7 @@ public class CourseManagementTest {
         Set<Integer> tempIDset = new HashSet<>();
         tempIDset.add(213);
         tempIDset.add(221);
-        assertEquals(tempIDset,CM.returnPrerequisitesID(cpsc313.getCourseID()));
+        assertEquals(tempIDset, CM.returnPrerequisitesID(cpsc313.getCourseID()));
     }
 
     @Test
@@ -67,6 +67,7 @@ public class CourseManagementTest {
         System.out.print(CM.displayCourseGraph(CM.returnAllNeededCoursesID(tempIDSet, 313)));
         assertNull(CM.returnAllNeededCoursesID(tempIDSet, 406));
     }
+
     @Test
     public void TestDeleteCourse() {
         assertFalse(CM.deleteCourse(cpsc406));

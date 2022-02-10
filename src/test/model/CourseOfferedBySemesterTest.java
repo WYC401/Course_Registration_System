@@ -7,23 +7,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CourseOfferedBySemesterTest {
     private CourseOfferedBySemester course;
-    private Student yicheng = new Student("Yicheng Wang",1,"Statistics");
+    private Student yicheng = new Student("Yicheng Wang", 1, "Statistics");
     private Student chenyang = new Student("Chenyang Li", 2, "History");
     private Student richard = new Student("Richard Yang", 3, "Computer Science");
     private Student jintong = new Student("Jingtong Yan", 4, "Statistics");
 
     @BeforeEach
     public void setup() {
-        course = new CourseOfferedBySemester("Computer System",213,"","TBD",
-                "2021W2",2,-1);
+        course = new CourseOfferedBySemester("Computer System", 213, "", "TBD",
+                "2021W2", 2, -1);
     }
 
     @Test
     public void constructorTest() {
         assertEquals("2021W2", course.getSemester());
-        assertEquals(2,course.getSeatsTotal());
-        assertEquals(2,course.getSeatsRemaining());
-        assertEquals(-1,course.getGrade());
+        assertEquals(2, course.getSeatsTotal());
+        assertEquals(2, course.getSeatsRemaining());
+        assertEquals(-1, course.getGrade());
 
     }
 
@@ -34,8 +34,8 @@ public class CourseOfferedBySemesterTest {
         assertFalse(course.setSeatsTotal(0));
         course.setSeatsRemaining(0);
         assertTrue(course.setSeatsTotal(10));
-        assertEquals(8,course.getSeatsRemaining());
-        assertEquals(10,course.getSeatsTotal());
+        assertEquals(8, course.getSeatsRemaining());
+        assertEquals(10, course.getSeatsTotal());
     }
 
     @Test
@@ -44,11 +44,11 @@ public class CourseOfferedBySemesterTest {
         course.addOneStudent(yicheng);
         assertEquals(1, course.getStudentRegistered().get(0).getId());
         assertFalse(course.isFull());
-        assertEquals(1,course.getSeatsRemaining());
+        assertEquals(1, course.getSeatsRemaining());
         course.addOneStudent(chenyang);
         assertTrue(course.isFull());
-        assertEquals(2,course.getStudentRegistered().get(1).getId());
-        assertEquals(0,course.getSeatsRemaining());
+        assertEquals(2, course.getStudentRegistered().get(1).getId());
+        assertEquals(0, course.getSeatsRemaining());
         course.addOneStudent(richard);
         assertEquals(2, course.getStudentRegistered().size());
     }
@@ -58,7 +58,7 @@ public class CourseOfferedBySemesterTest {
         course.addOneStudent(yicheng);
         course.addOneStudent(chenyang);
         course.removeStudent(richard);
-        assertEquals(2,course.getStudentRegistered().get(1).getId());
+        assertEquals(2, course.getStudentRegistered().get(1).getId());
         assertEquals(1, course.getStudentRegistered().get(0).getId());
         course.removeStudent(yicheng);
         assertEquals(1, course.getStudentRegistered().size());

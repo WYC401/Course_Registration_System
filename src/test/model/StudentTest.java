@@ -8,16 +8,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class StudentTest {
     // delete or rename this class!
     private Student studentTest;
-    private static CourseOfferedBySemester cpsc213ThisSemester = new CourseOfferedBySemester("ComputerSystem",213,
-            "This is a syllabus","Meghan","2021W1",2,-1);
-    private static CourseOfferedBySemester cpsc313ThisSemester = new CourseOfferedBySemester("ComputerSystem",313,
-            "This is a syllabus","Meghan","2021W1",1,-1);
-    private static CourseOfferedBySemester cpsc110ThisSemester = new CourseOfferedBySemester("ComputerSystem",110,
-            "This is a syllabus","Meghan","2021W1",1,-1);
+    private static CourseOfferedBySemester cpsc213ThisSemester = new CourseOfferedBySemester("ComputerSystem", 213,
+            "This is a syllabus", "Meghan", "2021W1", 2, -1);
+    private static CourseOfferedBySemester cpsc313ThisSemester = new CourseOfferedBySemester("ComputerSystem", 313,
+            "This is a syllabus", "Meghan", "2021W1", 1, -1);
+    private static CourseOfferedBySemester cpsc110ThisSemester = new CourseOfferedBySemester("ComputerSystem", 110,
+            "This is a syllabus", "Meghan", "2021W1", 1, -1);
 
     @BeforeEach
     public void setup() {
-        studentTest = new Student("Test student",1,"Mathematics");
+        studentTest = new Student("Test student", 1, "Mathematics");
     }
 
     @Test
@@ -28,7 +28,7 @@ class StudentTest {
     }
 
     @Test
-    public void addTakenCourseTest () {
+    public void addTakenCourseTest() {
         assertFalse(studentTest.isAlreadyTaken(cpsc110ThisSemester));
         assertTrue(studentTest.getTakenCourses().isEmpty());
         assertFalse(studentTest.isAlreadyRegistered(cpsc110ThisSemester));
@@ -39,7 +39,7 @@ class StudentTest {
     }
 
     @Test
-    public void registerCourseTest () {
+    public void registerCourseTest() {
         assertFalse(studentTest.isAlreadyTaken(cpsc110ThisSemester));
         assertTrue(studentTest.addTakenCourse(cpsc110ThisSemester));
         assertFalse(studentTest.canBeRegistered(cpsc110ThisSemester));

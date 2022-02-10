@@ -3,12 +3,13 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseOfferedBySemester extends Course{
+public class CourseOfferedBySemester extends Course {
     private String semester;
     private int seatsRemaining;
     private int seatsTotal;
     private int grade;
     private ArrayList<Student> studentsRegistered;
+
     public CourseOfferedBySemester(String courseName, int courseID, String syllabus, String instructor,
                                    String semester, int seatsTotal, int grade) {
 
@@ -24,9 +25,9 @@ public class CourseOfferedBySemester extends Course{
     // MODIFIERS: this
     // EFFECT: If the input number is greater than people already enrolled, the input is set to be total seats and seats
     // remaining change accordingly. If not, return false.
-    public boolean setSeatsTotal(int numSeats){
+    public boolean setSeatsTotal(int numSeats) {
         int numRegistered = getSeatsTotal() - getSeatsRemaining();
-        if((numSeats > getSeatsTotal() - getSeatsRemaining()) || (numSeats == getSeatsTotal() - getSeatsRemaining())) {
+        if ((numSeats > getSeatsTotal() - getSeatsRemaining()) || (numSeats == getSeatsTotal() - getSeatsRemaining())) {
             this.seatsTotal = numSeats;
             this.seatsRemaining = this.seatsTotal - numRegistered;
             return true;
@@ -35,7 +36,7 @@ public class CourseOfferedBySemester extends Course{
     }
 
     public boolean isFull() {
-        if(seatsRemaining == 0) {
+        if (seatsRemaining == 0) {
             return true;
         }
         return false;
@@ -43,19 +44,21 @@ public class CourseOfferedBySemester extends Course{
 
 
     public void addOneStudent(Student student) {
-        if(!isFull()) {
-            seatsRemaining --;
+        if (!isFull()) {
+            seatsRemaining--;
             studentsRegistered.add(student);
         }
     }
+
     public boolean containsStudent(Student student) {
-        if(studentsRegistered.contains(student)) {
+        if (studentsRegistered.contains(student)) {
             return true;
         }
         return false;
     }
+
     public void removeStudent(Student student) {
-        if(containsStudent(student)) {
+        if (containsStudent(student)) {
             studentsRegistered.remove(student);
         }
     }
@@ -63,6 +66,7 @@ public class CourseOfferedBySemester extends Course{
     public int getGrade() {
         return grade;
     }
+
     public void setGrade(int grade) {
         this.grade = grade;
     }

@@ -1,4 +1,5 @@
 package model;
+
 /*
 This is representation of a course, including name of course, courseID, syllabus, instructor and section
  */
@@ -15,6 +16,7 @@ public class Course {
         this.syllabus = syllabus;
         this.instructor = instructor;
     }
+
     public String getCourseName() {
         return courseName;
     }
