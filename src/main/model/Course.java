@@ -43,7 +43,7 @@ public class Course {
         this.syllabus = syllabus;
     }
 
-    public void setInstructor() {
+    public void setInstructor(String instructor) {
         this.instructor = instructor;
     }
 

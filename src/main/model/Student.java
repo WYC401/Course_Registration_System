@@ -105,15 +105,6 @@ public class Student {
         return tempSet;
     }
 
-    //EFFECT: return all the courses registered in this semester
-    private ArrayList<Integer> getRegisteredCourses() {
-        return null;
-    }
-
-    public Set<Integer> getRegisteredCourseID() {
-        return courseSetToTake.keySet();
-    }
-
     public Set<Integer> getAlreadyTakenCourseID() {
         return courseSetAlreadyTaken.keySet();
     }

@@ -66,4 +66,10 @@ public class CourseOfferedBySemesterTest {
         course.removeStudent(chenyang);
         assertEquals(0, course.getStudentRegistered().size());
     }
+
+    @Test
+    public void setGradeTest() {
+        course.setGrade(100);
+        assertEquals(100, course.getGrade());
+    }
 }

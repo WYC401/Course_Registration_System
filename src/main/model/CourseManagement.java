@@ -4,6 +4,7 @@ import org.jgrapht.alg.shortestpath.AllDirectedPaths;
 import org.jgrapht.graph.*;
 import org.jgrapht.nio.*;
 import org.jgrapht.nio.dot.DOTExporter;
+import org.jgrapht.traverse.DepthFirstIterator;
 /*
 This is CourseManagement System that store all the courses and their relationships across all the faculties.
 it should have the following functionalities:
@@ -49,12 +50,7 @@ public class CourseManagement {
     }
 
 
-    // REQUIRES: the course name(id) is valid and its prerequisites list is also valid
-    // MODIFIES: this
-    // EFFECT: change the prerequisite of certain course. return true if it works
-    public boolean changePrerequisites() {
-        return false;
-    }
+
 
     // REQUIRES: the course name(id) is valid
     // MODIFIES: this
@@ -86,18 +82,40 @@ public class CourseManagement {
     // REQUIRES: the course name is valid
     // EFFECT: return a list of all the courses that must be taken before registration of input course
     public Graph<Integer,DefaultEdge> returnAllNeededCoursesID(Set<Integer> courseAlreadyTaken, Integer courseID) {
-        AllDirectedPaths<Integer,DefaultEdge> allPathToCourse = new AllDirectedPaths<>(courseGraph);
-        Set<Integer> singleCourseSet = new HashSet<Integer>();
-        singleCourseSet.add(courseID);
-        List<GraphPath<Integer,DefaultEdge>> pathList = allPathToCourse.getAllPaths(courseAlreadyTaken, singleCourseSet,
-                true,null);
-        GraphPath<Integer, DefaultEdge> tempMinLength = pathList.get(0);
-        for(GraphPath<Integer,DefaultEdge> gp: pathList) {
-            if(gp.getLength() < tempMinLength.getLength()) {
-                tempMinLength = gp;
+        Stack<Integer> s = new Stack<>();
+        HashMap<Integer,Integer> tempVisitedMap = new HashMap<>();
+        for(Integer i : getAllCoursesID()) {
+            tempVisitedMap.put(i, 0);
+        }
+        for(Integer i: courseAlreadyTaken) {
+            tempVisitedMap.put(i,1);
+        }
+
+        if(!containCourse(courseID)) {
+            return null;
+        }
+        s.push(courseID);
+        while(!s.empty()) {
+            int temp = s.pop();
+            if(tempVisitedMap.get(temp) == 0) {
+                tempVisitedMap.put(temp, 1);
+                Set<DefaultEdge> outgoingEdges = courseGraph.outgoingEdgesOf(temp);
+                if(!Objects.isNull(outgoingEdges)) {
+                    for (DefaultEdge e : outgoingEdges) {
+                        s.push(courseGraph.getEdgeTarget(e));
+                    }
+                }
             }
         }
-        return tempMinLength.getGraph();
+        Set<Integer> tempVisitedSet = new HashSet<>();
+        for(Integer i: getAllCoursesID()) {
+            if(tempVisitedMap.get(i) == 1) {
+                tempVisitedSet.add(i);
+            }
+        }
+        return new AsSubgraph<Integer, DefaultEdge>(courseGraph, tempVisitedSet);
+
+
     }
 
     public Set<Integer> getAllCoursesID() {
@@ -120,9 +138,12 @@ public class CourseManagement {
         exporter.exportGraph(courseGraph, writer);
         return writer.toString();
     }
-    public void displayCurrentCourseGraph() {
-        System.out.println(displayCourseGraph(this.courseGraph));
+
+    public String displayCurrentCourseGraph() {
+        return displayCourseGraph(this.courseGraph);
     }
+
+
 
     public Course getCourse(Integer courseID) {
         return courseMap.get(courseID);

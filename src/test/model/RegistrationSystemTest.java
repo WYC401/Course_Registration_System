@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RegistrationSystemTest {
     private RegistrationSystem registrationSystem;
@@ -30,8 +29,12 @@ public class RegistrationSystemTest {
         registrationSystem.loadCourseManagement(CM);
         registrationSystem.addCourseAvailable(cpsc213ThisSemester);
         registrationSystem.addCourseAvailable(cpsc313ThisSemester);
+        registrationSystem.addCourseAvailable(cpsc110ThisSemester);
 
         registrationSystem.addStudent(Arrays.asList("yicheng2021","wycwyc"),yicheng);
+        assertEquals(yicheng, registrationSystem.searchStudent(Arrays.asList("yicheng2021","wycwyc")));
+        assertNull(registrationSystem.searchStudent(Arrays.asList("wyc98","wycwyc")));
+        assertNull(registrationSystem.searchStudent(Arrays.asList("yicheng2021","wyc")));
         registrationSystem.addStudent(Arrays.asList("chenyang2018","lcylcy"),chenyang);
         registrationSystem.addStudent(Arrays.asList("richard2019","yzhyzh"),richard);
         registrationSystem.addStudent(Arrays.asList("jintong2021","yjtyjt"),jintong);
@@ -47,6 +50,15 @@ public class RegistrationSystemTest {
         richard.addTakenCourse(cpsc110PreviousSemester);
         richard.addTakenCourse(cpsc213PreviousSemester);
         richard.addTakenCourse(cpsc221PreviousSemester);
+        assertTrue(registrationSystem.containCourses(213));
+        assertFalse(registrationSystem.containCourses(210));
+        assertFalse(registrationSystem.containCourses(221));
+        assertTrue(registrationSystem.containCourses(110));
+        assertTrue(registrationSystem.containCourses(313));
+        assertEquals(cpsc213ThisSemester, registrationSystem.getCourseFromID(213));
+        assertEquals(cpsc313ThisSemester, registrationSystem.getCourseFromID(313));
+        assertEquals(cpsc110ThisSemester, registrationSystem.getCourseFromID(110));
+        assertNull(registrationSystem.getCourseFromID(210));
     }
     private void initialCourseGraph() {
         CM = new CourseManagement();
