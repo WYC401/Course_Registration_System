@@ -13,7 +13,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" scope="TEST">
+    <orderEntry type="module-library" exported="" scope="TEST">
       <library name="JUnit5.4">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/junit-jupiter-5.4.2.jar!/" />
@@ -29,8 +29,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="jgrapht.core" level="project" />
-    <orderEntry type="library" name="jgrapht.opt" level="project" />
-    <orderEntry type="library" name="jgrapht.io" level="project" />
+    <orderEntry type="library" exported="" name="jgrapht.core" level="project" />
+    <orderEntry type="library" exported="" name="jgrapht.io" level="project" />
+    <orderEntry type="library" exported="" name="jgrapht.opt" level="project" />
   </component>
 </module>
