@@ -30,6 +30,7 @@ public class CourseManagementTest {
         assertTrue(CM.setPrerequisites(cpsc313, cpsc213));
         assertTrue(CM.setPrerequisites(cpsc313, cpsc221));
         assertFalse(CM.setPrerequisites(cpsc406, cpsc313));
+        assertFalse(CM.setPrerequisites(cpsc313, cpsc406));
 
 
     }
@@ -50,7 +51,7 @@ public class CourseManagementTest {
     }
 
     @Test
-    public void TestSetPrerequisites() {
+    public void TestSReturnPrerequisites() {
         Set<Integer> tempIDset = new HashSet<>();
         tempIDset.add(213);
         tempIDset.add(221);

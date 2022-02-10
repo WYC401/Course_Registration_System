@@ -55,6 +55,8 @@ class StudentTest {
         studentTest.registerCourse(cpsc213ThisSemester);
         assertTrue(studentTest.isAlreadyRegistered(cpsc213ThisSemester));
         assertFalse(studentTest.canBeRegistered(cpsc213ThisSemester));
+        studentTest.registerCourse(cpsc213ThisSemester);
+        studentTest.registerCourse(cpsc110ThisSemester);
         Set<Integer> temp = new HashSet<>();
         temp.add(213);
         assertEquals(temp, studentTest.getAlreadyRegisteredID());

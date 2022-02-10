@@ -56,10 +56,6 @@ public class RegistrationSystem {
         return false;
     }
 
-    // EFFECT: return/display the information of the course
-    public void searchCourseInformation(CourseOfferedBySemester course) {
-
-    }
 
     // MODIFIERS: this
     // EFFECT: add one course available for this semester into the system

@@ -36,6 +36,11 @@ public class CourseOfferedBySemesterTest {
         assertTrue(course.setSeatsTotal(10));
         assertEquals(8, course.getSeatsRemaining());
         assertEquals(10, course.getSeatsTotal());
+        course.setSeatsTotal(2);
+        course.setSeatsRemaining(0);
+        assertTrue(course.setSeatsTotal(2));
+        assertEquals(0, course.getSeatsRemaining());
+        assertEquals(2, course.getSeatsTotal());
     }
 
     @Test
