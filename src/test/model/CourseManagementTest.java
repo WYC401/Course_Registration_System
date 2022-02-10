@@ -69,6 +69,15 @@ public class CourseManagementTest {
     }
 
     @Test
+    public void TestReturnAllPrerequisites() {
+        Set<Integer> tempIDSet = new HashSet<>();
+        tempIDSet.add(213);
+        tempIDSet.add(221);
+        assertEquals(tempIDSet, CM.returnPrerequisitesID(313));
+        assertNull(CM.returnPrerequisitesID(406));
+    }
+
+    @Test
     public void TestDeleteCourse() {
         assertFalse(CM.deleteCourse(cpsc406));
         assertTrue(CM.deleteCourse(cpsc313));
