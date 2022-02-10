@@ -3,7 +3,6 @@ package ui;
 import model.*;
 
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
 

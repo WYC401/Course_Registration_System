@@ -1,10 +1,9 @@
 package model;
 import org.jgrapht.*;
-import org.jgrapht.alg.shortestpath.AllDirectedPaths;
 import org.jgrapht.graph.*;
 import org.jgrapht.nio.*;
 import org.jgrapht.nio.dot.DOTExporter;
-import org.jgrapht.traverse.DepthFirstIterator;
+
 /*
 This is CourseManagement System that store all the courses and their relationships across all the faculties.
 it should have the following functionalities:
