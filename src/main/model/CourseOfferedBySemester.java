@@ -3,6 +3,10 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+This class extends course to give specific information about courses in each semester, which will include interaction
+with students who take or took this courses.
+ */
 public class CourseOfferedBySemester extends Course {
     private String semester;
     private int seatsRemaining;
@@ -10,6 +14,7 @@ public class CourseOfferedBySemester extends Course {
     private int grade;
     private ArrayList<Student> studentsRegistered;
 
+    //EFFECT: construct a course object in specific semester
     public CourseOfferedBySemester(String courseName, int courseID, String syllabus, String instructor,
                                    String semester, int seatsTotal, int grade) {
 
@@ -24,7 +29,7 @@ public class CourseOfferedBySemester extends Course {
 
     // MODIFIERS: this
     // EFFECT: If the input number is greater than people already enrolled, the input is set to be total seats and seats
-    // remaining change accordingly. If not, return false.
+    //          remaining change accordingly. If not, return false.
     public boolean setSeatsTotal(int numSeats) {
         int numRegistered = getSeatsTotal() - getSeatsRemaining();
         if ((numSeats > getSeatsTotal() - getSeatsRemaining()) || (numSeats == getSeatsTotal() - getSeatsRemaining())) {
@@ -35,6 +40,7 @@ public class CourseOfferedBySemester extends Course {
         return false;
     }
 
+    //EFFECT: return true if there are remaining seats
     public boolean isFull() {
         if (seatsRemaining == 0) {
             return true;
@@ -42,7 +48,8 @@ public class CourseOfferedBySemester extends Course {
         return false;
     }
 
-
+    //MODIFIERS:this
+    //EFFECT: add one student to course and the remaining seats decrease by 1
     public void addOneStudent(Student student) {
         if (!isFull()) {
             seatsRemaining--;
@@ -50,6 +57,7 @@ public class CourseOfferedBySemester extends Course {
         }
     }
 
+    //EFFECT: return true if the student has been added into course
     public boolean containsStudent(Student student) {
         if (studentsRegistered.contains(student)) {
             return true;
@@ -57,6 +65,8 @@ public class CourseOfferedBySemester extends Course {
         return false;
     }
 
+    //MODIFIERS: this
+    //EFFECT: remove students from registration set of the course and the remaining seats increment by 1
     public void removeStudent(Student student) {
         if (containsStudent(student)) {
             studentsRegistered.remove(student);
@@ -87,6 +97,7 @@ public class CourseOfferedBySemester extends Course {
         this.seatsRemaining = num;
     }
 
+    //EFFECT: return the list of students who registered this course
     public List<Student> getStudentRegistered() {
         return studentsRegistered;
     }

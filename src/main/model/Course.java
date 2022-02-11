@@ -1,15 +1,15 @@
 package model;
 
 /*
-This is representation of a course, including name of course, courseID, syllabus, instructor and section
+This is representation of a course, including name of course, courseID, syllabus, instructor
  */
 public class Course {
-    // EFFECT: create a new course object
     private String courseName;
     private Integer courseID;
     private String syllabus;
     private String instructor;
 
+    //EFFECT: create a new course object
     public Course(String courseName, int courseID, String syllabus, String instructor) {
         this.courseName = courseName;
         this.courseID = courseID;

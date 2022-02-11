@@ -3,13 +3,19 @@ package ui;
 import model.*;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
 
+/*
+This is a registration APP you can play with, incorporating the functionalities like searching, adding, dropping
+and viewing courses
+ */
 public class RegistrationApp {
     private final RegistrationSystem registrationSystemCore;
     private Scanner scanner;
 
+    //EFFECT: create a registration app
     public RegistrationApp() {
         registrationSystemCore = new RegistrationSystem();
         initi();
@@ -36,6 +42,8 @@ public class RegistrationApp {
 
     }
 
+    //MODIFIERS: this
+    //EFFECT: display the registration page if user choose to go to
     private void goToRegisterPage(Student student) {
         String temp = "";
         do {
@@ -62,6 +70,7 @@ public class RegistrationApp {
         } while (temp.equals("c"));
     }
 
+    //EFFECT: display the menu page in search, view, drop, register mode and return the user's decision of that page
     private String displaySubPageInformation(String mode) {
         System.out.println("Continue to register or Back to Main Menu");
         System.out.println("\tc-->continue to " + mode);
@@ -69,6 +78,8 @@ public class RegistrationApp {
         return scanner.next().toLowerCase();
     }
 
+    //MODIFIERS: this
+    //EFFECT: display the search page if user choose to go to
     private void goToSearchPage(Student student) {
         String temp = "";
         do {
@@ -93,6 +104,8 @@ public class RegistrationApp {
         } while (temp.equals("c"));
     }
 
+    //MODIFIERS: this
+    //EFFECT: display the drop page if user choose to go to
     private void goToDropPage(Student student) {
         String temp;
         do {
@@ -115,6 +128,8 @@ public class RegistrationApp {
         } while (temp.equals("c"));
     }
 
+    //MODIFIERS: this
+    //EFFECT: display the view page if user choose to go to
     private void goToViewPage(Student student) {
         String temp;
         do {
@@ -125,16 +140,20 @@ public class RegistrationApp {
         } while (temp.equals("c"));
     }
 
+    //EFFECT: deal with choice user pressed in. if it is not included in the menu, repeat the menu information again
+    //          until user press one of the keys in menu
     private String dealWithChoice() {
-        String choice = "";
+        String choice = scanner.next().toLowerCase();
         while ((!choice.equals("q")) && (!choice.equals("d")) && (!choice.equals("r")) && (!choice.equals("s"))
                 && (!choice.equals("v"))) {
+            displayMenu();
             choice = scanner.next();
             choice = choice.toLowerCase();
         }
         return choice;
     }
 
+    //EFFECT: check in users with right names
     private Student login() {
         System.out.println("Welcome to course registration system");
         String usernameGot = "";
@@ -161,6 +180,7 @@ public class RegistrationApp {
         }
     }
 
+    //EFFECT: print out menu information
     private void displayMenu() {
         System.out.println("Welcome back!");
         System.out.println("Select From: ");
@@ -171,6 +191,8 @@ public class RegistrationApp {
         System.out.println("\tv-->view all registered courses");
     }
 
+    //MODIFIERS: this
+    //EFFECT: initialize the registration system
     private void initi() {
         CourseManagement courseManagement = new CourseManagement();
         Course cpsc213 = new Course("Computer System", 213, "This is a syllabus", "Meghan");
@@ -196,6 +218,8 @@ public class RegistrationApp {
 
     }
 
+    //MODIFIERS: this
+    //EFFECT: add students into registration system
     private void addStudent(RegistrationSystem registrationSystemCore) {
         Student yicheng = new Student("Yicheng Wang", 1, "Statistics");
         Student chenyang = new Student("Chenyang Li", 2, "History");
@@ -218,6 +242,8 @@ public class RegistrationApp {
         richard.addTakenCourse(cpsc221PreviousSemester);
     }
 
+    //MODIFIERS: this
+    //EFFECT: add courses into the system
     private void addCourseThisSemester(RegistrationSystem registrationSystemCore) {
         CourseOfferedBySemester cpsc213ThisSemester = new CourseOfferedBySemester("ComputerSystem", 213,
                 "This is a syllabus", "Meghan", "2021W1", 2, -1);

@@ -1,7 +1,7 @@
 package model;
 /*
 The student class identifies student with id, including the following information: major, name
-courses she/he have already taken and the corresponding grades
+courses she/he have already taken and course already registered
  */
 
 
@@ -50,6 +50,9 @@ public class Student {
         return false;
     }
 
+    //EFFECT: verify student's access to register the input by their courses taken in previous semesters and courses
+    //        registered in this semester. return true if they did not take the course and
+    //        have not registered this course
     public boolean canBeRegistered(CourseOfferedBySemester course) {
         if ((!isAlreadyRegistered(course)) && (!isAlreadyTaken(course))) {
             return true;
@@ -58,7 +61,7 @@ public class Student {
     }
 
     // MODIFIES: this
-    // EFFECT: register one course
+    // EFFECT: register one course if they did not take the course and have not registered this course
     public void registerCourse(CourseOfferedBySemester course) {
         if ((!isAlreadyRegistered(course)) && (!isAlreadyTaken(course))) {
             courseSetToTake.put(course.getCourseID(), course);
@@ -66,6 +69,7 @@ public class Student {
 
     }
 
+    //EFFECT: return true if student have already taken this course in previous semesters
     public boolean isAlreadyTaken(Course course) {
         if (courseSetAlreadyTaken.containsKey(course.getCourseID())) {
             return true;
@@ -74,6 +78,7 @@ public class Student {
         }
     }
 
+    //EFFECT: return true if students have registered this course in this semester
     public boolean isAlreadyRegistered(Course course) {
         if (courseSetToTake.containsKey(course.getCourseID())) {
             return true;
@@ -83,7 +88,7 @@ public class Student {
     }
 
     // MODIFIES: this
-    // EFFECT: drop the course registered
+    // EFFECT: drop the course registered and return true if the course is not registered
     public boolean dropCourse(CourseOfferedBySemester course) {
         if (isAlreadyRegistered(course)) {
             courseSetToTake.remove(course);
@@ -93,7 +98,7 @@ public class Student {
     }
 
 
-    //EFFECT: return all the courses which were taken in previous semester
+    //EFFECT: return all the courses in the format of set which were taken in previous semester
     public Set<CourseOfferedBySemester> getTakenCourses() {
         Collection<CourseOfferedBySemester> tempCollection = courseSetAlreadyTaken.values();
         HashSet<CourseOfferedBySemester> tempSet = new HashSet<>();
@@ -103,10 +108,12 @@ public class Student {
         return tempSet;
     }
 
+    //EFFECT: return all the courses ID which are registered this semester
     public Set<Integer> getAlreadyRegisteredID() {
         return courseSetToTake.keySet();
     }
 
+    //EFFECT: return all the courses ID which were taken before
     public Set<Integer> getAlreadyTakenCourseID() {
         return courseSetAlreadyTaken.keySet();
     }

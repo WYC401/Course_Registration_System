@@ -6,7 +6,7 @@ import org.jgrapht.nio.*;
 import org.jgrapht.nio.dot.DOTExporter;
 
 /*
-This is CourseManagement System that store all the courses and their relationships across all the faculties.
+This is CourseManagement System that stores all the courses and their relationships across all the faculties.
 it should have the following functionalities:
 (1) add a new course to the system
 (2) change the prerequisite relation
@@ -24,6 +24,8 @@ public class CourseManagement {
     private Graph<Integer, DefaultEdge> courseGraph;
     private HashMap<Integer, Course> courseMap;
 
+    //EFFECT: courseMap used to link the ID with course are created and the courses are stored in courseGraph for their
+    //      relationship of prerequisites
     public CourseManagement() {
         courseGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
         courseMap = new HashMap<>();
@@ -36,12 +38,11 @@ public class CourseManagement {
         courseMap.put(course.getCourseID(), course);
     }
 
-    // REQUIRES: two List-like object to indicate those courses being of its prerequisites and taking courses
+    // REQUIRES: two course objects to indicate those courses being of its prerequisites and taking courses
     //           as prerequisites
     // MODIFIES: this
     // EFFECT: add a course together with its prerequisites and the courses taking it as prerequisites.
-    //          success in added will return ture
-
+    //          success in adding will return ture
     public boolean setPrerequisites(Course course, Course prerequisite) {
         if (getAllCoursesID().contains(prerequisite.getCourseID())
                 && getAllCoursesID().contains(course.getCourseID())) {
@@ -66,7 +67,7 @@ public class CourseManagement {
     }
 
     // REQUIRES: the course name (id) is valid
-    // EFFECT: return a list of prerequisites for input course
+    // EFFECT: return a set of prerequisites for input course
     public Set<Integer> returnPrerequisitesID(Integer courseID) {
         if (!containCourse(courseID)) {
             return null;
@@ -79,8 +80,8 @@ public class CourseManagement {
         return prerequisitesSet;
     }
 
-    // REQUIRES: the course name is valid
-    // EFFECT: return a list of all the courses that must be taken before registration of input course
+    // REQUIRES: the course ID is valid
+    // EFFECT: return a graph of all the courses that must be taken before registration of input course
 
     @SuppressWarnings("methodlength")
     public Graph<Integer, DefaultEdge> returnAllNeededCoursesID(Set<Integer> courseAlreadyTaken, Integer courseID) {
@@ -120,14 +121,17 @@ public class CourseManagement {
 
     }
 
+    //EFFECT: return all the coursesID in the management system
     public Set<Integer> getAllCoursesID() {
         return courseGraph.vertexSet();
     }
 
+    //EFFECT: return true if a course corresponding to courseID is in course set of management system.
     private boolean containCourse(Integer courseID) {
         return getAllCoursesID().contains(courseID);
     }
 
+    //EFFECT: return a string that stores course given
     public String displayCourseGraph(Graph<Integer, DefaultEdge> courseGraph) {
         DOTExporter<Integer, DefaultEdge> exporter =
                 new DOTExporter<>(v -> String.valueOf(v));
@@ -141,15 +145,17 @@ public class CourseManagement {
         return writer.toString();
     }
 
+    //EFFECT: return a string that stores all the course relationship in the course management system
     public String displayCurrentCourseGraph() {
         return displayCourseGraph(this.courseGraph);
     }
 
-
+    //EFFECT: return the corresponding course object if a courseID is given
     public Course getCourse(Integer courseID) {
         return courseMap.get(courseID);
     }
 
+    //EFFECT: return the courseID if a course is given
     public Integer getCourseID(Course course) {
         Set<Integer> idSet = courseMap.keySet();
         for (Integer i : idSet) {

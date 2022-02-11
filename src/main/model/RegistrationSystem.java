@@ -13,6 +13,7 @@ public class RegistrationSystem {
     private CourseManagement courseManagementSystem;
     private HashMap<List<String>, Student> studentMapByUsername;
 
+    //EFFECT: create registration system that configures students, course set and course management system
     public RegistrationSystem() {
         courseSetThisSemester = new HashMap<Integer, CourseOfferedBySemester>();
         courseManagementSystem = new CourseManagement();
@@ -26,10 +27,10 @@ public class RegistrationSystem {
     }
 
     // MODIFIES: this
-    // EFFECT: If the course has not full and student satisfies all the prerequisites
+    // EFFECT: If the course has not full, student satisfies all the prerequisites and student did not take or have not
+    //          registered this course:
     //          (1)student gets into the list of enrollment list of input course
-    //          (2)the number of course vacancy is deducted by 1
-    //          (3)the courses will be added into student's registered list
+    //          (2)the courses will be added into student's registered list
     //          then return true
     //          else, false;
     public boolean register(CourseOfferedBySemester course, Student student) {
@@ -43,10 +44,10 @@ public class RegistrationSystem {
     }
 
     // MODIFIES: this
-    // EFFECT: if the student has registered this course,
+    // EFFECT: if the student has registered this course and courses contains this student,
     //          (1)student gets out the list of enrollment list of input course
-    //          (2)the number of course vacancy is increased by 1
-    //          (3)the courses will be removed into student's registered list
+    //          (2)the courses will be removed into student's registered list
+    //          else return false
     public boolean drop(CourseOfferedBySemester course, Student student) {
         if (course.containsStudent(student) && student.isAlreadyRegistered(course)) {
             course.removeStudent(student);
@@ -69,6 +70,8 @@ public class RegistrationSystem {
         studentMapByUsername.put(usernameAndPassword, student);
     }
 
+    //EFFECT: search student by their username and password in this system. if the two matches, a student object will
+    //          be returned
     public Student searchStudent(List<String> usernameAndPassword) {
         if (studentMapByUsername.containsKey(usernameAndPassword)) {
             return studentMapByUsername.get(usernameAndPassword);
@@ -76,10 +79,12 @@ public class RegistrationSystem {
         return null;
     }
 
+    //EFFECT: return true if the courseSet in this registration system contains this course(by ID)
     public boolean containCourses(Integer courseID) {
         return courseSetThisSemester.keySet().contains(courseID);
     }
 
+    //EFFECT: return the course by its ID if it is in the system
     public CourseOfferedBySemester getCourseFromID(Integer courseID) {
         if (containCourses(courseID)) {
             return courseSetThisSemester.get(courseID);
@@ -88,19 +93,22 @@ public class RegistrationSystem {
 
     }
 
-
+    //EFFECT: return true if the student satisfies the prerequisites of course else return false
     private boolean hasPrerequisites(Course course, Student student) {
         if (student.getAlreadyTakenCourseID()
-                        .containsAll(courseManagementSystem.returnPrerequisitesID(course.getCourseID()))) {
+                .containsAll(courseManagementSystem.returnPrerequisitesID(course.getCourseID()))) {
             return true;
         }
         return false;
     }
 
+    //EFFECT: return true if the class is full
     public boolean isCourseFull(CourseOfferedBySemester course, Student student) {
         return course.isFull();
     }
 
+    //EFFECT: return true if the student did not register previously or have not registered this course in the current
+    //          semester
     public boolean canRegisterThisCourse(CourseOfferedBySemester course, Student student) {
         return student.canBeRegistered(course);
     }
