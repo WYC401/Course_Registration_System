@@ -17,5 +17,5 @@ showing students learning roadmap。
 ## User story
 - As a user, I want to be able to register a new course which I have not taken.
 - As a user, I want to be able to search courses I want to register.
-- As a user, I want to be able to drop the courses I do not like
+- As a user, I want to be able to drop the courses I do not like.
 - As a user, I want to be able to view all the courses I have registered.
