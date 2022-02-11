@@ -1,10 +1,20 @@
-# My Personal Project
+# Course Registration System
 
-## A subtitle
+## About
+This is course registration system which can allow students to perform following things:
+- register courses
+- drop courses already registered
+- search courses 
+- view all the courses registered
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
+## Who will Use it?
+Students with valid username and password can register into this system.
 
-An example of text with **bold** and *italic* fonts.  
+## What is interesting? 
+The system is developed by *graph data structure* and I am thinking about adding more functionalities like showing students learning roadmap.
+
+## User story
+- As a user, I want to be able to register a new course which I have not taken.
+- As a user, I want to be able to search courses I want to register.
+- As a user, I want to be able to drop the courses I do not like
+- As a user, I want to be able to view all the courses I have registered.
