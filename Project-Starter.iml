@@ -32,5 +32,6 @@
     <orderEntry type="library" exported="" name="jgrapht.core" level="project" />
     <orderEntry type="library" exported="" name="jgrapht.io" level="project" />
     <orderEntry type="library" exported="" name="jgrapht.opt" level="project" />
+    <orderEntry type="library" name="json-20210307" level="project" />
   </component>
 </module>
