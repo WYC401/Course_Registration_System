@@ -1,0 +1,63 @@
+{
+    "courseGraph": {
+        "creator": "JGraphT JSON Exporter",
+        "nodes": [
+            {"id": "1"},
+            {"id": "2"},
+            {"id": "3"},
+            {"id": "4"},
+            {"id": "5"}
+        ],
+        "edges": [
+            {
+                "source": "2",
+                "target": "4"
+            },
+            {
+                "source": "1",
+                "target": "2"
+            },
+            {
+                "source": "3",
+                "target": "1"
+            },
+            {
+                "source": "3",
+                "target": "5"
+            }
+        ],
+        "version": "1"
+    },
+    "courseMap": {
+        "110": {
+            "syllabus": "This is a syllabus",
+            "courseName": "ComputerSystem",
+            "instructor": "Meghan",
+            "courseID": 110
+        },
+        "210": {
+            "syllabus": "This is a syllabus",
+            "courseName": "ComputerSystem",
+            "instructor": "Meghan",
+            "courseID": 210
+        },
+        "221": {
+            "syllabus": "This is a syllabus",
+            "courseName": "ComputerSystem",
+            "instructor": "Meghan",
+            "courseID": 221
+        },
+        "213": {
+            "syllabus": "This is a syllabus",
+            "courseName": "ComputerSystem",
+            "instructor": "Meghan",
+            "courseID": 213
+        },
+        "313": {
+            "syllabus": "This is a syllabus",
+            "courseName": "ComputerSystem",
+            "instructor": "Meghan",
+            "courseID": 313
+        }
+    }
+}

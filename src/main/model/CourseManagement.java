@@ -1,9 +1,16 @@
 package model;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.jgrapht.*;
 import org.jgrapht.graph.*;
 import org.jgrapht.nio.*;
 import org.jgrapht.nio.dot.DOTExporter;
+import org.jgrapht.nio.json.JSONExporter;
+import org.json.JSONObject;
+import persistence.Writable;
+import sun.misc.IOUtils;
+import sun.misc.IOUtils.*;
+import sun.nio.ch.IOUtil;
 
 /*
 This is CourseManagement System that stores all the courses and their relationships across all the faculties.
@@ -16,11 +23,14 @@ it should have the following functionalities:
 (6) find all the courses needed to be taken for specific course
  */
 
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Stream;
 
-public class CourseManagement {
+public class CourseManagement implements Writable {
     private Graph<Integer, DefaultEdge> courseGraph;
     private HashMap<Integer, Course> courseMap;
 
@@ -164,6 +174,43 @@ public class CourseManagement {
             }
         }
         return null;
+    }
+
+    @Override
+    public JSONObject toJson() throws IOException {
+        JSONObject json = new JSONObject();
+        json.put("courseMap", courseMapToJson());
+        json.put("courseGraph", courseGraphToJson());
+        return json;
+    }
+
+    public JSONObject courseMapToJson() {
+        JSONObject json = new JSONObject();
+        for(Integer i: courseMap.keySet()) {
+            json.put(String.valueOf(i), courseMap.get(i).toJson());
+        }
+        return json;
+    }
+
+    public JSONObject courseGraphToJson() throws IOException {
+        JSONObject json = new JSONObject();
+        JSONExporter<Integer, DefaultEdge> exporter = new JSONExporter<>(v -> String.valueOf(v));
+        File dataDirectory = new File("./data");
+        dataDirectory.mkdir();
+        File tempFile = new File("./data/temp.json");
+        PrintWriter writer = new PrintWriter(tempFile);
+        exporter.exportGraph(courseGraph, writer);
+
+        if(tempFile.exists()) {
+            StringBuilder contentBuilder = new StringBuilder();
+            try(Stream<String> stream = Files.lines(Paths.get("./data/temp.json"), StandardCharsets.UTF_8)) {
+                stream.forEach(s -> contentBuilder.append(s));
+                return new JSONObject(contentBuilder.toString());
+            }
+        } else {
+            throw new FileNotFoundException();
+        }
+
     }
 
 }

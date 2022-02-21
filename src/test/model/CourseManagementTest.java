@@ -3,9 +3,11 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Set;
-
+import java.io.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CourseManagementTest {
@@ -18,7 +20,7 @@ public class CourseManagementTest {
     static Course cpsc406 = new Course("ComputerSystem", 406, "This is a syllabus", "Meghan");
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws IOException {
         CM = new CourseManagement();
         CM.addCourses(cpsc213);
         CM.addCourses(cpsc210);
@@ -31,7 +33,9 @@ public class CourseManagementTest {
         assertTrue(CM.setPrerequisites(cpsc313, cpsc221));
         assertFalse(CM.setPrerequisites(cpsc406, cpsc313));
         assertFalse(CM.setPrerequisites(cpsc313, cpsc406));
-
+        PrintWriter writer = new PrintWriter(new File("./data/sample.json"));
+        writer.print(CM.toJson().toString(4));
+        writer.close();
 
     }
 

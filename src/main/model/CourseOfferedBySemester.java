@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,5 +104,26 @@ public class CourseOfferedBySemester extends Course {
     public List<Student> getStudentRegistered() {
         return studentsRegistered;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = super.toJson();
+        jsonObject.put("semester", getSemester());
+        jsonObject.put("seatsRemaining", getSeatsRemaining());
+        jsonObject.put("seatsTotal", getSeatsTotal());
+        jsonObject.put("grade", getGrade());
+        jsonObject.put("studentsRegistered", studentArrayToJson());
+        return jsonObject;
+
+    }
+
+    private JSONArray studentArrayToJson() {
+       JSONArray jsonArray = new JSONArray();
+       for(Student s: studentsRegistered) {
+           jsonArray.put(s.toJson());
+       }
+       return jsonArray;
+    }
+
 
 }

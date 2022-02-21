@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 /*
 This is representation of a course, including name of course, courseID, syllabus, instructor
  */
-public class Course {
+public class Course implements Writable {
     private String courseName;
     private Integer courseID;
     private String syllabus;
@@ -50,4 +53,13 @@ public class Course {
     }
 
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("courseName", courseName);
+        json.put("courseID", courseID);
+        json.put("syllabus", syllabus);
+        json.put("instructor", instructor);
+        return json;
+    }
 }

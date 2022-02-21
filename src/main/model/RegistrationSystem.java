@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
+import java.io.IOException;
 import java.util.*;
 
 /*
@@ -8,14 +12,14 @@ This is a class for course registration system. It should have such functionalit
 (2) a course registered can be dropped
 (3) all the information of a course can be searched and displayed
  */
-public class RegistrationSystem {
-    private HashMap<Integer, CourseOfferedBySemester> courseSetThisSemester;
+public class RegistrationSystem implements Writable {
+    private HashMap<Integer, CourseOfferedBySemester> courseMapThisSemester;
     private CourseManagement courseManagementSystem;
     private HashMap<List<String>, Student> studentMapByUsername;
 
     //EFFECT: create registration system that configures students, course set and course management system
     public RegistrationSystem() {
-        courseSetThisSemester = new HashMap<Integer, CourseOfferedBySemester>();
+        courseMapThisSemester = new HashMap<Integer, CourseOfferedBySemester>();
         courseManagementSystem = new CourseManagement();
         studentMapByUsername = new HashMap<>();
     }
@@ -61,7 +65,7 @@ public class RegistrationSystem {
     // MODIFIERS: this
     // EFFECT: add one course available for this semester into the system
     public boolean addCourseAvailable(CourseOfferedBySemester course) {
-        return Objects.isNull(courseSetThisSemester.put(course.getCourseID(), course));
+        return Objects.isNull(courseMapThisSemester.put(course.getCourseID(), course));
     }
 
     // MODIFIERS: this
@@ -81,13 +85,13 @@ public class RegistrationSystem {
 
     //EFFECT: return true if the courseSet in this registration system contains this course(by ID)
     public boolean containCourses(Integer courseID) {
-        return courseSetThisSemester.keySet().contains(courseID);
+        return courseMapThisSemester.keySet().contains(courseID);
     }
 
     //EFFECT: return the course by its ID if it is in the system
     public CourseOfferedBySemester getCourseFromID(Integer courseID) {
         if (containCourses(courseID)) {
-            return courseSetThisSemester.get(courseID);
+            return courseMapThisSemester.get(courseID);
         }
         return null;
 
@@ -113,4 +117,28 @@ public class RegistrationSystem {
         return student.canBeRegistered(course);
     }
 
+    @Override
+    public JSONObject toJson() throws IOException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseMapThisSemester",courseMapThisSemesterToJson());
+        jsonObject.put("studentMapByUsername", studentMapByUsernameToJson());
+        jsonObject.put("courseManagementSystem", courseManagementSystem.toJson());
+        return jsonObject;
+    }
+
+    private JSONObject studentMapByUsernameToJson() {
+        JSONObject jsonObject = new JSONObject();
+        for(List<String> ls: studentMapByUsername.keySet()) {
+            jsonObject.put(ls.get(0)+" "+ls.get(1), studentMapByUsername.get(ls).toJson());
+        }
+        return jsonObject;
+    }
+
+    private JSONObject courseMapThisSemesterToJson() {
+        JSONObject jsonObject = new JSONObject();
+        for(Integer i: courseMapThisSemester.keySet()) {
+            jsonObject.put(String.valueOf(i), courseMapThisSemester.get(i).toJson());
+        }
+        return jsonObject;
+    }
 }
