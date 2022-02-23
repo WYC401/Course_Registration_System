@@ -24,6 +24,14 @@ public class RegistrationSystem implements Writable {
         studentMapByUsername = new HashMap<>();
     }
 
+    public RegistrationSystem(HashMap<Integer, CourseOfferedBySemester> courseMapThisSemester,
+                              HashMap<List<String>, Student> studentMapByUsername,
+                              CourseManagement courseManagementSystem) {
+        this.courseManagementSystem = courseManagementSystem;
+        this.courseMapThisSemester = courseMapThisSemester;
+        this.studentMapByUsername = studentMapByUsername;
+    }
+
     // MODIFIERS : this
     // EFFECT: initialize course management system under the hood
     public void loadCourseManagement(CourseManagement courseManagementSystem) {

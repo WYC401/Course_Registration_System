@@ -127,25 +127,10 @@ public class Student implements Writable {
         jsonObject.put("name", getName());
         jsonObject.put("id", getId());
         jsonObject.put("major", getMajor());
-        jsonObject.put("courseMapAlreadyTaken", courseMapAlreadyTakenToJson());
-        jsonObject.put("courseMapToTake", courseMapToTakeToJson());
+        jsonObject.put("courseMapAlreadyTaken", courseMapAlreadyTaken.keySet().toString());
+        jsonObject.put("courseMapToTake", courseMapToTake.keySet().toString());
         return jsonObject;
     }
 
-    private JSONObject courseMapAlreadyTakenToJson() {
-        JSONObject jsonObject = new JSONObject();
-        for(Integer i: courseMapAlreadyTaken.keySet()) {
-            jsonObject.put(String.valueOf(i), courseMapAlreadyTaken.get(i).toJson());
-        }
-        return jsonObject;
-    }
-
-    private JSONObject courseMapToTakeToJson() {
-        JSONObject jsonObject = new JSONObject();
-        for(Integer i: courseMapToTake.keySet()) {
-            jsonObject.put(String.valueOf(i), courseMapToTake.get(i).toJson());
-        }
-        return jsonObject;
-    }
 
 }
