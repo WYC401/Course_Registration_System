@@ -259,10 +259,10 @@ public class RegistrationApp {
         CourseOfferedBySemester cpsc221PreviousSemester = new CourseOfferedBySemester(
                 "Basic Data Structure And Algorithm", 221,
                 "This is a syllabus", "Meghan", "2021W1", 2, 60);
-        yicheng.addTakenCourse(cpsc210PreviousSemester);
-        richard.addTakenCourse(cpsc110PreviousSemester);
-        richard.addTakenCourse(cpsc213PreviousSemester);
-        richard.addTakenCourse(cpsc221PreviousSemester);
+        yicheng.addTakenCourse(cpsc210PreviousSemester.getCourseID());
+        richard.addTakenCourse(cpsc110PreviousSemester.getCourseID());
+        richard.addTakenCourse(cpsc213PreviousSemester.getCourseID());
+        richard.addTakenCourse(cpsc221PreviousSemester.getCourseID());
     }
 
     //MODIFIERS: this

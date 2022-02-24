@@ -46,10 +46,10 @@ public class RegistrationSystemTest {
                 "This is a syllabus", "Meghan", "2021W1", 2, 60);
         CourseOfferedBySemester cpsc221PreviousSemester = new CourseOfferedBySemester("ComputerSystem", 221,
                 "This is a syllabus", "Meghan", "2021W1", 2, 60);
-        yicheng.addTakenCourse(cpsc210PreviousSemester);
-        richard.addTakenCourse(cpsc110PreviousSemester);
-        richard.addTakenCourse(cpsc213PreviousSemester);
-        richard.addTakenCourse(cpsc221PreviousSemester);
+        yicheng.addTakenCourse(cpsc210PreviousSemester.getCourseID());
+        richard.addTakenCourse(cpsc110PreviousSemester.getCourseID());
+        richard.addTakenCourse(cpsc213PreviousSemester.getCourseID());
+        richard.addTakenCourse(cpsc221PreviousSemester.getCourseID());
         assertTrue(registrationSystem.containCourses(213));
         assertFalse(registrationSystem.containCourses(210));
         assertFalse(registrationSystem.containCourses(221));

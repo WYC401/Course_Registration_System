@@ -2,13 +2,14 @@ package persistence;
 
 import model.CourseOfferedBySemester;
 import model.RegistrationSystem;
+import model.Student;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class JsonReader {
@@ -41,8 +42,40 @@ public class JsonReader {
         return new RegistrationSystem(parseCourseMap(jsonCourseMapThisSemester), parseStudentMapByUsername(jsonStudentMapByUsername),
                 parseCourseManagementSystem(jsonCourseManagementSystem));
     }
+    private HashMap<List<String>, Student> parseStudentMapByUsername(JSONObject jsonStudentMapByUsername) {
+        HashMap<List<String>, Student> sm = new HashMap<>();
+        for(String k: jsonStudentMapByUsername.keySet()) {
+            JSONObject jsonObject = jsonStudentMapByUsername.getJSONObject(k);
+            String[] usernameAndPassword = k.split(" ");
+            ArrayList<String> temp = new ArrayList<String>();
+            temp.add(usernameAndPassword[0]);
+            temp.add(usernameAndPassword[1]);
+            sm.put(temp, parseStudent(jsonObject));
+        }
+    }
+    private Student parseStudent(JSONObject jsonObject) {
+        String major = jsonObject.getString("major");
+        String name = jsonObject.getString("name");
+        Integer id = jsonObject.getInt("id");
+        Student student = new Student(name, id, major);
+        String tempCourseMapAlreadyTaken = jsonObject.getString("courseMapAlreadyTaken");
+        String[] temp = tempCourseMapAlreadyTaken.replace("[", "").replace("]","").split(", ");
+        for(String i : temp) {
+            student.addTakenCourse(Integer.valueOf(i))
+        }
 
-    private HashMap<Integer, CourseOfferedBySemester> parseCourseMap(JSONObject jsonCourseMapThisSemester) {
+
+
 
     }
+    private HashMap<Integer, CourseOfferedBySemester> parseCourseMap(JSONObject jsonCourseMapThisSemester) {
+        HashMap<Integer,CourseOfferedBySemester> hm = new HashMap<>();
+        for(String k: jsonCourseMapThisSemester.keySet()) {
+            JSONObject jsonObject = jsonCourseMapThisSemester.getJSONObject(k);
+            hm.put(Integer.valueOf(k), parseCourseThisSemester(jsonObject));
+        }
+        return hm;
+    }
+
+
 }

@@ -48,7 +48,7 @@ public class RegistrationSystem implements Writable {
     public boolean register(CourseOfferedBySemester course, Student student) {
         if (hasPrerequisites(course, student) && (canRegisterThisCourse(course, student))
                 && (!isCourseFull(course, student))) {
-            student.registerCourse(course);
+            student.registerCourse(course.getCourseID());
             course.addOneStudent(student);
             return true;
         }
@@ -61,9 +61,9 @@ public class RegistrationSystem implements Writable {
     //          (2)the courses will be removed into student's registered list
     //          else return false
     public boolean drop(CourseOfferedBySemester course, Student student) {
-        if (course.containsStudent(student) && student.isAlreadyRegistered(course)) {
+        if (course.containsStudent(student) && student.isAlreadyRegistered(course.getCourseID())) {
             course.removeStudent(student);
-            student.dropCourse(course);
+            student.dropCourse(course.getCourseID());
             return true;
         }
         return false;
@@ -122,7 +122,7 @@ public class RegistrationSystem implements Writable {
     //EFFECT: return true if the student did not register previously or have not registered this course in the current
     //          semester
     public boolean canRegisterThisCourse(CourseOfferedBySemester course, Student student) {
-        return student.canBeRegistered(course);
+        return student.canBeRegistered(course.getCourseID());
     }
 
     @Override

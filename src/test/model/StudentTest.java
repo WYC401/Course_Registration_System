@@ -32,13 +32,13 @@ class StudentTest {
 
     @Test
     public void addTakenCourseTest() {
-        assertFalse(studentTest.isAlreadyTaken(cpsc110ThisSemester));
-        assertTrue(studentTest.getTakenCourses().isEmpty());
-        assertFalse(studentTest.isAlreadyRegistered(cpsc110ThisSemester));
-        assertTrue(studentTest.addTakenCourse(cpsc110ThisSemester));
-        assertTrue(studentTest.getTakenCourses().contains(cpsc110ThisSemester));
-        assertTrue(studentTest.isAlreadyTaken(cpsc110ThisSemester));
-        assertFalse(studentTest.addTakenCourse(cpsc110ThisSemester));
+        assertFalse(studentTest.isAlreadyTaken(cpsc110ThisSemester.getCourseID()));
+        assertTrue(studentTest.getAlreadyTakenCourseID().isEmpty());
+        assertFalse(studentTest.isAlreadyRegistered(cpsc110ThisSemester.getCourseID()));
+        assertTrue(studentTest.addTakenCourse(cpsc110ThisSemester.getCourseID()));
+        assertTrue(studentTest.getAlreadyTakenCourseID().contains(cpsc110ThisSemester.getCourseID()));
+        assertTrue(studentTest.isAlreadyTaken(cpsc110ThisSemester.getCourseID()));
+        assertFalse(studentTest.addTakenCourse(cpsc110ThisSemester.getCourseID()));
         Set<Integer> temp = new HashSet<>();
         temp.add(110);
         assertEquals(temp, studentTest.getAlreadyTakenCourseID());
@@ -48,15 +48,15 @@ class StudentTest {
 
     @Test
     public void registerCourseTest() {
-        assertFalse(studentTest.isAlreadyTaken(cpsc110ThisSemester));
-        assertTrue(studentTest.addTakenCourse(cpsc110ThisSemester));
-        assertFalse(studentTest.canBeRegistered(cpsc110ThisSemester));
-        assertTrue(studentTest.canBeRegistered(cpsc213ThisSemester));
-        studentTest.registerCourse(cpsc213ThisSemester);
-        assertTrue(studentTest.isAlreadyRegistered(cpsc213ThisSemester));
-        assertFalse(studentTest.canBeRegistered(cpsc213ThisSemester));
-        studentTest.registerCourse(cpsc213ThisSemester);
-        studentTest.registerCourse(cpsc110ThisSemester);
+        assertFalse(studentTest.isAlreadyTaken(cpsc110ThisSemester.getCourseID()));
+        assertTrue(studentTest.addTakenCourse(cpsc110ThisSemester.getCourseID()));
+        assertFalse(studentTest.canBeRegistered(cpsc110ThisSemester.getCourseID()));
+        assertTrue(studentTest.canBeRegistered(cpsc213ThisSemester.getCourseID()));
+        studentTest.registerCourse(cpsc213ThisSemester.getCourseID());
+        assertTrue(studentTest.isAlreadyRegistered(cpsc213ThisSemester.getCourseID()));
+        assertFalse(studentTest.canBeRegistered(cpsc213ThisSemester.getCourseID()));
+        studentTest.registerCourse(cpsc213ThisSemester.getCourseID());
+        studentTest.registerCourse(cpsc110ThisSemester.getCourseID());
         Set<Integer> temp = new HashSet<>();
         temp.add(213);
         assertEquals(temp, studentTest.getAlreadyRegisteredID());
@@ -64,10 +64,10 @@ class StudentTest {
 
     @Test
     public void dropCourseTest() {
-        assertFalse(studentTest.dropCourse(cpsc313ThisSemester));
-        studentTest.registerCourse(cpsc213ThisSemester);
-        assertTrue(studentTest.dropCourse(cpsc213ThisSemester));
-        assertFalse(studentTest.isAlreadyRegistered(cpsc313ThisSemester));
+        assertFalse(studentTest.dropCourse(cpsc313ThisSemester.getCourseID()));
+        studentTest.registerCourse(cpsc213ThisSemester.getCourseID());
+        assertTrue(studentTest.dropCourse(cpsc213ThisSemester.getCourseID()));
+        assertFalse(studentTest.isAlreadyRegistered(cpsc313ThisSemester.getCourseID()));
     }
 
 }
