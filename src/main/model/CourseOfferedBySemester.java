@@ -54,10 +54,8 @@ public class CourseOfferedBySemester extends Course {
     //MODIFIERS:this
     //EFFECT: add one student to course and the remaining seats decrease by 1
     public void addOneStudent(Student student) {
-        if (!isFull()) {
-            seatsRemaining--;
-            studentsRegistered.add(student);
-        }
+        seatsRemaining--;
+        studentsRegistered.add(student);
     }
 
     //EFFECT: return true if the student has been added into course

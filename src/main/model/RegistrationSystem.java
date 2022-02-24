@@ -149,4 +149,5 @@ public class RegistrationSystem implements Writable {
         }
         return jsonObject;
     }
+
 }

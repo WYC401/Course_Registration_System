@@ -1,8 +1,7 @@
 package persistence;
 
-import model.CourseOfferedBySemester;
-import model.RegistrationSystem;
-import model.Student;
+import model.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -53,21 +52,31 @@ public class JsonReader {
             sm.put(temp, parseStudent(jsonObject));
         }
     }
+
     private Student parseStudent(JSONObject jsonObject) {
         String major = jsonObject.getString("major");
         String name = jsonObject.getString("name");
         Integer id = jsonObject.getInt("id");
         Student student = new Student(name, id, major);
         String tempCourseMapAlreadyTaken = jsonObject.getString("courseMapAlreadyTaken");
-        String[] temp = tempCourseMapAlreadyTaken.replace("[", "").replace("]","").split(", ");
-        for(String i : temp) {
+        String[] temp1 = tempCourseMapAlreadyTaken.replace("[", "").replace("]","").split(", ");
+        for(String i : temp1) {
+            if(i.length()==0) {
+                break;
+            }
             student.addTakenCourse(Integer.valueOf(i))
         }
-
-
-
-
+        String tempCourseMapToTake = jsonObject.getString("courseMapToTake");
+        String[] temp2 = tempCourseMapToTake.replace("[","").replace("]","").split(", ");
+        for(String i : temp2) {
+            if(i.length()==0) {
+                break;
+            }
+            student.registerCourse(Integer.valueOf(i));
+        }
+        return student;
     }
+
     private HashMap<Integer, CourseOfferedBySemester> parseCourseMap(JSONObject jsonCourseMapThisSemester) {
         HashMap<Integer,CourseOfferedBySemester> hm = new HashMap<>();
         for(String k: jsonCourseMapThisSemester.keySet()) {
@@ -77,5 +86,56 @@ public class JsonReader {
         return hm;
     }
 
+    private CourseOfferedBySemester parseCourseThisSemester(JSONObject jsonObject){
+        String syllabus = jsonObject.getString("syllabus");
+        String courseName = jsonObject.getString("courseName");
+        String instructor = jsonObject.getString("instructor");
+        String semester = jsonObject.getString("semester");
+        Integer seatsRemaining = jsonObject.getInt("seatsRemaining");
+        Integer seatsTotal = jsonObject.getInt("seatsTotal");
+        Integer courseID = jsonObject.getInt("courseID");
+        Integer grade = jsonObject.getInt("grade");
+        CourseOfferedBySemester course = new CourseOfferedBySemester(courseName, courseID, syllabus, instructor, semester, seatsTotal, grade);
+        course.setSeatsRemaining(seatsRemaining);
+        JSONArray jsonArray = jsonObject.getJSONArray("studentsRegistered");
+        for(int i = 0; i < jsonArray.length(); i++) {
+            course.addOneStudent(parseStudent(jsonArray.getJSONObject(i)));
+        }
+        return course;
+    }
 
+    private CourseManagement parseCourseManagementSystem(JSONObject jsonObject) {
+        JSONObject jsonCourseGraph = jsonObject.getJSONObject("courseGraph");
+        JSONObject jsonCourseMap = jsonObject.getJSONObject("courseMap");
+        CourseManagement courseManagement = new CourseManagement();
+        parseRawCourseMap(courseManagement, jsonCourseGraph);
+        parseCourseGraph(courseManagement, jsonCourseMap);
+
+
+    }
+
+    private void parseCourseGraph(CourseManagement courseManagement, JSONObject jsonCourseMap) {
+        JSONArray nodesArray = jsonCourseMap.getJSONArray("nodes");
+        for(int i = 0; i < nodesArray.length(); i++) {
+            courseManagement.addCourses(courseManagement.getCourse(Integer.parseInt(nodesArray.getJSONObject(i).getString("id"))));
+        }
+        JSONArray edgeArray = jsonCourseMap.getJSONArray("edges");
+        for(int i = 0; i < edgeArray.length(); i++) {
+            int source = Integer.parseInt(edgeArray.getJSONObject(i).getString("source"));
+            int target = Integer.parseInt(edgeArray.getJSONObject(i).getString("target"));
+            courseManagement.setPrerequisites(courseManagement.getCourse(source), courseManagement.getCourse(target));
+        }
+    }
+    private void parseRawCourseMap(CourseManagement courseManagement, JSONObject jsonCourseMap)  {
+        for(String k: jsonCourseMap.keySet()) {
+            courseManagement.addCourses(parseCourse(jsonCourseMap.getJSONObject(k)));
+        }
+    }
+    private Course parseCourse(JSONObject jsonObject) {
+        String syllabus = jsonObject.getString("syllabus");
+        String courseName = jsonObject.getString("courseName");
+        String instructor = jsonObject.getString("instructor");
+        int courseID = jsonObject.getInt("courseID");
+        return new Course(courseName, courseID, syllabus, instructor);
+    }
 }
