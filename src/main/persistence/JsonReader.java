@@ -51,6 +51,7 @@ public class JsonReader {
             temp.add(usernameAndPassword[1]);
             sm.put(temp, parseStudent(jsonObject));
         }
+        return sm;
     }
 
     private Student parseStudent(JSONObject jsonObject) {
@@ -64,7 +65,7 @@ public class JsonReader {
             if(i.length()==0) {
                 break;
             }
-            student.addTakenCourse(Integer.valueOf(i))
+            student.addTakenCourse(Integer.valueOf(i));
         }
         String tempCourseMapToTake = jsonObject.getString("courseMapToTake");
         String[] temp2 = tempCourseMapToTake.replace("[","").replace("]","").split(", ");
@@ -96,11 +97,13 @@ public class JsonReader {
         Integer courseID = jsonObject.getInt("courseID");
         Integer grade = jsonObject.getInt("grade");
         CourseOfferedBySemester course = new CourseOfferedBySemester(courseName, courseID, syllabus, instructor, semester, seatsTotal, grade);
-        course.setSeatsRemaining(seatsRemaining);
+
         JSONArray jsonArray = jsonObject.getJSONArray("studentsRegistered");
         for(int i = 0; i < jsonArray.length(); i++) {
+            course.setSeatsRemaining(seatsTotal);
             course.addOneStudent(parseStudent(jsonArray.getJSONObject(i)));
         }
+        course.setSeatsRemaining(seatsRemaining);
         return course;
     }
 
@@ -108,9 +111,9 @@ public class JsonReader {
         JSONObject jsonCourseGraph = jsonObject.getJSONObject("courseGraph");
         JSONObject jsonCourseMap = jsonObject.getJSONObject("courseMap");
         CourseManagement courseManagement = new CourseManagement();
-        parseRawCourseMap(courseManagement, jsonCourseGraph);
-        parseCourseGraph(courseManagement, jsonCourseMap);
-
+        parseRawCourseMap(courseManagement, jsonCourseMap);
+        parseCourseGraph(courseManagement, jsonCourseGraph);
+        return courseManagement;
 
     }
 

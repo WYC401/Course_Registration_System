@@ -78,11 +78,11 @@
         "courseGraph": {
             "creator": "JGraphT JSON Exporter",
             "nodes": [
-                {"id": "213"},
-                {"id": "210"},
-                {"id": "313"},
                 {"id": "110"},
-                {"id": "221"}
+                {"id": "210"},
+                {"id": "221"},
+                {"id": "213"},
+                {"id": "313"}
             ],
             "edges": [
                 {

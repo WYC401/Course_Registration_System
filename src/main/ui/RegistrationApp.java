@@ -1,7 +1,7 @@
 package ui;
 
 import model.*;
-import persistence.JsonWriter;
+import persistence.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,15 +15,17 @@ This is a registration APP you can play with, incorporating the functionalities 
 and viewing courses
  */
 public class RegistrationApp {
-    private final RegistrationSystem registrationSystemCore;
+    private RegistrationSystem registrationSystemCore;
     private Scanner scanner;
     private static final String CORE_PATH = "./data/registrationSystemCore.json";
     private JsonWriter writer;
+    private JsonReader reader;
 
     //EFFECT: create a registration app
     public RegistrationApp() {
         registrationSystemCore = new RegistrationSystem();
         writer = new JsonWriter(CORE_PATH);
+        reader = new JsonReader(CORE_PATH);
         initi();
         Student studentUsingSystem = login();
         if (Objects.isNull(studentUsingSystem)) {
@@ -43,6 +45,8 @@ public class RegistrationApp {
                 goToSearchPage(studentUsingSystem);
             } else if (choice.equals("p")) {
                 saveFile();
+            } else if (choice.equals("l")) {
+                loadFile();
             }
             else {
                 goToViewPage(studentUsingSystem);
@@ -62,6 +66,16 @@ public class RegistrationApp {
         }
         catch(IOException e) {
             System.out.println("No directory named \"data\"");
+        }
+    }
+
+
+    private void loadFile() {
+        try{
+            registrationSystemCore = reader.read();
+            System.out.println("File loaded from " + CORE_PATH);
+        } catch(IOException e) {
+            System.out.println("Unable to read file: " + CORE_PATH);
         }
     }
     //MODIFIERS: this
@@ -167,7 +181,7 @@ public class RegistrationApp {
     private String dealWithChoice() {
         String choice = scanner.next().toLowerCase();
         while ((!choice.equals("q")) && (!choice.equals("d")) && (!choice.equals("r")) && (!choice.equals("s"))
-                && (!choice.equals("v")) && (!choice.equals("p"))) {
+                && (!choice.equals("v")) && (!choice.equals("p")) && (!choice.equals("l"))) {
             displayMenu();
             choice = scanner.next();
             choice = choice.toLowerCase();
@@ -212,6 +226,7 @@ public class RegistrationApp {
         System.out.println("\tq-->quit the system");
         System.out.println("\tv-->view all registered courses");
         System.out.println("\tp-->persist the data");
+        System.out.println("\tl-->load the data");
     }
 
     //MODIFIERS: this

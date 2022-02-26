@@ -60,8 +60,10 @@ public class CourseOfferedBySemester extends Course {
 
     //EFFECT: return true if the student has been added into course
     public boolean containsStudent(Student student) {
-        if (studentsRegistered.contains(student)) {
-            return true;
+        for(Student s: studentsRegistered) {
+            if(s.getId() == student.getId()) {
+                return true;
+            }
         }
         return false;
     }
