@@ -134,6 +134,17 @@ public class RegistrationSystem implements Writable {
         return jsonObject;
     }
 
+    public int numberOfCourseThisSemester() {
+        return courseMapThisSemester.keySet().size();
+    }
+
+    public int numberOfStudent() {
+        return studentMapByUsername.size();
+    }
+
+    public int numberOfCourseInDatabase() {
+        return courseManagementSystem.getAllCoursesID().size();
+    }
     private JSONObject studentMapByUsernameToJson() {
         JSONObject jsonObject = new JSONObject();
         for(List<String> ls: studentMapByUsername.keySet()) {
@@ -149,5 +160,6 @@ public class RegistrationSystem implements Writable {
         }
         return jsonObject;
     }
+
 
 }

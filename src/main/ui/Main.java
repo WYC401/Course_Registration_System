@@ -1,5 +1,6 @@
 package ui;
 import jdk.nashorn.internal.parser.JSONParser;
+import model.RegistrationSystem;
 import org.jgrapht.*;
 import org.jgrapht.graph.*;
 import org.jgrapht.nio.*;
@@ -24,7 +25,7 @@ This is main function where registration app runs
  */
 public class Main {
     public static void main(String[] args) throws URISyntaxException, IOException {
-        new RegistrationApp();
+        //new RegistrationApp();
 
 
         Graph<URI, DefaultEdge> g = new DefaultDirectedGraph<>(DefaultEdge.class);
@@ -59,7 +60,10 @@ public class Main {
         writer.close();
         */
 
-
+        RegistrationSystem rs = new RegistrationSystem();
+        PrintWriter writer = new PrintWriter(new File("./data/testReaderEmptyRegistrationSystem.json"));
+        writer.print(rs.toJson());
+        writer.close();
 
 
 

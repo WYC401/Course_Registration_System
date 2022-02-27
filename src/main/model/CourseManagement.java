@@ -195,10 +195,8 @@ public class CourseManagement implements Writable {
     public JSONObject courseGraphToJson() throws IOException {
         JSONObject json = new JSONObject();
         JSONExporter<Integer, DefaultEdge> exporter = new JSONExporter<>(v -> String.valueOf(v));
-        File dataDirectory = new File("./data");
-        dataDirectory.mkdir();
         File tempFile = new File("./data/temp.json");
-        PrintWriter writer = new PrintWriter(tempFile);
+        PrintWriter writer = new PrintWriter(tempFile);//FileNOTFOUNDException
         exporter.exportGraph(courseGraph, writer);
 
         if(tempFile.exists()) {
