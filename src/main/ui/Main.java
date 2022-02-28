@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 
 import org.jgrapht.util.SupplierUtil;
 import org.json.*;
+import persistence.JsonReader;
 
 /*
 This is main function where registration app runs
@@ -60,8 +61,9 @@ public class Main {
         writer.close();
         */
 
-        RegistrationSystem rs = new RegistrationSystem();
-        PrintWriter writer = new PrintWriter(new File("./data/testReaderEmptyRegistrationSystem.json"));
+        JsonReader reader = new JsonReader("./data/registrationSystemCore.json");
+        RegistrationSystem rs = reader.read();
+        PrintWriter writer = new PrintWriter(new File("./data/testReaderNormalRegistrationSystem.json"));
         writer.print(rs.toJson());
         writer.close();
 

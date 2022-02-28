@@ -38,7 +38,7 @@ public class JsonReaderTest extends JsonTest{
 
     @Test
     public void testNormalRegistrationSystem() {
-        JsonReader reader = new JsonReader("./data/registrationSystemCore.json");
+        JsonReader reader = new JsonReader("./data/testReaderNormalRegistrationSystem.json");
         try{
             RegistrationSystem rs = reader.read();
             checkStudentsInSystem(rs);
