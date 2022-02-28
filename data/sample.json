@@ -2,28 +2,28 @@
     "courseGraph": {
         "creator": "JGraphT JSON Exporter",
         "nodes": [
-            {"id": "1"},
-            {"id": "2"},
-            {"id": "3"},
-            {"id": "4"},
-            {"id": "5"}
+            {"id": "213"},
+            {"id": "210"},
+            {"id": "313"},
+            {"id": "110"},
+            {"id": "221"}
         ],
         "edges": [
             {
-                "source": "2",
-                "target": "4"
+                "source": "210",
+                "target": "110"
             },
             {
-                "source": "1",
-                "target": "2"
+                "source": "213",
+                "target": "210"
             },
             {
-                "source": "3",
-                "target": "1"
+                "source": "313",
+                "target": "213"
             },
             {
-                "source": "3",
-                "target": "5"
+                "source": "313",
+                "target": "221"
             }
         ],
         "version": "1"

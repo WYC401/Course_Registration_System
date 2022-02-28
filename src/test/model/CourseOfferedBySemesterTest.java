@@ -54,8 +54,6 @@ public class CourseOfferedBySemesterTest {
         assertTrue(course.isFull());
         assertEquals(2, course.getStudentRegistered().get(1).getId());
         assertEquals(0, course.getSeatsRemaining());
-        course.addOneStudent(richard);
-        assertEquals(2, course.getStudentRegistered().size());
     }
 
     @Test

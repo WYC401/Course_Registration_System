@@ -125,6 +125,25 @@ public class RegistrationSystem implements Writable {
         return student.canBeRegistered(course.getCourseID());
     }
 
+    public Set<Integer> getCourseSetInDatabase() {
+        return courseManagementSystem.getAllCoursesID();
+    }
+
+    public Set<List<Integer>> getAllPrerequisitesRelation() {
+        Set<Integer> courseSet = getCourseSetInDatabase();
+        Set<List<Integer>> temp = new HashSet<>();
+        List<Integer> temptemp ;
+        for(Integer i : courseSet) {
+            for(Integer j : courseManagementSystem.returnPrerequisitesID(i)) {
+                temptemp = new ArrayList<>();
+                temptemp.add(i);
+                temptemp.add(j);
+                temp.add(temptemp);
+            }
+        }
+        return temp;
+    }
+
     @Override
     public JSONObject toJson() throws IOException {
         JSONObject jsonObject = new JSONObject();
@@ -160,6 +179,5 @@ public class RegistrationSystem implements Writable {
         }
         return jsonObject;
     }
-
 
 }
