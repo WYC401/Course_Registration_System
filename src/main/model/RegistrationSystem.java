@@ -132,9 +132,9 @@ public class RegistrationSystem implements Writable {
     public Set<List<Integer>> getAllPrerequisitesRelation() {
         Set<Integer> courseSet = getCourseSetInDatabase();
         Set<List<Integer>> temp = new HashSet<>();
-        List<Integer> temptemp ;
-        for(Integer i : courseSet) {
-            for(Integer j : courseManagementSystem.returnPrerequisitesID(i)) {
+        List<Integer> temptemp;
+        for (Integer i : courseSet) {
+            for (Integer j : courseManagementSystem.returnPrerequisitesID(i)) {
                 temptemp = new ArrayList<>();
                 temptemp.add(i);
                 temptemp.add(j);
@@ -147,7 +147,7 @@ public class RegistrationSystem implements Writable {
     @Override
     public JSONObject toJson() throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("courseMapThisSemester",courseMapThisSemesterToJson());
+        jsonObject.put("courseMapThisSemester", courseMapThisSemesterToJson());
         jsonObject.put("studentMapByUsername", studentMapByUsernameToJson());
         jsonObject.put("courseManagementSystem", courseManagementSystem.toJson());
         return jsonObject;
@@ -164,17 +164,18 @@ public class RegistrationSystem implements Writable {
     public int numberOfCourseInDatabase() {
         return courseManagementSystem.getAllCoursesID().size();
     }
+
     private JSONObject studentMapByUsernameToJson() {
         JSONObject jsonObject = new JSONObject();
-        for(List<String> ls: studentMapByUsername.keySet()) {
-            jsonObject.put(ls.get(0)+" "+ls.get(1), studentMapByUsername.get(ls).toJson());
+        for (List<String> ls : studentMapByUsername.keySet()) {
+            jsonObject.put(ls.get(0) + " " + ls.get(1), studentMapByUsername.get(ls).toJson());
         }
         return jsonObject;
     }
 
     private JSONObject courseMapThisSemesterToJson() {
         JSONObject jsonObject = new JSONObject();
-        for(Integer i: courseMapThisSemester.keySet()) {
+        for (Integer i : courseMapThisSemester.keySet()) {
             jsonObject.put(String.valueOf(i), courseMapThisSemester.get(i).toJson());
         }
         return jsonObject;

@@ -1,4 +1,5 @@
 package persistence;
+
 import model.*;
 
 import java.util.List;
@@ -7,7 +8,8 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonTest {
-    protected void checkRawCourse(Course course, String courseName, Integer courseID, String syllabus, String instructor) {
+    protected void checkRawCourse(Course course, String courseName, Integer courseID, String syllabus,
+                                  String instructor) {
         assertEquals(courseName, course.getCourseName());
         assertEquals(courseID, course.getCourseID());
         assertEquals(instructor, course.getInstructor());
@@ -19,7 +21,7 @@ public class JsonTest {
         assertEquals(name, student.getName());
         assertEquals(id, student.getId());
         assertEquals(major, student.getMajor());
-        checkTwoSetEqual(student.getAlreadyRegisteredID(),courseSetToTake);
+        checkTwoSetEqual(student.getAlreadyRegisteredID(), courseSetToTake);
         checkTwoSetEqual(student.getAlreadyTakenCourseID(), courseSetAlreadyTaken);
 
     }
@@ -32,14 +34,14 @@ public class JsonTest {
         assertEquals(seatsTotal, course.getSeatsTotal());
         assertEquals(seatsRemaining, course.getSeatsRemaining());
         assertEquals(semester, course.getSemester());
-        assertEquals(studentList.size(), course.getSeatsTotal()-course.getSeatsRemaining());
+        assertEquals(studentList.size(), course.getSeatsTotal() - course.getSeatsRemaining());
     }
 
     protected void checkTwoSetEqual(Set<Integer> set1, Set<Integer> set2) {
-        for(Integer i : set1) {
+        for (Integer i : set1) {
             assertTrue(set2.contains(i));
         }
-        for(Integer i: set2) {
+        for (Integer i : set2) {
             assertTrue(set1.contains(i));
         }
     }

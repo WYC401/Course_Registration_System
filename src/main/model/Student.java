@@ -101,8 +101,6 @@ public class Student implements Writable {
     }
 
 
-
-
     //EFFECT: return all the courses ID which are registered this semester
     public Set<Integer> getAlreadyRegisteredID() {
         return courseMapToTake;
