@@ -94,7 +94,7 @@ public class CourseManagement implements Writable {
     // REQUIRES: the course ID is valid
     // EFFECT: return a graph of all the courses that must be taken before registration of input course
 
-    @SuppressWarnings("methodlength")
+
     public Graph<Integer, DefaultEdge> returnAllNeededCoursesID(Set<Integer> courseAlreadyTaken, Integer courseID) {
         Stack<Integer> s = new Stack<>();
         HashMap<Integer, Integer> tempVisitedMap = new HashMap<>();
@@ -108,6 +108,17 @@ public class CourseManagement implements Writable {
         if (!containCourse(courseID)) {
             return null;
         }
+        popStack(s, courseID, tempVisitedMap);
+        Set<Integer> tempVisitedSet = new HashSet<>();
+        for (Integer i : getAllCoursesID()) {
+            if (tempVisitedMap.get(i) == 1) {
+                tempVisitedSet.add(i);
+            }
+        }
+        return new AsSubgraph<Integer, DefaultEdge>(courseGraph, tempVisitedSet);
+    }
+
+    private void popStack(Stack<Integer> s, Integer courseID, HashMap<Integer, Integer> tempVisitedMap) {
         s.push(courseID);
         while (!s.empty()) {
             int temp = s.pop();
@@ -121,15 +132,6 @@ public class CourseManagement implements Writable {
                 }
             }
         }
-        Set<Integer> tempVisitedSet = new HashSet<>();
-        for (Integer i : getAllCoursesID()) {
-            if (tempVisitedMap.get(i) == 1) {
-                tempVisitedSet.add(i);
-            }
-        }
-        return new AsSubgraph<Integer, DefaultEdge>(courseGraph, tempVisitedSet);
-
-
     }
 
     //EFFECT: return all the coursesID in the management system
