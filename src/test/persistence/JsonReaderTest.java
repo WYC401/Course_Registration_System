@@ -67,6 +67,7 @@ public class JsonReaderTest extends JsonTest {
         assertEquals(3, rs.numberOfStudent());
     }
 
+    //dd
     private void checkCourseInSystem(RegistrationSystem rs) {
         assertEquals(4, rs.numberOfCourseThisSemester());
         List<Student> ls = new ArrayList<Student>();
