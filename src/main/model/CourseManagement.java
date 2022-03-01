@@ -1,6 +1,7 @@
 package model;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+//import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 import org.jgrapht.*;
 import org.jgrapht.graph.*;
 import org.jgrapht.nio.*;
@@ -8,9 +9,9 @@ import org.jgrapht.nio.dot.DOTExporter;
 import org.jgrapht.nio.json.JSONExporter;
 import org.json.JSONObject;
 import persistence.Writable;
-import sun.misc.IOUtils;
-import sun.misc.IOUtils.*;
-import sun.nio.ch.IOUtil;
+//import sun.misc.IOUtils;
+//import sun.misc.IOUtils.*;
+//import sun.nio.ch.IOUtil;
 
 /*
 This is CourseManagement System that stores all the courses and their relationships across all the faculties.
@@ -186,7 +187,7 @@ public class CourseManagement implements Writable {
 
     public JSONObject courseMapToJson() {
         JSONObject json = new JSONObject();
-        for(Integer i: courseMap.keySet()) {
+        for (Integer i : courseMap.keySet()) {
             json.put(String.valueOf(i), courseMap.get(i).toJson());
         }
         return json;
@@ -199,9 +200,9 @@ public class CourseManagement implements Writable {
         PrintWriter writer = new PrintWriter(tempFile);//FileNOTFOUNDException
         exporter.exportGraph(courseGraph, writer);
 
-        if(tempFile.exists()) {
+        if (tempFile.exists()) {
             StringBuilder contentBuilder = new StringBuilder();
-            try(Stream<String> stream = Files.lines(Paths.get("./data/temp.json"), StandardCharsets.UTF_8)) {
+            try (Stream<String> stream = Files.lines(Paths.get("./data/temp.json"), StandardCharsets.UTF_8)) {
                 stream.forEach(s -> contentBuilder.append(s));
                 return new JSONObject(contentBuilder.toString());
             }
