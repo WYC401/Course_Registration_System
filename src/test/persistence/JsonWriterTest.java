@@ -18,7 +18,7 @@ public class JsonWriterTest  extends JsonTest{
             writer.open();
             fail("File is not there or the name of file is invalid");//TODO:how to distinguish between the two case
         }catch(FileNotFoundException e) {
-
+            //should pass
         }
     }
 
@@ -79,7 +79,7 @@ public class JsonWriterTest  extends JsonTest{
 
     private void checkCourseInSystem(RegistrationSystem rs) {
         assertEquals(4, rs.numberOfCourseThisSemester());
-        List<Student> ls = new ArrayList<Student>();
+        List<Student> ls = new ArrayList<>();
         checkCourseBySemester(rs.getCourseFromID(110), "ComputerSystem", 110, "This is a syllabus", "Meghan", 2, "2021W1", 2, -1, ls);
         checkCourseBySemester(rs.getCourseFromID(210), "ComputerSystem", 210, "This is a syllabus", "Meghan", 2, "2021W1", 2, -1, ls);
         checkCourseBySemester(rs.getCourseFromID(313), "ComputerSystem", 313, "This is a syllabus", "Meghan", 2, "2021W1", 2, -1, ls);
@@ -113,7 +113,6 @@ public class JsonWriterTest  extends JsonTest{
         temp.add(313);
         temp.add(221);
         relation.add(temp);
-        Set<List<Integer>> tempForCheck = rs.getAllPrerequisitesRelation();
         assertTrue(relation.containsAll(rs.getAllPrerequisitesRelation()));
         assertTrue(rs.getAllPrerequisitesRelation().containsAll(relation));
     }
