@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RegistrationSystemTest {
     private RegistrationSystem registrationSystem;
-    private CourseManagement CM;
+    private CourseManagement courseManagement;
     private static CourseOfferedBySemester cpsc213ThisSemester = new CourseOfferedBySemester("ComputerSystem", 213,
             "This is a syllabus", "Meghan", "2021W1", 2, -1);
     private static CourseOfferedBySemester cpsc313ThisSemester = new CourseOfferedBySemester("ComputerSystem", 313,
@@ -26,11 +26,24 @@ public class RegistrationSystemTest {
     public void setup() {
         registrationSystem = new RegistrationSystem();
         initialCourseGraph();
-        registrationSystem.loadCourseManagement(CM);
+        registrationSystem.loadCourseManagement(courseManagement);
         registrationSystem.addCourseAvailable(cpsc213ThisSemester);
         registrationSystem.addCourseAvailable(cpsc313ThisSemester);
         registrationSystem.addCourseAvailable(cpsc110ThisSemester);
+        initialStudents();
+        initialCourseThisSemester();
+        assertTrue(registrationSystem.containCourses(213));
+        assertFalse(registrationSystem.containCourses(210));
+        assertFalse(registrationSystem.containCourses(221));
+        assertTrue(registrationSystem.containCourses(110));
+        assertTrue(registrationSystem.containCourses(313));
+        assertEquals(cpsc213ThisSemester, registrationSystem.getCourseFromID(213));
+        assertEquals(cpsc313ThisSemester, registrationSystem.getCourseFromID(313));
+        assertEquals(cpsc110ThisSemester, registrationSystem.getCourseFromID(110));
+        assertNull(registrationSystem.getCourseFromID(210));
+    }
 
+    private void initialStudents() {
         registrationSystem.addStudent(Arrays.asList("yicheng2021", "wycwyc"), yicheng);
         assertEquals(yicheng, registrationSystem.searchStudent(Arrays.asList("yicheng2021", "wycwyc")));
         assertNull(registrationSystem.searchStudent(Arrays.asList("wyc98", "wycwyc")));
@@ -38,6 +51,9 @@ public class RegistrationSystemTest {
         registrationSystem.addStudent(Arrays.asList("chenyang2018", "lcylcy"), chenyang);
         registrationSystem.addStudent(Arrays.asList("richard2019", "yzhyzh"), richard);
         registrationSystem.addStudent(Arrays.asList("jintong2021", "yjtyjt"), jintong);
+    }
+
+    private void initialCourseThisSemester() {
         CourseOfferedBySemester cpsc213PreviousSemester = new CourseOfferedBySemester("ComputerSystem", 213,
                 "This is a syllabus", "Meghan", "2021W1", 2, 60);
         CourseOfferedBySemester cpsc210PreviousSemester = new CourseOfferedBySemester("ComputerSystem", 210,
@@ -50,33 +66,25 @@ public class RegistrationSystemTest {
         richard.addTakenCourse(cpsc110PreviousSemester.getCourseID());
         richard.addTakenCourse(cpsc213PreviousSemester.getCourseID());
         richard.addTakenCourse(cpsc221PreviousSemester.getCourseID());
-        assertTrue(registrationSystem.containCourses(213));
-        assertFalse(registrationSystem.containCourses(210));
-        assertFalse(registrationSystem.containCourses(221));
-        assertTrue(registrationSystem.containCourses(110));
-        assertTrue(registrationSystem.containCourses(313));
-        assertEquals(cpsc213ThisSemester, registrationSystem.getCourseFromID(213));
-        assertEquals(cpsc313ThisSemester, registrationSystem.getCourseFromID(313));
-        assertEquals(cpsc110ThisSemester, registrationSystem.getCourseFromID(110));
-        assertNull(registrationSystem.getCourseFromID(210));
+
     }
 
     private void initialCourseGraph() {
-        CM = new CourseManagement();
+        courseManagement = new CourseManagement();
         Course cpsc213 = new Course("ComputerSystem", 213, "This is a syllabus", "Meghan");
         Course cpsc210 = new Course("ComputerSystem", 210, "This is a syllabus", "Meghan");
         Course cpsc313 = new Course("ComputerSystem", 313, "This is a syllabus", "Meghan");
         Course cpsc110 = new Course("ComputerSystem", 110, "This is a syllabus", "Meghan");
         Course cpsc221 = new Course("ComputerSystem", 221, "This is a syllabus", "Meghan");
-        CM.addCourses(cpsc213);
-        CM.addCourses(cpsc210);
-        CM.addCourses(cpsc313);
-        CM.addCourses(cpsc110);
-        CM.addCourses(cpsc221);
-        CM.setPrerequisites(cpsc210, cpsc110);
-        CM.setPrerequisites(cpsc213, cpsc210);
-        CM.setPrerequisites(cpsc313, cpsc213);
-        CM.setPrerequisites(cpsc313, cpsc221);
+        courseManagement.addCourses(cpsc213);
+        courseManagement.addCourses(cpsc210);
+        courseManagement.addCourses(cpsc313);
+        courseManagement.addCourses(cpsc110);
+        courseManagement.addCourses(cpsc221);
+        courseManagement.setPrerequisites(cpsc210, cpsc110);
+        courseManagement.setPrerequisites(cpsc213, cpsc210);
+        courseManagement.setPrerequisites(cpsc313, cpsc213);
+        courseManagement.setPrerequisites(cpsc313, cpsc221);
         //CM.displayCurrentCourseGraph();
 
     }

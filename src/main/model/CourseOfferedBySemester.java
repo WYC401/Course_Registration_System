@@ -60,8 +60,8 @@ public class CourseOfferedBySemester extends Course {
 
     //EFFECT: return true if the student has been added into course
     public boolean containsStudent(Student student) {
-        for(Student s: studentsRegistered) {
-            if(s.getId() == student.getId()) {
+        for (Student s : studentsRegistered) {
+            if (s.getId() == student.getId()) {
                 return true;
             }
         }
@@ -118,11 +118,11 @@ public class CourseOfferedBySemester extends Course {
     }
 
     private JSONArray studentArrayToJson() {
-       JSONArray jsonArray = new JSONArray();
-       for(Student s: studentsRegistered) {
-           jsonArray.put(s.toJson());
-       }
-       return jsonArray;
+        JSONArray jsonArray = new JSONArray();
+        for (Student s : studentsRegistered) {
+            jsonArray.put(s.toJson());
+        }
+        return jsonArray;
     }
 
 

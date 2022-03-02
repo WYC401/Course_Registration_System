@@ -31,6 +31,11 @@ public class RegistrationApp {
         if (Objects.isNull(studentUsingSystem)) {
             System.exit(0);
         }
+        menuOperation(studentUsingSystem);
+
+    }
+
+    private void menuOperation(Student studentUsingSystem) {
         while (true) {
             displayMenu();
             scanner = new Scanner(System.in);
@@ -47,37 +52,35 @@ public class RegistrationApp {
                 saveFile();
             } else if (choice.equals("l")) {
                 loadFile();
-            }
-            else {
+            } else {
                 goToViewPage(studentUsingSystem);
             }
         }
-
     }
 
+
     private void saveFile() {
-        try{
+        try {
             writer.open();
             writer.write(registrationSystemCore);
             writer.close();
-        }
-        catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("No such file: " + CORE_PATH);
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             System.out.println("No directory named \"data\"");
         }
     }
 
 
     private void loadFile() {
-        try{
+        try {
             registrationSystemCore = reader.read();
             System.out.println("File loaded from " + CORE_PATH);
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.println("Unable to read file: " + CORE_PATH);
         }
     }
+
     //MODIFIERS: this
     //EFFECT: display the registration page if user choose to go to
     private void goToRegisterPage(Student student) {
