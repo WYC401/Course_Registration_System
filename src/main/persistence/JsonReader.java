@@ -11,19 +11,24 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
+// The class can read registration system from a json file.
+
 public class JsonReader {
     private String sc;
 
+    // EFFECTS: construct reader to read the json file
     public JsonReader(String sc) {
         this.sc = sc;
     }
 
+    // EFFECTS: read source file. If succeeding in reading, return registration System. If not, throw IOException.
     public RegistrationSystem read() throws IOException {
         String jsonText = readFile(sc);
         JSONObject jsonObject = new JSONObject(jsonText);
         return parseRegistrationSystem(jsonObject);
     }
 
+    // EFFECTS: read source file. If success, return a string. If not, throw IOException.
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
@@ -34,6 +39,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // EFFECT: parse the given jsonObject and turn it into a Registration System
     private RegistrationSystem parseRegistrationSystem(JSONObject jsonObject) {
         JSONObject jsonCourseMapThisSemester = jsonObject.getJSONObject("courseMapThisSemester");
         JSONObject jsonStudentMapByUsername = jsonObject.getJSONObject("studentMapByUsername");
@@ -43,6 +49,7 @@ public class JsonReader {
                 parseCourseManagementSystem(jsonCourseManagementSystem));
     }
 
+    // EFFECT: parse given json Object and return a student map
     private HashMap<List<String>, Student> parseStudentMapByUsername(JSONObject jsonStudentMapByUsername) {
         HashMap<List<String>, Student> sm = new HashMap<>();
         for (String k : jsonStudentMapByUsername.keySet()) {
@@ -56,6 +63,7 @@ public class JsonReader {
         return sm;
     }
 
+    // EFFECTS: parse given json object to student
     private Student parseStudent(JSONObject jsonObject) {
         String major = jsonObject.getString("major");
         String name = jsonObject.getString("name");
@@ -80,6 +88,7 @@ public class JsonReader {
         return student;
     }
 
+    // EFFECT: parse the given json object to course map
     private HashMap<Integer, CourseOfferedBySemester> parseCourseMap(JSONObject jsonCourseMapThisSemester) {
         HashMap<Integer, CourseOfferedBySemester> hm = new HashMap<>();
         for (String k : jsonCourseMapThisSemester.keySet()) {
@@ -89,6 +98,7 @@ public class JsonReader {
         return hm;
     }
 
+    //EFFECT: parse the given json object to course
     private CourseOfferedBySemester parseCourseThisSemester(JSONObject jsonObject) {
         String syllabus = jsonObject.getString("syllabus");
         String courseName = jsonObject.getString("courseName");
@@ -110,6 +120,7 @@ public class JsonReader {
         return course;
     }
 
+    // EFFECTS: parse the given json object to course management system
     private CourseManagement parseCourseManagementSystem(JSONObject jsonObject) {
         JSONObject jsonCourseGraph = jsonObject.getJSONObject("courseGraph");
         JSONObject jsonCourseMap = jsonObject.getJSONObject("courseMap");
@@ -120,6 +131,8 @@ public class JsonReader {
 
     }
 
+    // EFFECT: parse the json object according the courseMangement Object input and
+    // make change to courseMangement object
     private void parseCourseGraph(CourseManagement courseManagement, JSONObject jsonCourseMap) {
         JSONArray nodesArray = jsonCourseMap.getJSONArray("nodes");
         for (int i = 0; i < nodesArray.length(); i++) {
@@ -134,12 +147,15 @@ public class JsonReader {
         }
     }
 
+    // EFFECT: parse the jsonObject according to courseManagement Object input and construct course map inside the
+    // course management system
     private void parseRawCourseMap(CourseManagement courseManagement, JSONObject jsonCourseMap) {
         for (String k : jsonCourseMap.keySet()) {
             courseManagement.addCourses(parseCourse(jsonCourseMap.getJSONObject(k)));
         }
     }
 
+    //EFFECT: parse json object into a course
     private Course parseCourse(JSONObject jsonObject) {
         String syllabus = jsonObject.getString("syllabus");
         String courseName = jsonObject.getString("courseName");

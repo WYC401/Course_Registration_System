@@ -93,8 +93,6 @@ public class CourseManagement implements Writable {
 
     // REQUIRES: the course ID is valid
     // EFFECT: return a graph of all the courses that must be taken before registration of input course
-
-
     public Graph<Integer, DefaultEdge> returnAllNeededCoursesID(Set<Integer> courseAlreadyTaken, Integer courseID) {
         Stack<Integer> s = new Stack<>();
         HashMap<Integer, Integer> tempVisitedMap = new HashMap<>();
@@ -118,6 +116,7 @@ public class CourseManagement implements Writable {
         return new AsSubgraph<Integer, DefaultEdge>(courseGraph, tempVisitedSet);
     }
 
+    // EFFECT: find all the integers in all of the paths to target integer
     private void popStack(Stack<Integer> s, Integer courseID, HashMap<Integer, Integer> tempVisitedMap) {
         s.push(courseID);
         while (!s.empty()) {
@@ -179,6 +178,9 @@ public class CourseManagement implements Writable {
         return null;
     }
 
+    // EFFECT: turn a courseManagementSystem into a json object, involving a temp.json file in the data folder to
+    //            exchange the temporary file. If the data folder does not exist or any wrong with reading the temporary
+    //            file, IOException will be thrown.
     @Override
     public JSONObject toJson() throws IOException {
         JSONObject json = new JSONObject();
@@ -187,6 +189,7 @@ public class CourseManagement implements Writable {
         return json;
     }
 
+    // EFFECT: turn a courseMap Object into json
     public JSONObject courseMapToJson() {
         JSONObject json = new JSONObject();
         for (Integer i : courseMap.keySet()) {
@@ -195,6 +198,9 @@ public class CourseManagement implements Writable {
         return json;
     }
 
+    // EFFECT: turn a courseGraph into a json object, involving a temp.json file in the data folder to
+    //            exchange the temporary file. If the data folder does not exist or any wrong with reading the temporary
+    //            file, IOException will be thrown.
     public JSONObject courseGraphToJson() throws IOException {
         JSONObject json = new JSONObject();
         JSONExporter<Integer, DefaultEdge> exporter = new JSONExporter<>(v -> String.valueOf(v));

@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 /*
 This is a registration APP you can play with, incorporating the functionalities like searching, adding, dropping
-and viewing courses
+and viewing courses. Also, it can save the status of the system and load it later.
  */
 public class RegistrationApp {
     private RegistrationSystem registrationSystemCore;
@@ -35,6 +35,7 @@ public class RegistrationApp {
 
     }
 
+    // EFFECT: student successfully logining can press keys offered by menu to operate
     private void menuOperation(Student studentUsingSystem) {
         while (true) {
             displayMenu();
@@ -59,6 +60,7 @@ public class RegistrationApp {
     }
 
 
+    // EFFECT: save the current status into json file and the file is stored in CORE_PATH
     private void saveFile() {
         try {
             writer.open();
@@ -71,7 +73,7 @@ public class RegistrationApp {
         }
     }
 
-
+    // EFFECT: load past version of registration system from CORE_PATH
     private void loadFile() {
         try {
             registrationSystemCore = reader.read();

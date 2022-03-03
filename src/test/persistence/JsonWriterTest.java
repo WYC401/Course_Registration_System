@@ -153,8 +153,7 @@ public class JsonWriterTest extends JsonTest {
 
     }
 
-    //MODIFIERS: this
-    //EFFECT: add students into registration system
+
     private void addStudent(RegistrationSystem registrationSystemCore) {
         Student yicheng = new Student("Yicheng Wang", 1, "Statistics");
         Student chenyang = new Student("Chenyang Li", 2, "History");
@@ -177,8 +176,7 @@ public class JsonWriterTest extends JsonTest {
         richard.addTakenCourse(cpsc221PreviousSemester.getCourseID());
     }
 
-    //MODIFIERS: this
-    //EFFECT: add courses into the system
+
     private void addCourseThisSemester(RegistrationSystem registrationSystemCore) {
         CourseOfferedBySemester cpsc213ThisSemester = new CourseOfferedBySemester("ComputerSystem", 213,
                 "This is a syllabus", "Meghan", "2021W1", 2, -1);

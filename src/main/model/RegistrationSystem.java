@@ -24,6 +24,7 @@ public class RegistrationSystem implements Writable {
         studentMapByUsername = new HashMap<>();
     }
 
+    //EFFECT: create registration system by course map, student map and course Management System.
     public RegistrationSystem(HashMap<Integer, CourseOfferedBySemester> courseMapThisSemester,
                               HashMap<List<String>, Student> studentMapByUsername,
                               CourseManagement courseManagementSystem) {
@@ -125,10 +126,14 @@ public class RegistrationSystem implements Writable {
         return student.canBeRegistered(course.getCourseID());
     }
 
+    //EFFECT: return all the courseID in the course management system database.(They are not necessarily offered  each
+    //          semester)
     public Set<Integer> getCourseSetInDatabase() {
         return courseManagementSystem.getAllCoursesID();
     }
 
+    // EFFECT: return a set of Integers sets, where each Integer set represent that one course is the prerequisite of
+    //        another course
     public Set<List<Integer>> getAllPrerequisitesRelation() {
         Set<Integer> courseSet = getCourseSetInDatabase();
         Set<List<Integer>> temp = new HashSet<>();
@@ -144,6 +149,7 @@ public class RegistrationSystem implements Writable {
         return temp;
     }
 
+    // EFFECT: return a jsonObject reflecting this Registration System.
     @Override
     public JSONObject toJson() throws IOException {
         JSONObject jsonObject = new JSONObject();
@@ -153,18 +159,22 @@ public class RegistrationSystem implements Writable {
         return jsonObject;
     }
 
+    // EFFECT: return the number of the courses offered by this semester.
     public int numberOfCourseThisSemester() {
         return courseMapThisSemester.keySet().size();
     }
 
+    // EFFECT: return the number of students in this system
     public int numberOfStudent() {
         return studentMapByUsername.size();
     }
 
+    // EFFECT: return the number of courses in the course management system database
     public int numberOfCourseInDatabase() {
         return courseManagementSystem.getAllCoursesID().size();
     }
 
+    //EFFECT: convert student map to a json object and return it.
     private JSONObject studentMapByUsernameToJson() {
         JSONObject jsonObject = new JSONObject();
         for (List<String> ls : studentMapByUsername.keySet()) {
@@ -173,6 +183,7 @@ public class RegistrationSystem implements Writable {
         return jsonObject;
     }
 
+    //EFFECT: convert course map to a json object and return it
     private JSONObject courseMapThisSemesterToJson() {
         JSONObject jsonObject = new JSONObject();
         for (Integer i : courseMapThisSemester.keySet()) {

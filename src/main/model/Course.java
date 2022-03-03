@@ -52,7 +52,7 @@ public class Course implements Writable {
         this.instructor = instructor;
     }
 
-
+    // EFFECT: turn this course object into a json
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -105,6 +105,7 @@ public class CourseOfferedBySemester extends Course {
         return studentsRegistered;
     }
 
+    //EFFECT: return a JsonObject which this courseOfferedByThisSemester Object is converted to.
     @Override
     public JSONObject toJson() {
         JSONObject jsonObject = super.toJson();
@@ -117,6 +118,7 @@ public class CourseOfferedBySemester extends Course {
 
     }
 
+    //EFFECT: return a JsonObject which the students are converted into.
     private JSONArray studentArrayToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Student s : studentsRegistered) {
