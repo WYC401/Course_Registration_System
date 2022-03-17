@@ -1,6 +1,5 @@
 package model;
 
-import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,7 @@ public class CourseTest {
     }
 
     @Test
-    public void TestSetter() {
+    public void testSetter() {
         course.setCourseID(210);
         course.setCourseName("Software Construction");
         course.setInstructor("Meghan");

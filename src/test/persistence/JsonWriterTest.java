@@ -10,14 +10,14 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JsonWriterTest  extends JsonTest{
+public class JsonWriterTest extends JsonTest {
     @Test
     public void testWriteInvalidFile() {
         JsonWriter writer = new JsonWriter("./data/illegal\0^&&&&fileName.json");
-        try{
+        try {
             writer.open();
             fail("File is not there or the name of file is invalid");//TODO:how to distinguish between the two case
-        }catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             //should pass
         }
     }
@@ -26,7 +26,7 @@ public class JsonWriterTest  extends JsonTest{
     public void testWriterEmptyRegistrationSystem() {
         RegistrationSystem rs = new RegistrationSystem();
         JsonWriter writer = new JsonWriter("./data/testWriterEmptyRegistrationSystem.json");
-        try{
+        try {
             writer.open();
             writer.write(rs);
             writer.close();
@@ -36,13 +36,13 @@ public class JsonWriterTest  extends JsonTest{
             assertEquals(0, rs2.numberOfCourseInDatabase());
             assertEquals(0, rs2.numberOfStudent());
             assertEquals(0, rs2.numberOfCourseThisSemester());
-        } catch(IOException e) {
+        } catch (IOException e) {
             fail("should not catch!");
         }
     }
 
     @Test
-    public void TestWriterNormalRegistrationSystem() {
+    public void testWriterNormalRegistrationSystem() {
         JsonWriter writer = new JsonWriter("./data/testWriterNormalRegistrationSystem.json");
         try {
             RegistrationSystem rs = new RegistrationSystem();
@@ -56,7 +56,7 @@ public class JsonWriterTest  extends JsonTest{
             checkStudentsInSystem(rs2);
             checkCourseInSystem(rs2);
             checkCourseManagement(rs2);
-        } catch(IOException e) {
+        } catch (IOException e) {
             fail("should not catch!");
         }
     }
@@ -64,38 +64,39 @@ public class JsonWriterTest  extends JsonTest{
     private void checkStudentsInSystem(RegistrationSystem rs) {
         Set<Integer> toTake = new HashSet<>();
         Set<Integer> alreadyTaken = new HashSet<>();
-        checkStudent(rs.searchStudent(Arrays.asList("chenyang2018", "lcylcy")), "Chenyang Li","History", 2, toTake, alreadyTaken);
+        checkStudent(rs.searchStudent(Arrays.asList("chenyang2018", "lcylcy")),
+                "Chenyang Li", "History", 2, toTake, alreadyTaken);
         alreadyTaken.add(210);
         toTake.add(213);
-        checkStudent(rs.searchStudent(Arrays.asList("yicheng2021", "wycwyc")), "Yicheng Wang","Statistics", 1, toTake, alreadyTaken);
+        checkStudent(rs.searchStudent(Arrays.asList("yicheng2021", "wycwyc")),
+                "Yicheng Wang", "Statistics", 1, toTake, alreadyTaken);
         alreadyTaken.clear();
         alreadyTaken.add(213);
         alreadyTaken.add(221);
         alreadyTaken.add(110);
         toTake.clear();
-        checkStudent(rs.searchStudent(Arrays.asList("richard2019","yzhyzh")), "Richard Yang", "Computer Science", 3, toTake, alreadyTaken);
+        checkStudent(rs.searchStudent(Arrays.asList("richard2019", "yzhyzh")),
+                "Richard Yang", "Computer Science", 3, toTake, alreadyTaken);
         assertEquals(3, rs.numberOfStudent());
     }
 
     private void checkCourseInSystem(RegistrationSystem rs) {
         assertEquals(4, rs.numberOfCourseThisSemester());
         List<Student> ls = new ArrayList<>();
-        checkCourseBySemester(rs.getCourseFromID(110), "ComputerSystem", 110, "This is a syllabus", "Meghan", 2, "2021W1", 2, -1, ls);
-        checkCourseBySemester(rs.getCourseFromID(210), "ComputerSystem", 210, "This is a syllabus", "Meghan", 2, "2021W1", 2, -1, ls);
-        checkCourseBySemester(rs.getCourseFromID(313), "ComputerSystem", 313, "This is a syllabus", "Meghan", 2, "2021W1", 2, -1, ls);
+        checkCourseBySemester(rs.getCourseFromID(110), "ComputerSystem", 110,
+                "This is a syllabus", "Meghan", 2, "2021W1", 2, -1, ls);
+        checkCourseBySemester(rs.getCourseFromID(210), "ComputerSystem", 210,
+                "This is a syllabus", "Meghan", 2, "2021W1", 2, -1, ls);
+        checkCourseBySemester(rs.getCourseFromID(313), "ComputerSystem", 313,
+                "This is a syllabus", "Meghan", 2, "2021W1", 2, -1, ls);
         ls.add(rs.searchStudent(Arrays.asList("yicheng2021", "wycwyc")));
-        checkCourseBySemester(rs.getCourseFromID(213), "ComputerSystem", 213, "This is a syllabus", "Meghan", 1, "2021W1", 2, -1, ls);
+        checkCourseBySemester(rs.getCourseFromID(213), "ComputerSystem", 213,
+                "This is a syllabus", "Meghan", 1, "2021W1", 2, -1, ls);
     }
 
     public void checkCourseManagement(RegistrationSystem rs) {
         assertEquals(5, rs.numberOfCourseInDatabase());
-        Set<Integer> s = new HashSet<>();
-        s.add(110);
-        s.add(210);
-        s.add(221);
-        s.add(213);
-        s.add(313);
-        checkTwoSetEqual(s, rs.getCourseSetInDatabase());
+        checkTwoSetEqual(initialSetForCourse(), rs.getCourseSetInDatabase());
         Set<List<Integer>> relation = new HashSet<>();
         List<Integer> temp = new ArrayList<>();
         temp.add(210);
@@ -115,6 +116,16 @@ public class JsonWriterTest  extends JsonTest{
         relation.add(temp);
         assertTrue(relation.containsAll(rs.getAllPrerequisitesRelation()));
         assertTrue(rs.getAllPrerequisitesRelation().containsAll(relation));
+    }
+
+    private Set<Integer> initialSetForCourse() {
+        Set<Integer> s = new HashSet<>();
+        s.add(110);
+        s.add(210);
+        s.add(221);
+        s.add(213);
+        s.add(313);
+        return s;
     }
 
     private void initi(RegistrationSystem registrationSystemCore) {
@@ -142,8 +153,7 @@ public class JsonWriterTest  extends JsonTest{
 
     }
 
-    //MODIFIERS: this
-    //EFFECT: add students into registration system
+
     private void addStudent(RegistrationSystem registrationSystemCore) {
         Student yicheng = new Student("Yicheng Wang", 1, "Statistics");
         Student chenyang = new Student("Chenyang Li", 2, "History");
@@ -166,8 +176,7 @@ public class JsonWriterTest  extends JsonTest{
         richard.addTakenCourse(cpsc221PreviousSemester.getCourseID());
     }
 
-    //MODIFIERS: this
-    //EFFECT: add courses into the system
+
     private void addCourseThisSemester(RegistrationSystem registrationSystemCore) {
         CourseOfferedBySemester cpsc213ThisSemester = new CourseOfferedBySemester("ComputerSystem", 213,
                 "This is a syllabus", "Meghan", "2021W1", 2, -1);
@@ -181,7 +190,8 @@ public class JsonWriterTest  extends JsonTest{
         registrationSystemCore.addCourseAvailable(cpsc313ThisSemester);
         registrationSystemCore.addCourseAvailable(cpsc110ThisSemester);
         registrationSystemCore.addCourseAvailable(cpsc210ThisSemester);
-        registrationSystemCore.register(cpsc213ThisSemester, registrationSystemCore.searchStudent((Arrays.asList("yicheng2021", "wycwyc"))));
+        registrationSystemCore.register(cpsc213ThisSemester,
+                registrationSystemCore.searchStudent((Arrays.asList("yicheng2021", "wycwyc"))));
 
     }
 }

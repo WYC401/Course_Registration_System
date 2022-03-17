@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 /*
 This is a registration APP you can play with, incorporating the functionalities like searching, adding, dropping
-and viewing courses
+and viewing courses. Also, it can save the status of the system and load it later.
  */
 public class RegistrationApp {
     private RegistrationSystem registrationSystemCore;
@@ -31,6 +31,12 @@ public class RegistrationApp {
         if (Objects.isNull(studentUsingSystem)) {
             System.exit(0);
         }
+        menuOperation(studentUsingSystem);
+
+    }
+
+    // EFFECT: student successfully logining can press keys offered by menu to operate
+    private void menuOperation(Student studentUsingSystem) {
         while (true) {
             displayMenu();
             scanner = new Scanner(System.in);
@@ -47,37 +53,36 @@ public class RegistrationApp {
                 saveFile();
             } else if (choice.equals("l")) {
                 loadFile();
-            }
-            else {
+            } else {
                 goToViewPage(studentUsingSystem);
             }
         }
-
     }
 
+
+    // EFFECT: save the current status into json file and the file is stored in CORE_PATH
     private void saveFile() {
-        try{
+        try {
             writer.open();
             writer.write(registrationSystemCore);
             writer.close();
-        }
-        catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("No such file: " + CORE_PATH);
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             System.out.println("No directory named \"data\"");
         }
     }
 
-
+    // EFFECT: load past version of registration system from CORE_PATH
     private void loadFile() {
-        try{
+        try {
             registrationSystemCore = reader.read();
             System.out.println("File loaded from " + CORE_PATH);
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.println("Unable to read file: " + CORE_PATH);
         }
     }
+
     //MODIFIERS: this
     //EFFECT: display the registration page if user choose to go to
     private void goToRegisterPage(Student student) {

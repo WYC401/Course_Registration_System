@@ -19,3 +19,5 @@ showing students learning roadmap。
 - As a user, I want to be able to search courses I want to register.
 - As a user, I want to be able to drop the courses I do not like.
 - As a user, I want to be able to view all the courses I have registered.
+- As a user, I want to be able to save the current state of registration system.
+- As a user, I want to be able to load the previous state of registration system.

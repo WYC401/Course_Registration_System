@@ -11,7 +11,7 @@ import java.io.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CourseManagementTest {
-    private CourseManagement CM;
+    private CourseManagement courseManagement;
     static Course cpsc213 = new Course("ComputerSystem", 213, "This is a syllabus", "Meghan");
     static Course cpsc210 = new Course("ComputerSystem", 210, "This is a syllabus", "Meghan");
     static Course cpsc313 = new Course("ComputerSystem", 313, "This is a syllabus", "Meghan");
@@ -21,71 +21,72 @@ public class CourseManagementTest {
 
     @BeforeEach
     public void setup() throws IOException {
-        CM = new CourseManagement();
-        CM.addCourses(cpsc213);
-        CM.addCourses(cpsc210);
-        CM.addCourses(cpsc313);
-        CM.addCourses(cpsc110);
-        CM.addCourses(cpsc221);
-        assertTrue(CM.setPrerequisites(cpsc210, cpsc110));
-        assertTrue(CM.setPrerequisites(cpsc213, cpsc210));
-        assertTrue(CM.setPrerequisites(cpsc313, cpsc213));
-        assertTrue(CM.setPrerequisites(cpsc313, cpsc221));
-        assertFalse(CM.setPrerequisites(cpsc406, cpsc313));
-        assertFalse(CM.setPrerequisites(cpsc313, cpsc406));
+        courseManagement = new CourseManagement();
+        courseManagement.addCourses(cpsc213);
+        courseManagement.addCourses(cpsc210);
+        courseManagement.addCourses(cpsc313);
+        courseManagement.addCourses(cpsc110);
+        courseManagement.addCourses(cpsc221);
+        assertTrue(courseManagement.setPrerequisites(cpsc210, cpsc110));
+        assertTrue(courseManagement.setPrerequisites(cpsc213, cpsc210));
+        assertTrue(courseManagement.setPrerequisites(cpsc313, cpsc213));
+        assertTrue(courseManagement.setPrerequisites(cpsc313, cpsc221));
+        assertFalse(courseManagement.setPrerequisites(cpsc406, cpsc313));
+        assertFalse(courseManagement.setPrerequisites(cpsc313, cpsc406));
         PrintWriter writer = new PrintWriter(new File("./data/sample.json"));
-        writer.print(CM.toJson().toString(4));
+        writer.print(courseManagement.toJson().toString(4));
         writer.close();
 
     }
 
     @Test
-    public void TestAddCourse() {
+    public void testAddCourse() {
         Set<Integer> tempCourseSet = new HashSet<Integer>();
         tempCourseSet.add(213);
         tempCourseSet.add(210);
         tempCourseSet.add(110);
         tempCourseSet.add(313);
         tempCourseSet.add(221);
-        assertEquals(tempCourseSet, CM.getAllCoursesID());
-        assertEquals(cpsc213, CM.getCourse(213));
-        assertNull(CM.getCourse(20));
-        assertEquals(213, CM.getCourseID(cpsc213));
-        assertNull(CM.getCourseID(cpsc406));
+        assertEquals(tempCourseSet, courseManagement.getAllCoursesID());
+        assertEquals(cpsc213, courseManagement.getCourse(213));
+        assertNull(courseManagement.getCourse(20));
+        assertEquals(213, courseManagement.getCourseID(cpsc213));
+        assertNull(courseManagement.getCourseID(cpsc406));
     }
 
     @Test
-    public void TestSReturnPrerequisites() {
+    public void testSReturnPrerequisites() {
         Set<Integer> tempIDset = new HashSet<>();
         tempIDset.add(213);
         tempIDset.add(221);
-        assertEquals(tempIDset, CM.returnPrerequisitesID(cpsc313.getCourseID()));
+        assertEquals(tempIDset, courseManagement.returnPrerequisitesID(cpsc313.getCourseID()));
     }
 
     @Test
-    public void TestReturnAllCoursesNeeded() {
+    public void testReturnAllCoursesNeeded() {
         Set<Integer> tempIDSet = new HashSet<Integer>();
         tempIDSet.add(210);
         tempIDSet.add(213);
-        System.out.print(CM.displayCurrentCourseGraph());
-        System.out.print(CM.displayCurrentCourseGraph());
-        System.out.print(CM.displayCourseGraph(CM.returnAllNeededCoursesID(tempIDSet, 313)));
-        assertNull(CM.returnAllNeededCoursesID(tempIDSet, 406));
+        System.out.print(courseManagement.displayCurrentCourseGraph());
+        System.out.print(courseManagement.displayCurrentCourseGraph());
+        System.out.print(courseManagement.displayCourseGraph(courseManagement
+                .returnAllNeededCoursesID(tempIDSet, 313)));
+        assertNull(courseManagement.returnAllNeededCoursesID(tempIDSet, 406));
     }
 
     @Test
-    public void TestReturnAllPrerequisites() {
+    public void testReturnAllPrerequisites() {
         Set<Integer> tempIDSet = new HashSet<>();
         tempIDSet.add(213);
         tempIDSet.add(221);
-        assertEquals(tempIDSet, CM.returnPrerequisitesID(313));
-        assertNull(CM.returnPrerequisitesID(406));
+        assertEquals(tempIDSet, courseManagement.returnPrerequisitesID(313));
+        assertNull(courseManagement.returnPrerequisitesID(406));
     }
 
     @Test
-    public void TestDeleteCourse() {
-        assertFalse(CM.deleteCourse(cpsc406));
-        assertTrue(CM.deleteCourse(cpsc313));
-        assertTrue(CM.deleteCourse(cpsc213));
+    public void testDeleteCourse() {
+        assertFalse(courseManagement.deleteCourse(cpsc406));
+        assertTrue(courseManagement.deleteCourse(cpsc313));
+        assertTrue(courseManagement.deleteCourse(cpsc213));
     }
 }
