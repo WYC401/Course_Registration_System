@@ -6,7 +6,6 @@ import persistence.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -14,7 +13,7 @@ import java.util.Scanner;
 This is a registration APP you can play with, incorporating the functionalities like searching, adding, dropping
 and viewing courses. Also, it can save the status of the system and load it later.
  */
-public class RegistrationApp {
+public class RegistrationApp1 {
     private RegistrationSystem registrationSystemCore;
     private Scanner scanner;
     private static final String CORE_PATH = "./data/registrationSystemCore.json";
@@ -22,7 +21,7 @@ public class RegistrationApp {
     private JsonReader reader;
 
     //EFFECT: create a registration app
-    public RegistrationApp() {
+    public RegistrationApp1() {
         registrationSystemCore = new RegistrationSystem();
         writer = new JsonWriter(CORE_PATH);
         reader = new JsonReader(CORE_PATH);
