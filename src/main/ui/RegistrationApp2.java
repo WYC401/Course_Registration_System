@@ -124,6 +124,10 @@ public class RegistrationApp2 extends JFrame implements ActionListener {
 
     }
 
+    public RegistrationSystem getRegistrationSystemCore() {
+        return registrationSystemCore;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == loginButton) {
@@ -131,7 +135,7 @@ public class RegistrationApp2 extends JFrame implements ActionListener {
             if (Objects.isNull(student)) {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             } else {
-                JFrame secondframe = new JFrame("this is second page to go!");
+                JFrame secondframe = new MenueUI(registrationSystemCore, student);
                 secondframe.setVisible(true);
                 dispose();
             }

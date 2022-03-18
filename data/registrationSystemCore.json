@@ -49,17 +49,26 @@
             "syllabus": "This is a syllabus",
             "courseName": "ComputerSystem",
             "instructor": "Meghan",
-            "seatsRemaining": 1,
+            "seatsRemaining": 0,
             "seatsTotal": 2,
             "grade": -1,
             "semester": "2021W1",
-            "studentsRegistered": [{
-                "courseMapAlreadyTaken": "[210]",
-                "major": "Statistics",
-                "courseMapToTake": "[213]",
-                "name": "Yicheng Wang",
-                "id": 1
-            }],
+            "studentsRegistered": [
+                {
+                    "courseMapAlreadyTaken": "[210]",
+                    "major": "Statistics",
+                    "courseMapToTake": "[213]",
+                    "name": "Yicheng Wang",
+                    "id": 1
+                },
+                {
+                    "courseMapAlreadyTaken": "[210]",
+                    "major": "Statistics",
+                    "courseMapToTake": "[213]",
+                    "name": "Yicheng Wang",
+                    "id": 1
+                }
+            ],
             "courseID": 213
         },
         "313": {
@@ -78,11 +87,11 @@
         "courseGraph": {
             "creator": "JGraphT JSON Exporter",
             "nodes": [
-                {"id": "213"},
-                {"id": "210"},
-                {"id": "313"},
                 {"id": "110"},
-                {"id": "221"}
+                {"id": "210"},
+                {"id": "221"},
+                {"id": "213"},
+                {"id": "313"}
             ],
             "edges": [
                 {
