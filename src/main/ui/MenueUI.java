@@ -16,6 +16,7 @@ public class MenueUI extends JFrame  implements ActionListener {
     public static final int HEIGHT = 700;
     private JMenuBar menuBar = new JMenuBar();
     private Student user;
+    private JPanel cards;
 
     public MenueUI(RegistrationSystem registrationSystemCore, Student user){
         this.registrationSystemCore = registrationSystemCore;
@@ -25,6 +26,9 @@ public class MenueUI extends JFrame  implements ActionListener {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        cards = new JPanel(new CardLayout());
+        initialCards();
+        getContentPane().add(cards, BorderLayout.CENTER);
         //menuBar.addMouseListener(this);
     }
 
@@ -37,25 +41,46 @@ public class MenueUI extends JFrame  implements ActionListener {
         menuBar.add(viewMenu, 0);
         menuBar.add(fileMenu, 1);
         menuBar.add(operationMenu, 2);
-        viewMenu.add(new JMenuItem("Registered Courses"),0);
+        viewMenu.add(new JMenuItem("Courses Registered"),0);
         viewMenu.getItem(0).addActionListener(this);
-
         viewMenu.add(new JMenuItem("Learning Roadmap"), 1);
-        operationMenu.add(new JMenuItem("Search"));
-        operationMenu.add(new JMenuItem("Drop"));
+        viewMenu.getItem(1).addActionListener(this);
+        operationMenu.add(new JMenuItem("Search"), 0);
+        operationMenu.getItem(0).addActionListener(this);
+        operationMenu.add(new JMenuItem("Drop"), 1);
+        operationMenu.getItem(1).addActionListener(this);
         operationMenu.add(new JMenuItem("Register"));
-        fileMenu.add(new JMenuItem("Save"));
-        fileMenu.add(new JMenuItem("Load"));
-        fileMenu.add(new JMenuItem("Exit"));
+        operationMenu.getItem(2).addActionListener(this);
+        fileMenu.add(new JMenuItem("Save"), 0);
+        fileMenu.getItem(0).addActionListener(this);
+        fileMenu.add(new JMenuItem("Load"),1);
+        fileMenu.getItem(1).addActionListener(this);
+        fileMenu.add(new JMenuItem("Exit"),2);
+        fileMenu.getItem(2).addActionListener(this);
+    }
+
+    private void initialCards() {
+        JPanel viewCoursesRegisteredCard = new JPanel();
+        viewCoursesRegisteredCard.add(new TextField("Here are courses registered!"));
+        JPanel viewLearningRoadmapCard = new JPanel();
+        viewLearningRoadmapCard.add(new TextField("Here is graph."));
+        cards.add(viewLearningRoadmapCard, "Learning Roadmap");
+        cards.add(viewCoursesRegisteredCard, "Courses Registered");
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        /*
         if (e.getSource() == menuBar.getMenu(0).getItem(0)) {
 
             menuBar.getMenu(0).getItem(0).getText();
-            dispose();
+
         }
+        */
+        JMenuItem temp = (JMenuItem) e.getSource();
+        CardLayout cl = (CardLayout)(cards.getLayout());
+        cl.show(cards, (String)temp.getText());
+
     }
 }
