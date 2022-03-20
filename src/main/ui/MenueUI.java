@@ -60,12 +60,11 @@ public class MenueUI extends JFrame  implements ActionListener {
     }
 
     private void initialCards() {
-        JPanel viewCoursesRegisteredCard = new JPanel();
-        viewCoursesRegisteredCard.add(new TextField("Here are courses registered!"));
-        JPanel viewLearningRoadmapCard = new JPanel();
-        viewLearningRoadmapCard.add(new TextField("Here is graph."));
-        cards.add(viewLearningRoadmapCard, "Learning Roadmap");
-        cards.add(viewCoursesRegisteredCard, "Courses Registered");
+        SearchPane searchPane = new SearchPane(this.registrationSystemCore);
+
+        cards.add( searchPane, "Search");
+        cards.add(new JPanel().add(new JLabel("save")), "Save");
+
     }
 
 
@@ -81,6 +80,8 @@ public class MenueUI extends JFrame  implements ActionListener {
         JMenuItem temp = (JMenuItem) e.getSource();
         CardLayout cl = (CardLayout)(cards.getLayout());
         cl.show(cards, (String)temp.getText());
+
+
 
     }
 }
