@@ -63,7 +63,8 @@ public class MenueUI extends JFrame  implements ActionListener {
         SearchPane searchPane = new SearchPane(this.registrationSystemCore);
 
         cards.add( searchPane, "Search");
-        cards.add(new JPanel().add(new JLabel("save")), "Save");
+        RegisterPane registerPane = new RegisterPane(this.registrationSystemCore, this.user);
+        cards.add(registerPane, "Register");
 
     }
 
