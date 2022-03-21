@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class MenueUI extends JFrame  implements ActionListener {
     private RegistrationSystem registrationSystemCore;
@@ -61,10 +59,13 @@ public class MenueUI extends JFrame  implements ActionListener {
 
     private void initialCards() {
         SearchPane searchPane = new SearchPane(this.registrationSystemCore);
-
         cards.add( searchPane, "Search");
+
         RegisterPane registerPane = new RegisterPane(this.registrationSystemCore, this.user);
         cards.add(registerPane, "Register");
+
+        PresentInformationPane viewPane = new PresentInformationPane(this.registrationSystemCore, this.user);
+        cards.add(viewPane, "Courses Registered");
 
     }
 
@@ -80,6 +81,10 @@ public class MenueUI extends JFrame  implements ActionListener {
         */
         JMenuItem temp = (JMenuItem) e.getSource();
         CardLayout cl = (CardLayout)(cards.getLayout());
+        if(((String)temp.getText()).equals("Courses Registered")) {
+            PresentInformationPane tempViewPane = (PresentInformationPane) cards.getComponent(2);
+            tempViewPane.update();
+        }
         cl.show(cards, (String)temp.getText());
 
 
