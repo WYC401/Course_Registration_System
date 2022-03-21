@@ -127,5 +127,13 @@ public class CourseOfferedBySemester extends Course {
         return jsonArray;
     }
 
+    public Object[] partiallyStringlized() {
+        Object[] temp = new Object[4];
+        temp[0] = getCourseID();
+        temp[1] = getCourseName();
+        temp[2] = getSemester();
+        temp[3] = getInstructor();
+        return temp;
+    }
 
 }

@@ -13,7 +13,9 @@ public class SearchPane extends JPanel implements ActionListener {
     public static final int HEIGHT = 700;
     private JTextField idInput;
     private JButton searchButton;
-    JPanel tablePanel;
+    private JPanel tablePanel;
+    private JTable jt;
+    private JPanel messagePanel = new JPanel();
 
     public SearchPane(RegistrationSystem registrationSystemCore) {
         this.registrationSystemCore = registrationSystemCore;
@@ -27,14 +29,28 @@ public class SearchPane extends JPanel implements ActionListener {
         searchButton = new JButton("Search");
         JPanel searchCombo = new JPanel();
         searchCombo.setLayout(new FlowLayout());
+        searchCombo.add(new JLabel("courseID"));
         searchCombo.add(idInput);
         searchCombo.add(searchButton);
         searchCombo.setVisible(true);
         add(searchCombo);
+
+        messagePanel.add(new JLabel("Invalid courseID or the course is not offered this semester!"));
+        messagePanel.setVisible(false);
+        add(messagePanel);
+
         tablePanel = new JPanel();
+
+        //jt = new JTable();
+
+        //jt.setVisible(false);
         tablePanel.setVisible(false);
         add(tablePanel);
+
         searchButton.addActionListener(this);
+
+
+
 
     }
 
@@ -44,24 +60,32 @@ public class SearchPane extends JPanel implements ActionListener {
         if(e.getSource() == searchButton)  {
             try {
                 int courseId = Integer.parseInt(idInput.getText());
+                tablePanel.setVisible(false);
                 if(registrationSystemCore.containCourses(courseId)) {
-                    String data[][]={ {"101","Amit","670000"},
-                            {"102","Jai","780000"},
-                            {"101","Sachin","700000"}};
-                    String column[]={"ID","NAME","SALARY"};
-                    JTable jt = new JTable(data,column);
-                    jt.setBounds(30,40,200,300);
-                    tablePanel.add(jt);
+                    if(tablePanel.getComponentCount() > 0) {
+                        tablePanel.remove(0);
+                    }
+                    messagePanel.setVisible(false);
+                    Object[][] data = new Object[1][4];
+                    data[0] = registrationSystemCore.getCourseFromID(courseId).partiallyStringlized();
+                    String [] column = {"ID","NAME","Semester", "Instructor"};
+                    jt = new JTable(data, column);
+                    jt.setFillsViewportHeight(true);
+                    //jt.setBounds(30,40,200,300);
+                    tablePanel.add(new JScrollPane(jt));
+                    jt.setVisible(true);
+                    //tablePanel.add(new JLabel("hhhhhhhhhh"));
                     tablePanel.setVisible(true);
                     setVisible(true);
 
 
                 } else {
                     tablePanel.setVisible(false);
-                    add(new JLabel("Invalid course ID or Not offered this semester!" ));
+                    messagePanel.setVisible(true);
                 }
             } catch( Exception exception) {
-                // do nothing
+                tablePanel.setVisible(false);
+                messagePanel.setVisible(true);
             }
 
         }
