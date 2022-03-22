@@ -135,7 +135,7 @@ public class RegistrationApp2 extends JFrame implements ActionListener {
             if (Objects.isNull(student)) {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             } else {
-                JFrame secondframe = new MenueUI(registrationSystemCore, student);
+                JFrame secondframe = new MenueUI(registrationSystemCore, student, Arrays.asList(usernameField.getText(), passwordField.getText()));
                 secondframe.setVisible(true);
                 dispose();
             }

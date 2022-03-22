@@ -50,9 +50,8 @@ public class RegisterPane extends JPanel implements ActionListener {
             try{
                 int courseID = Integer.parseInt(courseIDBox.getText());
                 if (registrationSystemCore.containCourses(courseID)) {
-                    if(registrationSystemCore.canRegisterThisCourse(registrationSystemCore.getCourseFromID(courseID),
-                            student)) {
-                        registrationSystemCore.register(registrationSystemCore.getCourseFromID(courseID), student);
+                    if(registrationSystemCore.register(registrationSystemCore.getCourseFromID(courseID), student)) {
+
                         errorMessage.setText("Successfully Registered!");
                         errorMessage.setVisible(true);
                     } else {

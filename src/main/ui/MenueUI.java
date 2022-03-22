@@ -2,11 +2,16 @@ package ui;
 
 //import model.RegistrationSystem;
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 
 public class MenueUI extends JFrame  implements ActionListener {
     private RegistrationSystem registrationSystemCore;
@@ -15,8 +20,16 @@ public class MenueUI extends JFrame  implements ActionListener {
     private JMenuBar menuBar = new JMenuBar();
     private Student user;
     private JPanel cards;
+    private static final String CORE_PATH = "./data/registrationSystemCore.json";
+    private JsonWriter writer;
+    private JsonReader reader;
+    private List<String> usernameAndPassword;
+    private SearchPane searchPane;
+    private RegisterPane registerPane;
+    private DropPane dropPane;
+    private ViewRegisterCoursePane viewPane;
 
-    public MenueUI(RegistrationSystem registrationSystemCore, Student user){
+    public MenueUI(RegistrationSystem registrationSystemCore, Student user, List<String> usernameAndPassword){
         this.registrationSystemCore = registrationSystemCore;
         this.user = user;
         initialMenuBar();
@@ -26,7 +39,11 @@ public class MenueUI extends JFrame  implements ActionListener {
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         cards = new JPanel(new CardLayout());
         initialCards();
+        addIntoCards();
         getContentPane().add(cards, BorderLayout.CENTER);
+        writer = new JsonWriter(CORE_PATH);
+        reader = new JsonReader(CORE_PATH);
+        this.usernameAndPassword = usernameAndPassword;
         //menuBar.addMouseListener(this);
     }
 
@@ -58,18 +75,25 @@ public class MenueUI extends JFrame  implements ActionListener {
     }
 
     private void initialCards() {
-        SearchPane searchPane = new SearchPane(this.registrationSystemCore);
+        searchPane = new SearchPane(this.registrationSystemCore);
+        //cards.add( searchPane, "Search");
+
+        registerPane = new RegisterPane(this.registrationSystemCore, this.user);
+        //cards.add(registerPane, "Register");
+
+        viewPane = new ViewRegisterCoursePane(this.registrationSystemCore, this.user);
+        //cards.add(viewPane, "Courses Registered");
+
+        dropPane = new DropPane(this.registrationSystemCore, this.user);
+        //cards.add(dropPane, "Drop");
+
+    }
+
+    private void addIntoCards() {
         cards.add( searchPane, "Search");
-
-        RegisterPane registerPane = new RegisterPane(this.registrationSystemCore, this.user);
         cards.add(registerPane, "Register");
-
-        ViewRegisterCoursePane viewPane = new ViewRegisterCoursePane(this.registrationSystemCore, this.user);
         cards.add(viewPane, "Courses Registered");
-
-        DropPane dropPane = new DropPane(this.registrationSystemCore, this.user);
         cards.add(dropPane, "Drop");
-
     }
 
 
@@ -92,9 +116,34 @@ public class MenueUI extends JFrame  implements ActionListener {
             PresentInformationPane tempViewPane = (PresentInformationPane) cards.getComponent(3);
             tempViewPane.update();
         }
+
+
+        if(((String) temp.getText()).equals("Save")) {
+            try {
+                writer.open();
+                writer.write(registrationSystemCore);
+                writer.close();
+            } catch (FileNotFoundException fne) {
+                System.out.println("No such file: " + CORE_PATH);
+            } catch (IOException ioe1) {
+                System.out.println("No directory named \"data\"");
+            }
+
+        } else if (((String) temp.getText()).equals("Load")) {
+            try {
+                registrationSystemCore = reader.read();
+                user = registrationSystemCore.searchStudent(usernameAndPassword);
+                cards.removeAll();
+                cards.repaint();
+                initialCards();
+                addIntoCards();
+                System.out.println("File loaded from " + CORE_PATH);
+            } catch (IOException ioe2) {
+                System.out.println("Unable to read file: " + CORE_PATH);
+            }
+        }
+
         cl.show(cards, (String)temp.getText());
-
-
 
     }
 }

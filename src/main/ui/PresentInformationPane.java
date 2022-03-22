@@ -83,12 +83,13 @@ public abstract class PresentInformationPane extends JPanel  {
 
     public void update() {
 
-        if (tablePane.getComponentCount() > 0) {
-            tablePane.remove(0);
-        }
+        tablePane.removeAll();
+        tablePane.revalidate();
         updateData();
         createInformation();
         tablePane.add(new JScrollPane(viewTable));
+        tablePane.setVisible(true);
+        tablePane.repaint();
     }
 
     class MyTableModel extends AbstractTableModel {
