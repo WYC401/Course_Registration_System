@@ -64,8 +64,11 @@ public class MenueUI extends JFrame  implements ActionListener {
         RegisterPane registerPane = new RegisterPane(this.registrationSystemCore, this.user);
         cards.add(registerPane, "Register");
 
-        PresentInformationPane viewPane = new PresentInformationPane(this.registrationSystemCore, this.user);
+        ViewRegisterCoursePane viewPane = new ViewRegisterCoursePane(this.registrationSystemCore, this.user);
         cards.add(viewPane, "Courses Registered");
+
+        DropPane dropPane = new DropPane(this.registrationSystemCore, this.user);
+        cards.add(dropPane, "Drop");
 
     }
 
@@ -83,6 +86,10 @@ public class MenueUI extends JFrame  implements ActionListener {
         CardLayout cl = (CardLayout)(cards.getLayout());
         if(((String)temp.getText()).equals("Courses Registered")) {
             PresentInformationPane tempViewPane = (PresentInformationPane) cards.getComponent(2);
+            tempViewPane.update();
+        }
+        if(((String)temp.getText()).equals("Drop")) {
+            PresentInformationPane tempViewPane = (PresentInformationPane) cards.getComponent(3);
             tempViewPane.update();
         }
         cl.show(cards, (String)temp.getText());

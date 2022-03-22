@@ -3,20 +3,20 @@ package ui;
 import model.*;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class PresentInformationPane extends JPanel  {
-    private RegistrationSystem registrationSystemCore;
-    private Student student;
+public abstract class PresentInformationPane extends JPanel  {
+    protected RegistrationSystem registrationSystemCore;
+    protected Student student;
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 700;
-    private JTable viewTable;
-    private JLabel messageLabel;
-    private JButton updateButton;
-    private JPanel tablePane;
-    private Object[][] data;
+    public static final String[] dataColumn = {"", "ID", "Name", "Semester", "Instructor"};
+    protected JTable viewTable;
+    protected JLabel messageLabel;
+    protected JButton updateButton;
+    protected JPanel tablePane;
+    protected Object[][] data;
 
     public PresentInformationPane(RegistrationSystem registrationSystemCore, Student student)  {
         this.registrationSystemCore = registrationSystemCore;
@@ -24,7 +24,7 @@ public class PresentInformationPane extends JPanel  {
         messageLabel = new JLabel();
         //updateButton = new JButton("Update");
         tablePane = new JPanel();
-        String[] dataColumn = {"", "ID", "Name", "Semester", "Instructor"};
+
         data = initialTable();
         createInformation();
 
@@ -43,25 +43,26 @@ public class PresentInformationPane extends JPanel  {
     }
 
     public void updateData() {
-        String[] dataColumn = {"", "ID", "Name", "Semester", "Instructor"};
         data = initialTable();
 
     }
 
     public void createInformation() {
-        String[] dataColumn = {"", "ID", "Name", "Semester", "Instructor"};
+
         if(data.length == 0) {
             messageLabel.setVisible(true);
             messageLabel.setText("No course registered!");
             viewTable = new JTable();
         } else {
             messageLabel.setVisible(false);
-            viewTable = new JTable(data, dataColumn);
+            viewTable = new JTable(new MyTableModel());
             viewTable.setFillsViewportHeight(true);
 
         }
         //scrollPane.setVisible(true);
         viewTable.setVisible(true);
+
+
     }
 
     private Object[][] initialTable() {
@@ -88,5 +89,52 @@ public class PresentInformationPane extends JPanel  {
         updateData();
         createInformation();
         tablePane.add(new JScrollPane(viewTable));
+    }
+
+    class MyTableModel extends AbstractTableModel {
+
+
+        @Override
+        public int getRowCount() {
+            return data.length;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return dataColumn.length;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            return data[rowIndex][columnIndex];
+        }
+
+        @Override
+        public Class<?> getColumnClass(int c) {
+            return getValueAt(0, c).getClass();
+        }
+
+        @Override
+        public String getColumnName(int col) {
+            return dataColumn[col];
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            //Note that the data/cell address is constant,
+            //no matter where the cell appears onscreen.
+            if (col < 1) {
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public void setValueAt(Object value, int row, int col) {
+            data[row][col] = value;
+            fireTableCellUpdated(row, col);
+
+        }
+
     }
 }
