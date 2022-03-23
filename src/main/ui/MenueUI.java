@@ -1,6 +1,7 @@
 package ui;
 
 //import model.RegistrationSystem;
+
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -13,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-public class MenueUI extends JFrame  implements ActionListener {
+public class MenueUI extends JFrame implements ActionListener {
     private RegistrationSystem registrationSystemCore;
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 700;
@@ -28,8 +29,9 @@ public class MenueUI extends JFrame  implements ActionListener {
     private RegisterPane registerPane;
     private DropPane dropPane;
     private ViewRegisterCoursePane viewPane;
+    private ViewRoadmapPane viewRoadmapPane;
 
-    public MenueUI(RegistrationSystem registrationSystemCore, Student user, List<String> usernameAndPassword){
+    public MenueUI(RegistrationSystem registrationSystemCore, Student user, List<String> usernameAndPassword) {
         this.registrationSystemCore = registrationSystemCore;
         this.user = user;
         initialMenuBar();
@@ -56,7 +58,7 @@ public class MenueUI extends JFrame  implements ActionListener {
         menuBar.add(viewMenu, 0);
         menuBar.add(fileMenu, 1);
         menuBar.add(operationMenu, 2);
-        viewMenu.add(new JMenuItem("Courses Registered"),0);
+        viewMenu.add(new JMenuItem("Courses Registered"), 0);
         viewMenu.getItem(0).addActionListener(this);
         viewMenu.add(new JMenuItem("Learning Roadmap"), 1);
         viewMenu.getItem(1).addActionListener(this);
@@ -68,9 +70,9 @@ public class MenueUI extends JFrame  implements ActionListener {
         operationMenu.getItem(2).addActionListener(this);
         fileMenu.add(new JMenuItem("Save"), 0);
         fileMenu.getItem(0).addActionListener(this);
-        fileMenu.add(new JMenuItem("Load"),1);
+        fileMenu.add(new JMenuItem("Load"), 1);
         fileMenu.getItem(1).addActionListener(this);
-        fileMenu.add(new JMenuItem("Exit"),2);
+        fileMenu.add(new JMenuItem("Exit"), 2);
         fileMenu.getItem(2).addActionListener(this);
     }
 
@@ -87,13 +89,17 @@ public class MenueUI extends JFrame  implements ActionListener {
         dropPane = new DropPane(this.registrationSystemCore, this.user);
         //cards.add(dropPane, "Drop");
 
+        viewRoadmapPane = new ViewRoadmapPane(registrationSystemCore, user);
+
+
     }
 
     private void addIntoCards() {
-        cards.add( searchPane, "Search");
+        cards.add(searchPane, "Search");
         cards.add(registerPane, "Register");
         cards.add(viewPane, "Courses Registered");
         cards.add(dropPane, "Drop");
+        cards.add(viewRoadmapPane, "Learning Roadmap");
     }
 
 
@@ -107,18 +113,26 @@ public class MenueUI extends JFrame  implements ActionListener {
         }
         */
         JMenuItem temp = (JMenuItem) e.getSource();
-        CardLayout cl = (CardLayout)(cards.getLayout());
-        if(((String)temp.getText()).equals("Courses Registered")) {
+        CardLayout cl = (CardLayout) (cards.getLayout());
+        if (((String) temp.getText()).equals("Courses Registered")) {
             PresentInformationPane tempViewPane = (PresentInformationPane) cards.getComponent(2);
             tempViewPane.update();
         }
-        if(((String)temp.getText()).equals("Drop")) {
+        if (((String) temp.getText()).equals("Drop")) {
             PresentInformationPane tempViewPane = (PresentInformationPane) cards.getComponent(3);
             tempViewPane.update();
         }
+        dealWithSavePanel(e);
+        dealWithLoadPane(e);
 
 
-        if(((String) temp.getText()).equals("Save")) {
+        cl.show(cards, (String) temp.getText());
+
+    }
+
+    private void dealWithSavePanel(ActionEvent e) {
+        JMenuItem temp = (JMenuItem) e.getSource();
+        if (((String) temp.getText()).equals("Save")) {
             try {
                 writer.open();
                 writer.write(registrationSystemCore);
@@ -129,7 +143,12 @@ public class MenueUI extends JFrame  implements ActionListener {
                 System.out.println("No directory named \"data\"");
             }
 
-        } else if (((String) temp.getText()).equals("Load")) {
+        }
+    }
+
+    private void dealWithLoadPane(ActionEvent e) {
+        JMenuItem temp = (JMenuItem) e.getSource();
+        if (((String) temp.getText()).equals("Load")) {
             try {
                 registrationSystemCore = reader.read();
                 user = registrationSystemCore.searchStudent(usernameAndPassword);
@@ -142,8 +161,5 @@ public class MenueUI extends JFrame  implements ActionListener {
                 System.out.println("Unable to read file: " + CORE_PATH);
             }
         }
-
-        cl.show(cards, (String)temp.getText());
-
     }
 }

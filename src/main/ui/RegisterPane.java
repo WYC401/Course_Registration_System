@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import model.*;
 
 public class RegisterPane extends JPanel implements ActionListener {
@@ -25,7 +26,7 @@ public class RegisterPane extends JPanel implements ActionListener {
         setLayout(null);
         JLabel title = new JLabel("Register!");
         title.setBounds(50, 50, 400, 50);
-        title.setFont(new Font("Courier", Font.BOLD,20));
+        title.setFont(new Font("Courier", Font.BOLD, 20));
         add(title);
 
         courseIDBox = new JTextField();
@@ -46,18 +47,18 @@ public class RegisterPane extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == button) {
-            try{
+        if (e.getSource() == button) {
+            try {
                 int courseID = Integer.parseInt(courseIDBox.getText());
                 if (registrationSystemCore.containCourses(courseID)) {
-                    if(registrationSystemCore.register(registrationSystemCore.getCourseFromID(courseID), student)) {
+                    if (registrationSystemCore.register(registrationSystemCore.getCourseFromID(courseID), student)) {
 
                         errorMessage.setText("Successfully Registered!");
                         errorMessage.setVisible(true);
                     } else {
-                        errorMessage.setText("You have registered or" +
-                                " you do not satisfy prerequisites " +
-                                "or you have taken this course! ");
+                        errorMessage.setText("You have registered or"
+                                + " you do not satisfy prerequisites "
+                                + "or you have taken this course! ");
                         errorMessage.setVisible(true);
                     }
                 } else {

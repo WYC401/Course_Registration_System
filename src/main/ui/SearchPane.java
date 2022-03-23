@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import model.*;
 
 public class SearchPane extends JPanel implements ActionListener {
@@ -50,44 +51,46 @@ public class SearchPane extends JPanel implements ActionListener {
         searchButton.addActionListener(this);
 
 
-
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(e.getSource() == searchButton)  {
+        if (e.getSource() == searchButton) {
             try {
                 int courseId = Integer.parseInt(idInput.getText());
                 tablePanel.setVisible(false);
-                if(registrationSystemCore.containCourses(courseId)) {
-                    if(tablePanel.getComponentCount() > 0) {
+                if (registrationSystemCore.containCourses(courseId)) {
+                    if (tablePanel.getComponentCount() > 0) {
                         tablePanel.remove(0);
                     }
-                    messagePanel.setVisible(false);
-                    Object[][] data = new Object[1][4];
-                    data[0] = registrationSystemCore.getCourseFromID(courseId).partiallyStringlized();
-                    String [] column = {"ID","NAME","Semester", "Instructor"};
-                    jt = new JTable(data, column);
-                    jt.setFillsViewportHeight(true);
-                    //jt.setBounds(30,40,200,300);
-                    tablePanel.add(new JScrollPane(jt));
-                    jt.setVisible(true);
-                    //tablePanel.add(new JLabel("hhhhhhhhhh"));
-                    tablePanel.setVisible(true);
-                    setVisible(true);
-
+                    showTable(courseId);
 
                 } else {
                     tablePanel.setVisible(false);
                     messagePanel.setVisible(true);
                 }
-            } catch( Exception exception) {
+            } catch (Exception exception) {
                 tablePanel.setVisible(false);
                 messagePanel.setVisible(true);
             }
 
         }
     }
+
+    private void showTable(int courseId) {
+        messagePanel.setVisible(false);
+        Object[][] data = new Object[1][4];
+        data[0] = registrationSystemCore.getCourseFromID(courseId).partiallyStringlized();
+        String[] column = {"ID", "NAME", "Semester", "Instructor"};
+        jt = new JTable(data, column);
+        jt.setFillsViewportHeight(true);
+        //jt.setBounds(30,40,200,300);
+        tablePanel.add(new JScrollPane(jt));
+        jt.setVisible(true);
+        //tablePanel.add(new JLabel("hhhhhhhhhh"));
+        tablePanel.setVisible(true);
+        setVisible(true);
+    }
+
 }

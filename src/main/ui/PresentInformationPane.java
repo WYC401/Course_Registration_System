@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 
-public abstract class PresentInformationPane extends JPanel  {
+public abstract class PresentInformationPane extends JPanel {
     protected RegistrationSystem registrationSystemCore;
     protected Student student;
     public static final int WIDTH = 1000;
@@ -18,7 +18,7 @@ public abstract class PresentInformationPane extends JPanel  {
     protected JPanel tablePane;
     protected Object[][] data;
 
-    public PresentInformationPane(RegistrationSystem registrationSystemCore, Student student)  {
+    public PresentInformationPane(RegistrationSystem registrationSystemCore, Student student) {
         this.registrationSystemCore = registrationSystemCore;
         this.student = student;
         messageLabel = new JLabel();
@@ -39,7 +39,6 @@ public abstract class PresentInformationPane extends JPanel  {
         tablePane.setVisible(true);
 
 
-
     }
 
     public void updateData() {
@@ -49,7 +48,7 @@ public abstract class PresentInformationPane extends JPanel  {
 
     public void createInformation() {
 
-        if(data.length == 0) {
+        if (data.length == 0) {
             messageLabel.setVisible(true);
             messageLabel.setText("No course registered!");
             viewTable = new JTable();
@@ -73,7 +72,7 @@ public abstract class PresentInformationPane extends JPanel  {
             tempDataRow = registrationSystemCore.getCourseFromID((int) temp[i]).partiallyStringlized();
             tempData[i][0] = new Boolean(false);
             for (int j = 1; j < 5; j++) {
-                tempData[i][j] = tempDataRow[j-1];
+                tempData[i][j] = tempDataRow[j - 1];
             }
 
         }

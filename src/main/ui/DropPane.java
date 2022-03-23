@@ -14,7 +14,7 @@ public class DropPane extends PresentInformationPane implements ActionListener {
     private JButton dropButton = new JButton("Drop");
 
     public DropPane(RegistrationSystem registrationSystemCore, Student student) {
-        super(registrationSystemCore,student);
+        super(registrationSystemCore, student);
         JPanel jpanel = new JPanel();
         jpanel.add(dropButton, BorderLayout.EAST);
         add(jpanel);
@@ -25,15 +25,15 @@ public class DropPane extends PresentInformationPane implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         List<Integer> temp = new ArrayList<Integer>();
-        for(int i =0; i < data.length; i++) {
+        for (int i = 0; i < data.length; i++) {
             Boolean checked = Boolean.valueOf(viewTable.getValueAt(i, 0).toString());
-            int id = Integer.valueOf(viewTable.getValueAt(i,1).toString());
-            if(checked) {
+            int id = Integer.valueOf(viewTable.getValueAt(i, 1).toString());
+            if (checked) {
                 temp.add(id);
             }
         }
 
-        for (Integer i: temp) {
+        for (Integer i : temp) {
             registrationSystemCore.drop(registrationSystemCore.getCourseFromID(i), student);
         }
         update();

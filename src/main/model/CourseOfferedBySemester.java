@@ -73,6 +73,7 @@ public class CourseOfferedBySemester extends Course {
     public void removeStudent(Student student) {
         if (containsStudent(student)) {
             studentsRegistered.remove(student);
+            setSeatsRemaining(getSeatsRemaining() + 1);
         }
     }
 
@@ -135,5 +136,6 @@ public class CourseOfferedBySemester extends Course {
         temp[3] = getInstructor();
         return temp;
     }
+
 
 }

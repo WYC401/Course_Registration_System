@@ -35,7 +35,7 @@ public class RegistrationApp2 extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         welcome.setBounds(50, 50, 400, 50);
-        welcome.setFont(new Font("Courier", Font.BOLD,20));
+        welcome.setFont(new Font("Courier", Font.BOLD, 20));
         userLabel.setBounds(50, 150, 100, 30);
         passwordLabel.setBounds(50, 220, 100, 30);
         usernameField.setBounds(150, 150, 150, 30);
@@ -53,8 +53,8 @@ public class RegistrationApp2 extends JFrame implements ActionListener {
         ifShowPassword.addActionListener(this);
 
 
-
     }
+
     //MODIFIERS: this
     //EFFECT: initialize the registration system
     private void initialCore() {
@@ -130,16 +130,18 @@ public class RegistrationApp2 extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == loginButton) {
-            Student student = registrationSystemCore.searchStudent(Arrays.asList(usernameField.getText(), passwordField.getText()));
+        if (e.getSource() == loginButton) {
+            Student student = registrationSystemCore.searchStudent(Arrays.asList(usernameField.getText(),
+                    passwordField.getText()));
             if (Objects.isNull(student)) {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             } else {
-                JFrame secondframe = new MenueUI(registrationSystemCore, student, Arrays.asList(usernameField.getText(), passwordField.getText()));
+                JFrame secondframe = new MenueUI(registrationSystemCore, student, Arrays.asList(usernameField.getText(),
+                        passwordField.getText()));
                 secondframe.setVisible(true);
                 dispose();
             }
-        } else if(e.getSource() == ifShowPassword) {
+        } else if (e.getSource() == ifShowPassword) {
             if (ifShowPassword.isSelected()) {
                 passwordField.setEchoChar((char) 0);
             } else {

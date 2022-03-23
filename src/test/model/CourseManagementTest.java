@@ -36,6 +36,7 @@ public class CourseManagementTest {
         PrintWriter writer = new PrintWriter(new File("./data/sample.json"));
         writer.print(courseManagement.toJson().toString(4));
         writer.close();
+        courseManagement.displayCurrentCourseGraph();
 
     }
 

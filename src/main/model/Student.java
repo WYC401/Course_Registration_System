@@ -106,6 +106,23 @@ public class Student implements Writable {
         return courseMapToTake;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Student student = (Student) o;
+        return id.equals(student.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     //EFFECT: return all the courses ID which were taken before
     public Set<Integer> getAlreadyTakenCourseID() {
         return courseMapAlreadyTaken;
