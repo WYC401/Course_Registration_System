@@ -9,6 +9,10 @@ import java.util.Arrays;
 import java.awt.*;
 import java.util.Objects;
 
+/*
+    This is a GUI registrationApp. This class mainly serves as the login page and pop into menu window if
+    login is successful
+ */
 public class RegistrationApp2 extends JFrame implements ActionListener {
     private RegistrationSystem registrationSystemCore;
     JLabel welcome = new JLabel("Welcome to Registration System!");
@@ -21,12 +25,16 @@ public class RegistrationApp2 extends JFrame implements ActionListener {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 700;
 
+
+    // EFFECT: create a new registration system app
     public RegistrationApp2() {
         registrationSystemCore = new RegistrationSystem();
         initialCore();
         initialLoginPage();
     }
 
+    // MODIFIES: this
+    // EFFECT: initialize a login page with button and texfield for password and username input
     private void initialLoginPage() {
 
         setLayout(null);
@@ -124,10 +132,14 @@ public class RegistrationApp2 extends JFrame implements ActionListener {
 
     }
 
+    // EFFECT: return the reference of registrationSystemCore
     public RegistrationSystem getRegistrationSystemCore() {
         return registrationSystemCore;
     }
 
+    // MODIFIES: this
+    // EFFECT: if the checkbox of "show password" is checked, the password input will no longer be encoded.
+    //         if the button is clicked, password and username will be verified to match or not
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {

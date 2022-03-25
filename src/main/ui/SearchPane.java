@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 
 import model.*;
 
+/*
+    This class is to provide all the information on the course user want to query
+ */
 public class SearchPane extends JPanel implements ActionListener {
 
     private RegistrationSystem registrationSystemCore;
@@ -18,6 +21,7 @@ public class SearchPane extends JPanel implements ActionListener {
     private JTable jt;
     private JPanel messagePanel = new JPanel();
 
+    // EFFECT: create a searchPane
     public SearchPane(RegistrationSystem registrationSystemCore) {
         this.registrationSystemCore = registrationSystemCore;
 
@@ -53,6 +57,8 @@ public class SearchPane extends JPanel implements ActionListener {
 
     }
 
+    // EFFECT: if user click the search button, the correct courseID will bring up the table about this course
+    //          else it will show error message on the screen
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -78,6 +84,8 @@ public class SearchPane extends JPanel implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECT: make the table with queried information visible
     private void showTable(int courseId) {
         messagePanel.setVisible(false);
         Object[][] data = new Object[1][4];

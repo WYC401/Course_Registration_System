@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 
 import model.*;
 
+/*
+    This is register panel where user can type in number of courseID and then register it if he/she can register
+ */
 public class RegisterPane extends JPanel implements ActionListener {
     private RegistrationSystem registrationSystemCore;
     private Student student;
@@ -18,6 +21,7 @@ public class RegisterPane extends JPanel implements ActionListener {
     private JButton button;
     private JLabel errorMessage;
 
+    // EFFECT: create a register panel
     public RegisterPane(RegistrationSystem registrationSystemCore, Student student) {
         this.registrationSystemCore = registrationSystemCore;
         this.student = student;
@@ -45,6 +49,9 @@ public class RegisterPane extends JPanel implements ActionListener {
         add(errorMessage);
     }
 
+    // EFFECT: if the user click the register button, it will successfully register if the user satisfies
+    //  with all the prerequisites and the course is not full. If the input courseID is not right, there will be message
+    //  to inform them.
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == button) {

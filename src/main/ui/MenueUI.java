@@ -14,6 +14,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+/*
+    This is a JFrame with menu item and card layout linked to each other. And the RegistrationSystem and Student login
+    is passed by their reference among each sub-Panels in card layout.
+ */
 public class MenueUI extends JFrame implements ActionListener {
     private RegistrationSystem registrationSystemCore;
     public static final int WIDTH = 1000;
@@ -31,6 +35,7 @@ public class MenueUI extends JFrame implements ActionListener {
     private ViewRegisterCoursePane viewPane;
     private ViewRoadmapPane viewRoadmapPane;
 
+    // EFFECT: create a MenuUI panel with reference of user and registrationsystem passed in
     public MenueUI(RegistrationSystem registrationSystemCore, Student user, List<String> usernameAndPassword) {
         this.registrationSystemCore = registrationSystemCore;
         this.user = user;
@@ -49,6 +54,8 @@ public class MenueUI extends JFrame implements ActionListener {
         //menuBar.addMouseListener(this);
     }
 
+    // MODIFIES: this
+    // EFFECT: initial the menu bar on top of the screen
     private void initialMenuBar() {
         JMenu viewMenu = new JMenu("View");
         JMenu operationMenu = new JMenu("Operate");
@@ -76,6 +83,8 @@ public class MenueUI extends JFrame implements ActionListener {
         fileMenu.getItem(2).addActionListener(this);
     }
 
+    // MODIFIERS: this
+    // EFFECT: create sub-panes
     private void initialCards() {
         searchPane = new SearchPane(this.registrationSystemCore);
         //cards.add( searchPane, "Search");
@@ -94,6 +103,7 @@ public class MenueUI extends JFrame implements ActionListener {
 
     }
 
+    // EFFECT: add the sub-panes with functionalities into card layout
     private void addIntoCards() {
         cards.add(searchPane, "Search");
         cards.add(registerPane, "Register");
@@ -103,6 +113,7 @@ public class MenueUI extends JFrame implements ActionListener {
     }
 
 
+    // EFFECT: link the menu clicks with panes in card layout.
     @Override
     public void actionPerformed(ActionEvent e) {
         /*
@@ -130,6 +141,7 @@ public class MenueUI extends JFrame implements ActionListener {
 
     }
 
+    //EFFECT: write the current state of registration System into json file if the "File->Save" is clicked
     private void dealWithSavePanel(ActionEvent e) {
         JMenuItem temp = (JMenuItem) e.getSource();
         if (((String) temp.getText()).equals("Save")) {
@@ -137,6 +149,7 @@ public class MenueUI extends JFrame implements ActionListener {
                 writer.open();
                 writer.write(registrationSystemCore);
                 writer.close();
+                JOptionPane.showMessageDialog(this, "Save Successfully");
             } catch (FileNotFoundException fne) {
                 System.out.println("No such file: " + CORE_PATH);
             } catch (IOException ioe1) {
@@ -146,6 +159,7 @@ public class MenueUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECT: read json file to bring up the saved state of registration System if "File->Save"
     private void dealWithLoadPane(ActionEvent e) {
         JMenuItem temp = (JMenuItem) e.getSource();
         if (((String) temp.getText()).equals("Load")) {
@@ -154,8 +168,9 @@ public class MenueUI extends JFrame implements ActionListener {
                 user = registrationSystemCore.searchStudent(usernameAndPassword);
                 cards.removeAll();
                 cards.repaint();
-                initialCards();
+                initialCards(); //we need to create cards again once the new registration System is loaded
                 addIntoCards();
+                JOptionPane.showMessageDialog(this, "File loaded from " + CORE_PATH);
                 System.out.println("File loaded from " + CORE_PATH);
             } catch (IOException ioe2) {
                 System.out.println("Unable to read file: " + CORE_PATH);

@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 
+/*
+    This abstract class represents the panels for indicating the current registered courses
+ */
 public abstract class PresentInformationPane extends JPanel {
     protected RegistrationSystem registrationSystemCore;
     protected Student student;
@@ -18,6 +21,7 @@ public abstract class PresentInformationPane extends JPanel {
     protected JPanel tablePane;
     protected Object[][] data;
 
+    // EFFECT: create a jpanel to present all the courses registered
     public PresentInformationPane(RegistrationSystem registrationSystemCore, Student student) {
         this.registrationSystemCore = registrationSystemCore;
         this.student = student;
@@ -41,11 +45,15 @@ public abstract class PresentInformationPane extends JPanel {
 
     }
 
+    // MODIFIES: this
+    // EFFECT: update registration information by extracting data from current registration System
     public void updateData() {
         data = initialTable();
 
     }
 
+    // MODIFIES: this
+    // EFFECT: update the panel to incooperate data and message
     public void createInformation() {
 
         if (data.length == 0) {
@@ -64,6 +72,8 @@ public abstract class PresentInformationPane extends JPanel {
 
     }
 
+    // MODIFIES: this
+    // EFFECT: return the registration data which is extracted from the object registrationSystem and Student
     private Object[][] initialTable() {
         Object[] temp = student.getAlreadyRegisteredID().toArray();
         Object[][] tempData = new Object[temp.length][5];
@@ -80,6 +90,7 @@ public abstract class PresentInformationPane extends JPanel {
     }
 
 
+    //EFFECT: update data table and all the information
     public void update() {
 
         tablePane.removeAll();
@@ -91,34 +102,43 @@ public abstract class PresentInformationPane extends JPanel {
         tablePane.repaint();
     }
 
+
+    /*
+      This is a class inside class to define the data model in Jtable
+     */
     class MyTableModel extends AbstractTableModel {
 
-
+        // EFFECT: return number of rows
         @Override
         public int getRowCount() {
             return data.length;
         }
 
+        // EFFECT: return the number of columns
         @Override
         public int getColumnCount() {
             return dataColumn.length;
         }
 
+        // EFFECT: return the value at rowIndex and columnIndex of table
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             return data[rowIndex][columnIndex];
         }
 
+        // EFFECT: return the Class for each column
         @Override
         public Class<?> getColumnClass(int c) {
             return getValueAt(0, c).getClass();
         }
 
+        // EFFECT: return Column Name for each column
         @Override
         public String getColumnName(int col) {
             return dataColumn[col];
         }
 
+        // EFFECT: return true if the cell is editable( modifiable)
         @Override
         public boolean isCellEditable(int row, int col) {
             //Note that the data/cell address is constant,
@@ -129,6 +149,7 @@ public abstract class PresentInformationPane extends JPanel {
             return false;
         }
 
+        // EFFECT: set value at the row, col
         @Override
         public void setValueAt(Object value, int row, int col) {
             data[row][col] = value;

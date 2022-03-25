@@ -3,7 +3,7 @@
         "yicheng2021 wycwyc": {
             "courseMapAlreadyTaken": "[210]",
             "major": "Statistics",
-            "courseMapToTake": "[213, 110]",
+            "courseMapToTake": "[]",
             "name": "Yicheng Wang",
             "id": 1
         },
@@ -27,17 +27,11 @@
             "syllabus": "This is a syllabus",
             "courseName": "ComputerSystem",
             "instructor": "Meghan",
-            "seatsRemaining": 1,
+            "seatsRemaining": 2,
             "seatsTotal": 2,
             "grade": -1,
             "semester": "2021W1",
-            "studentsRegistered": [{
-                "courseMapAlreadyTaken": "[210]",
-                "major": "Statistics",
-                "courseMapToTake": "[213, 110]",
-                "name": "Yicheng Wang",
-                "id": 1
-            }],
+            "studentsRegistered": [],
             "courseID": 110
         },
         "210": {
@@ -55,17 +49,11 @@
             "syllabus": "This is a syllabus",
             "courseName": "ComputerSystem",
             "instructor": "Meghan",
-            "seatsRemaining": 1,
+            "seatsRemaining": 2,
             "seatsTotal": 2,
             "grade": -1,
             "semester": "2021W1",
-            "studentsRegistered": [{
-                "courseMapAlreadyTaken": "[210]",
-                "major": "Statistics",
-                "courseMapToTake": "[213, 110]",
-                "name": "Yicheng Wang",
-                "id": 1
-            }],
+            "studentsRegistered": [],
             "courseID": 213
         },
         "313": {
