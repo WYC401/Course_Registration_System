@@ -3,13 +3,13 @@ package ui;
 //import model.RegistrationSystem;
 
 import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -34,6 +34,7 @@ public class MenueUI extends JFrame implements ActionListener {
     private DropPane dropPane;
     private ViewRegisterCoursePane viewPane;
     private ViewRoadmapPane viewRoadmapPane;
+    private WindowListener closeWindowListener;
 
     // EFFECT: create a MenuUI panel with reference of user and registrationsystem passed in
     public MenueUI(RegistrationSystem registrationSystemCore, Student user, List<String> usernameAndPassword) {
@@ -51,7 +52,26 @@ public class MenueUI extends JFrame implements ActionListener {
         writer = new JsonWriter(CORE_PATH);
         reader = new JsonReader(CORE_PATH);
         this.usernameAndPassword = usernameAndPassword;
+        initializeWindowListener();
         //menuBar.addMouseListener(this);
+    }
+
+    private void initializeWindowListener() {
+        closeWindowListener = new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                EventLog.getInstance().clear();
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                EventLog eventLog = EventLog.getInstance();
+                for (Event event : eventLog) {
+                    System.out.println(event.toString());
+                }
+            }
+        };
+        addWindowListener(closeWindowListener);
     }
 
     // MODIFIES: this
@@ -177,4 +197,6 @@ public class MenueUI extends JFrame implements ActionListener {
             }
         }
     }
+
+
 }

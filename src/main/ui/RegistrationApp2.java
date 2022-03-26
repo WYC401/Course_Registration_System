@@ -1,10 +1,10 @@
 package ui;
 
 import model.*;
+import model.Event;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.Arrays;
 import java.awt.*;
 import java.util.Objects;
@@ -26,11 +26,13 @@ public class RegistrationApp2 extends JFrame implements ActionListener {
     public static final int HEIGHT = 700;
 
 
+
     // EFFECT: create a new registration system app
     public RegistrationApp2() {
         registrationSystemCore = new RegistrationSystem();
         initialCore();
         initialLoginPage();
+
     }
 
     // MODIFIES: this

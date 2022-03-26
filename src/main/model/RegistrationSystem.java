@@ -51,6 +51,8 @@ public class RegistrationSystem implements Writable {
                 && (!isCourseFull(course, student))) {
             student.registerCourse(course.getCourseID());
             course.addOneStudent(student);
+            EventLog.getInstance().logEvent(new Event("student with ID " + String.valueOf(student.getId()
+            ) + " registered course with ID " + course.getCourseID()));
             return true;
         }
         return false;
@@ -65,6 +67,8 @@ public class RegistrationSystem implements Writable {
         if (course.containsStudent(student) && student.isAlreadyRegistered(course.getCourseID())) {
             course.removeStudent(student);
             student.dropCourse(course.getCourseID());
+            EventLog.getInstance().logEvent(new Event("student with ID " + String.valueOf(student.getId()
+            ) + " dropped course with ID " + course.getCourseID()));
             return true;
         }
         return false;
