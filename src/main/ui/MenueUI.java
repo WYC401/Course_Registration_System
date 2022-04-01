@@ -58,10 +58,6 @@ public class MenueUI extends JFrame implements ActionListener {
 
     private void initializeWindowListener() {
         closeWindowListener = new WindowAdapter() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-                EventLog.getInstance().clear();
-            }
 
             @Override
             public void windowClosing(WindowEvent e) {
@@ -169,6 +165,7 @@ public class MenueUI extends JFrame implements ActionListener {
                 writer.open();
                 writer.write(registrationSystemCore);
                 writer.close();
+                EventLog.getInstance().logEvent(new Event("Saved this state"));
                 JOptionPane.showMessageDialog(this, "Save Successfully");
             } catch (FileNotFoundException fne) {
                 System.out.println("No such file: " + CORE_PATH);
@@ -188,10 +185,11 @@ public class MenueUI extends JFrame implements ActionListener {
                 user = registrationSystemCore.searchStudent(usernameAndPassword);
                 cards.removeAll();
                 cards.repaint();
+                EventLog.getInstance().logEvent(new Event("Loaded from previous state"));
                 initialCards(); //we need to create cards again once the new registration System is loaded
                 addIntoCards();
                 JOptionPane.showMessageDialog(this, "File loaded from " + CORE_PATH);
-                System.out.println("File loaded from " + CORE_PATH);
+                //System.out.println("File loaded from " + CORE_PATH);
             } catch (IOException ioe2) {
                 System.out.println("Unable to read file: " + CORE_PATH);
             }

@@ -17,8 +17,7 @@ public class ViewRoadmapPane extends JPanel {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 700;
     private BufferedImage image;
-    private Student student;
-    private RegistrationSystem registrationSystemCore;
+
 
     // EFFECT: create a new view RoadMapPane, reading the graphs from ./pic/courseGraph.png
     public ViewRoadmapPane(RegistrationSystem registrationSystem, Student student) {

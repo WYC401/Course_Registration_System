@@ -26,7 +26,6 @@ public class RegistrationApp2 extends JFrame implements ActionListener {
     public static final int HEIGHT = 700;
 
 
-
     // EFFECT: create a new registration system app
     public RegistrationApp2() {
         registrationSystemCore = new RegistrationSystem();
@@ -152,6 +151,7 @@ public class RegistrationApp2 extends JFrame implements ActionListener {
             } else {
                 JFrame secondframe = new MenueUI(registrationSystemCore, student, Arrays.asList(usernameField.getText(),
                         passwordField.getText()));
+                EventLog.getInstance().logEvent(new Event(student.getName() + " logined in "));
                 secondframe.setVisible(true);
                 dispose();
             }
