@@ -21,6 +21,7 @@ showing students learning roadmap。
 - As a user, I want to be able to view all the courses I have registered.
 - As a user, I want to be able to save the current state of registration system.
 - As a user, I want to be able to load the previous state of registration system.
+- As a user, I want to see the learning roadmap.
 
 ## Phase 4: Task 2
 Sample Logs are:
@@ -30,10 +31,3 @@ Sample Logs are:
 - Thu Mar 31 17:22:59 PDT 2022 Loaded from previous state
 - Thu Mar 31 17:22:59 PDT 2022 Saved this state
 
-## Phase 4: Task 3
-- From the UML, there are some coupling in the class Search Pane, RegisterPane, ViewRegisteredCoursePane and MenuUI. The
-users' information can be accessed by passing his/her ID Number so there is no need to include the user as a filed for 
-these classes. 
-- Also, the class SearchPane and DropPane have the same look except for the drop button, so maybe an 
-abstract class can be extracted from them. 
-- Last, it is worth of effort to change the name of some methods to make it understandable. 
