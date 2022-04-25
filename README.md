@@ -6,6 +6,7 @@ This is course registration system which can allow students to perform following
 - drop courses already registered
 - search courses 
 - view all the courses registered
+- find learning roadmap to learn certain course
 
 ## Who will Use it?
 Students with valid username and password can register into this system.
